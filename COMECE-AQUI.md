@@ -32,12 +32,13 @@ Na primeira abertura a Unity vai:
 
 ## 2. Gerar o jogo
 
-Com o projeto aberto e o Console **sem erros vermelhos**:
+A cena **já foi gerada e validada**. Para jogar:
 
-1. Menu superior: **`SWARM` → `Montar Protótipo Completo`**.
-2. Confirme.
-3. A cena `Assets/Swarm/Scenes/Swarm.unity` é criada e aberta.
-4. Aperte **Play**.
+1. Abra `Assets/Swarm/Scenes/Swarm.unity`.
+2. Aperte **Play**.
+
+Se alterar o código e quiser recriar tudo: **`SWARM` → `Montar Protótipo Completo`**.
+Para conferir as referências: **`SWARM` → `Validar Cena do Protótipo`**.
 
 ### Controles
 

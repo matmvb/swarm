@@ -18,6 +18,7 @@ public class Enemy : MonoBehaviour
     bool _dead;
     float _flash;
     Color _baseColor;
+    Color _flashColor = Color.white;
     SpriteRenderer _sprite;
     Rigidbody2D _rb;
     Transform _target;
@@ -36,6 +37,7 @@ public class Enemy : MonoBehaviour
 
         _dead = false;
         _flash = 0f;
+        _flashColor = Color.white;
         _target = PlayerController.PlayerTransform;
 
         float multiplier = GameManager.Instance != null ? GameManager.Instance.Difficulty : 1f;
@@ -84,7 +86,7 @@ public class Enemy : MonoBehaviour
 
         _flash -= Time.deltaTime * 6f;
         if (_sprite != null)
-            _sprite.color = Color.Lerp(_baseColor, Color.white, Mathf.Clamp01(_flash));
+            _sprite.color = Color.Lerp(_baseColor, _flashColor, Mathf.Clamp01(_flash));
     }
 
     public void TakeDamage(float amount, bool critical)
@@ -93,6 +95,7 @@ public class Enemy : MonoBehaviour
 
         _health -= amount;
         _flash = 1f;
+        _flashColor = critical ? new Color(1f, 0.85f, 0.2f) : Color.white;
 
         if (Sfx.Instance != null) Sfx.Instance.PlayHit();
 
@@ -111,7 +114,7 @@ public class Enemy : MonoBehaviour
         if (CameraFollow.Instance != null)
         {
             bool big = data != null && data.scale > 1.4f;
-            CameraFollow.Instance.Shake(big ? 0.12f : 0.03f, 0.08f);
+            CameraFollow.Instance.Shake(big ? 0.25f : 0.03f, big ? 0.40f : 0.08f);
         }
 
         ObjectPool.Despawn(gameObject);

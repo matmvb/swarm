@@ -34,16 +34,45 @@ public static class SwarmSceneBuilder
 
         if (!confirmed) return;
 
+        BuildProject();
+
+        EditorUtility.DisplayDialog("SWARM", "Pronto!\n\nA cena foi criada e aberta.\nAperte Play.", "OK");
+    }
+
+    /// <summary>
+    /// Mesma coisa, sem diálogos. Use em batch:
+    /// Unity.exe -batchmode -quit -projectPath "..." -executeMethod SwarmSceneBuilder.BuildAllBatch
+    /// </summary>
+    public static void BuildAllBatch()
+    {
+        BuildProject();
+    }
+
+    /// <summary>Gera e valida em uma única execução (batch).</summary>
+    public static void BuildAndValidateBatch()
+    {
+        BuildProject();
+        ValidateScene();
+    }
+
+    static void BuildProject()
+    {
+        // A cena precisa ser criada ANTES dos assets: NewScene dispara um refresh
+        // que recarrega ScriptableObjects e invalida as instâncias em memória
+        // (referências viram fileID: 0 na cena salva).
+        Scene scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
+
         EnsureFolders();
         _white = EnsureWhiteSprite();
         _spriteMaterial = EnsureSpriteMaterial();
         _font = null;
 
-        List<EnemyData> enemies = EnsureEnemyData();
-        List<UpgradeData> upgrades = EnsureUpgradeData();
+        List<string> enemyPaths = EnsureEnemyData();
+        List<string> upgradePaths = EnsureUpgradeData();
         AssetDatabase.SaveAssets();
 
-        Scene scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
+        List<EnemyData> enemies = LoadAssets<EnemyData>(enemyPaths);
+        List<UpgradeData> upgrades = LoadAssets<UpgradeData>(upgradePaths);
 
         GameObject cameraObject = CreateCamera();
         GameObject player = CreatePlayer(out PlayerStats stats, out Health health, out XpSystem xpSystem, out UpgradeSystem upgradeSystem);
@@ -80,7 +109,6 @@ public static class SwarmSceneBuilder
         AssetDatabase.Refresh();
 
         Debug.Log("[SWARM] Protótipo criado/atualizado em " + SCENE_PATH);
-        EditorUtility.DisplayDialog("SWARM", "Pronto!\n\nA cena foi criada e aberta.\nAperte Play.", "OK");
     }
 
     [MenuItem("SWARM/Abrir Cena do Protótipo", priority = 1)]
@@ -412,12 +440,198 @@ public static class SwarmSceneBuilder
     }
 
     // ─────────────────────────────────────────────────────────────
+    // VALIDAÇÃO
+    // ─────────────────────────────────────────────────────────────
+
+    [MenuItem("SWARM/Validar Cena do Protótipo", priority = 2)]
+    public static void ValidateSceneMenu()
+    {
+        int problems = ValidateScene();
+        EditorUtility.DisplayDialog("SWARM",
+            problems == 0 ? "Cena OK: nenhum problema encontrado." : problems + " problema(s). Veja o Console.",
+            "OK");
+    }
+
+    public static void ValidateSceneBatch()
+    {
+        ValidateScene();
+    }
+
+    /// <summary>Confere se todas as referências obrigatórias da cena estão ligadas.</summary>
+    public static int ValidateScene()
+    {
+        int problems = 0;
+
+        if (string.IsNullOrEmpty(AssetDatabase.AssetPathToGUID(SCENE_PATH)))
+        {
+            Debug.LogError("[SWARM] Cena não existe: " + SCENE_PATH);
+            return 1;
+        }
+
+        EditorSceneManager.OpenScene(SCENE_PATH);
+
+        PlayerController player = Object.FindFirstObjectByType<PlayerController>();
+        if (player == null)
+        {
+            Debug.LogError("[SWARM] Player não encontrado");
+            problems++;
+        }
+        else
+        {
+            problems += CheckRefs(player, "stats", "health");
+            problems += CheckComponents<Rigidbody2D>(player.gameObject, "Rigidbody2D");
+            problems += CheckComponents<CircleCollider2D>(player.gameObject, "CircleCollider2D");
+
+            Weapon weapon = player.GetComponent<Weapon>();
+            if (weapon == null) { Debug.LogError("[SWARM] Weapon ausente no Player"); problems++; }
+            else problems += CheckRefs(weapon, "stats", "muzzle", "projectilePrefab");
+
+            XpSystem xp = player.GetComponent<XpSystem>();
+            if (xp == null) { Debug.LogError("[SWARM] XpSystem ausente no Player"); problems++; }
+            else problems += CheckRefs(xp, "orbPrefab", "upgrades", "hud");
+
+            UpgradeSystem upgrades = player.GetComponent<UpgradeSystem>();
+            if (upgrades == null) { Debug.LogError("[SWARM] UpgradeSystem ausente no Player"); problems++; }
+            else problems += CheckArray(upgrades, "pool", 12);
+        }
+
+        CameraFollow cameraFollow = Object.FindFirstObjectByType<CameraFollow>();
+        if (cameraFollow == null) { Debug.LogError("[SWARM] CameraFollow ausente"); problems++; }
+        else problems += CheckRefs(cameraFollow, "target");
+
+        EnemySpawner spawner = Object.FindFirstObjectByType<EnemySpawner>();
+        if (spawner == null)
+        {
+            Debug.LogError("[SWARM] EnemySpawner ausente");
+            problems++;
+        }
+        else
+        {
+            problems += CheckRefs(spawner, "target", "bossTemplate");
+            problems += CheckArray(spawner, "templates", 3);
+        }
+
+        HudController hud = Object.FindFirstObjectByType<HudController>();
+        if (hud == null)
+        {
+            Debug.LogError("[SWARM] HudController ausente");
+            problems++;
+        }
+        else
+        {
+            problems += CheckRefs(hud, "timerText", "killsText", "levelText", "hpText", "hudHint",
+                "hpFill", "xpFill", "levelUpPanel", "levelUpTitle", "levelUpOptions",
+                "gameOverPanel", "gameOverText", "xp", "playerHealth", "upgrades", "stats");
+        }
+
+        Enemy[] enemies = Object.FindObjectsByType<Enemy>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        if (enemies.Length != 4) { Debug.LogError("[SWARM] Esperados 4 templates de inimigo, achei " + enemies.Length); problems++; }
+
+        foreach (Enemy enemy in enemies)
+        {
+            problems += CheckRefs(enemy, "data");
+            if (enemy.GetComponent<Rigidbody2D>() == null) { Debug.LogError("[SWARM] " + enemy.name + " sem Rigidbody2D"); problems++; }
+            if (enemy.GetComponent<Collider2D>() == null) { Debug.LogError("[SWARM] " + enemy.name + " sem Collider2D"); problems++; }
+            if (enemy.gameObject.activeSelf) { Debug.LogError("[SWARM] Template " + enemy.name + " deveria estar inativo"); problems++; }
+        }
+
+        Projectile[] projectiles = Object.FindObjectsByType<Projectile>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        if (projectiles.Length != 1) { Debug.LogError("[SWARM] Esperado 1 template de projétil, achei " + projectiles.Length); problems++; }
+        foreach (Projectile projectile in projectiles)
+        {
+            if (projectile.GetComponent<Rigidbody2D>() == null || projectile.GetComponent<Collider2D>() == null)
+            {
+                Debug.LogError("[SWARM] Template de projétil sem Rigidbody2D/Collider2D");
+                problems++;
+            }
+            if (projectile.gameObject.activeSelf) { Debug.LogError("[SWARM] Template de projétil deveria estar inativo"); problems++; }
+        }
+
+        XpOrb[] orbs = Object.FindObjectsByType<XpOrb>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        if (orbs.Length != 1) { Debug.LogError("[SWARM] Esperado 1 template de orbe, achei " + orbs.Length); problems++; }
+        foreach (XpOrb orb in orbs)
+        {
+            if (orb.gameObject.activeSelf) { Debug.LogError("[SWARM] Template de orbe deveria estar inativo"); problems++; }
+        }
+
+        bool inBuildSettings = false;
+        foreach (EditorBuildSettingsScene entry in EditorBuildSettings.scenes)
+            if (entry.path == SCENE_PATH && entry.enabled) { inBuildSettings = true; break; }
+
+        if (!inBuildSettings) { Debug.LogError("[SWARM] Cena não está no Build Settings"); problems++; }
+
+        Debug.Log("[SWARM] Validação concluída: " + problems + " problema(s).");
+        return problems;
+    }
+
+    static int CheckRefs(Component component, params string[] fields)
+    {
+        int problems = 0;
+        var serialized = new SerializedObject(component);
+
+        foreach (string field in fields)
+        {
+            SerializedProperty property = serialized.FindProperty(field);
+
+            if (property == null)
+            {
+                Debug.LogError("[SWARM] " + component.GetType().Name + "." + field + " não existe");
+                problems++;
+            }
+            else if (property.propertyType == SerializedPropertyType.ObjectReference && property.objectReferenceValue == null)
+            {
+                Debug.LogError("[SWARM] " + component.GetType().Name + "." + field + " está NULL");
+                problems++;
+            }
+        }
+
+        return problems;
+    }
+
+    static int CheckArray(Component component, string field, int expected)
+    {
+        var serialized = new SerializedObject(component);
+        SerializedProperty property = serialized.FindProperty(field);
+
+        if (property == null)
+        {
+            Debug.LogError("[SWARM] Campo " + field + " não existe em " + component.GetType().Name);
+            return 1;
+        }
+
+        if (property.arraySize != expected)
+        {
+            Debug.LogError("[SWARM] " + component.GetType().Name + "." + field +
+                           " tem " + property.arraySize + " itens (esperado " + expected + ")");
+            return 1;
+        }
+
+        for (int i = 0; i < property.arraySize; i++)
+        {
+            if (property.GetArrayElementAtIndex(i).objectReferenceValue == null)
+            {
+                Debug.LogError("[SWARM] " + component.GetType().Name + "." + field + "[" + i + "] está NULL");
+                return 1;
+            }
+        }
+
+        return 0;
+    }
+
+    static int CheckComponents<T>(GameObject go, string label) where T : Component
+    {
+        if (go.GetComponent<T>() != null) return 0;
+        Debug.LogError("[SWARM] " + go.name + " sem " + label);
+        return 1;
+    }
+
+    // ─────────────────────────────────────────────────────────────
     // DADOS
     // ─────────────────────────────────────────────────────────────
 
-    static List<EnemyData> EnsureEnemyData()
+    static List<string> EnsureEnemyData()
     {
-        var list = new List<EnemyData>();
+        var list = new List<string>();
 
         list.Add(EnsureAsset<EnemyData>(ROOT + "/Data/Enemies/Drone.asset", data =>
         {
@@ -478,9 +692,9 @@ public static class SwarmSceneBuilder
         return list;
     }
 
-    static List<UpgradeData> EnsureUpgradeData()
+    static List<string> EnsureUpgradeData()
     {
-        var list = new List<UpgradeData>
+        var list = new List<string>
         {
             Upgrade("MunicaoPesada", "Munição Pesada", "+20% de dano", StatType.Damage, 20f, true, 5),
             Upgrade("GatilhoRapido", "Gatilho Rápido", "+15% de cadência", StatType.FireRate, 15f, true, 5),
@@ -499,7 +713,7 @@ public static class SwarmSceneBuilder
         return list;
     }
 
-    static UpgradeData Upgrade(string file, string title, string description, StatType stat, float amount, bool percent, int maxStacks)
+    static string Upgrade(string file, string title, string description, StatType stat, float amount, bool percent, int maxStacks)
     {
         return EnsureAsset<UpgradeData>(ROOT + "/Data/Upgrades/" + file + ".asset", upgrade =>
         {
@@ -512,17 +726,28 @@ public static class SwarmSceneBuilder
         });
     }
 
-    static T EnsureAsset<T>(string path, System.Action<T> configure) where T : ScriptableObject
+    static List<T> LoadAssets<T>(List<string> paths) where T : UnityEngine.Object
+    {
+        var list = new List<T>(paths.Count);
+        foreach (string path in paths)
+        {
+            T asset = AssetDatabase.LoadAssetAtPath<T>(path);
+            if (asset == null) Debug.LogError("[SWARM] Asset não carregou: " + path);
+            else list.Add(asset);
+        }
+        return list;
+    }
+
+    static string EnsureAsset<T>(string path, System.Action<T> configure) where T : ScriptableObject
     {
         EnsureFolder(Path.GetDirectoryName(path).Replace('\\', '/'));
 
-        var asset = AssetDatabase.LoadAssetAtPath<T>(path);
-        if (asset != null) return asset;
+        if (AssetDatabase.LoadAssetAtPath<T>(path) != null) return path;
 
-        asset = ScriptableObject.CreateInstance<T>();
+        T asset = ScriptableObject.CreateInstance<T>();
         configure?.Invoke(asset);
         AssetDatabase.CreateAsset(asset, path);
-        return asset;
+        return path;
     }
 
     // ─────────────────────────────────────────────────────────────

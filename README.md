@@ -30,8 +30,11 @@ C:\Users\scoty\OneDrive\Documentos\Default Project\swarm
 
 1. Abra o **Unity Hub** → **Add project from disk** → selecione a pasta acima.
 2. Espere o primeiro import (3–6 min).
-3. Menu **`SWARM > Montar Protótipo Completo`**.
-4. A cena `Assets/Swarm/Scenes/Swarm.unity` abre — aperte **Play**.
+3. Abra a cena **`Assets/Swarm/Scenes/Swarm.unity`** (já gerada) e aperte **Play**.
+
+> Se você alterar scripts/valores e quiser recriar a cena do zero:
+> menu **`SWARM > Montar Protótipo Completo`**.
+> Para checar as referências: **`SWARM > Validar Cena do Protótipo`**.
 
 Controles: **WASD/setas** move · tiro é automático · **1/2/3** escolhe upgrade · **R** reinicia.
 
@@ -59,6 +62,7 @@ Controles: **WASD/setas** move · tiro é automático · **1/2/3** escolhe upgra
 - [x] Juice básico (flash, camera shake, SFX procedurais)
 - [x] Meta-moeda + save (PlayerPrefs)
 - [x] Gerador automático de cena e dados
+- [x] Cena gerada e validada (0 referências quebradas)
 - [ ] Arte definitiva
 - [ ] Boss, armas e personagens (Sprint 4)
 - [ ] Build publicável (Sprint 7)

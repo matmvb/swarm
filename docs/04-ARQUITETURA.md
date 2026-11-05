@@ -181,7 +181,7 @@ atual vira uma dessas implementações.
 | Física 2D | < 2 ms | Profiler > Physics2D |
 | Render | < 6 ms | Frame Debugger |
 | GC por frame | **0 B** | Profiler > GC Alloc |
-| Inimigos vivos | 300–400 | contador no HUD (debug) |
+| Inimigos vivos | 300 | contador no HUD (debug) |
 
 Se estourar, a ordem de ataque é: **pool → reduzir `GetComponent` → layers →
 simplificar colisores** (nessa ordem).

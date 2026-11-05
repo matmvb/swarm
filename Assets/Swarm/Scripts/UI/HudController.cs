@@ -115,6 +115,8 @@ public class HudController : MonoBehaviour
         _options = options;
         LevelUpOpen = true;
 
+        if (Sfx.Instance != null) Sfx.Instance.PlayLevelUp();
+
         if (levelUpPanel != null) levelUpPanel.SetActive(true);
         if (levelUpTitle != null)
             levelUpTitle.text = "NÍVEL " + (xp != null ? xp.Level : 1) + " — ESCOLHA UM UPGRADE";

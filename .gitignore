@@ -31,3 +31,7 @@ crashlytics-build.properties
 # SO
 .DS_Store
 Thumbs.db
+
+# Unity 6 / IDE
+*.slnx
+.vsconfig
