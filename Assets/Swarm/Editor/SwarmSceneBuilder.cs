@@ -99,8 +99,17 @@ public static class SwarmSceneBuilder
         HudController hud = CreateHud(stats, health, xpSystem, upgradeSystem);
         SetRef(xpSystem, "hud", hud);
 
-        CreateManager();
+        GameObject manager = CreateManager();
         CreateSfx();
+
+        var runLogger = manager.AddComponent<RunLogger>();
+        SetRef(runLogger, "xp", xpSystem);
+        SetRef(runLogger, "upgrades", upgradeSystem);
+
+        var debugObject = new GameObject("DebugOverlay");
+        var debugOverlay = debugObject.AddComponent<DebugOverlay>();
+        SetRef(debugOverlay, "stats", stats);
+        SetRef(debugOverlay, "health", health);
 
         EnsureFolder(ROOT + "/Scenes");
         EditorSceneManager.SaveScene(scene, SCENE_PATH);
@@ -277,10 +286,11 @@ public static class SwarmSceneBuilder
         SetRef(spawner, "bossTemplate", bossTemplate);
     }
 
-    static void CreateManager()
+    static GameObject CreateManager()
     {
         var go = new GameObject("GameManager");
         go.AddComponent<GameManager>();
+        return go;
     }
 
     static void CreateSfx()
@@ -559,6 +569,14 @@ public static class SwarmSceneBuilder
             if (entry.path == SCENE_PATH && entry.enabled) { inBuildSettings = true; break; }
 
         if (!inBuildSettings) { Debug.LogError("[SWARM] Cena não está no Build Settings"); problems++; }
+
+        RunLogger runLogger = Object.FindFirstObjectByType<RunLogger>();
+        if (runLogger == null) { Debug.LogError("[SWARM] RunLogger ausente"); problems++; }
+        else problems += CheckRefs(runLogger, "xp", "upgrades");
+
+        DebugOverlay overlay = Object.FindFirstObjectByType<DebugOverlay>();
+        if (overlay == null) { Debug.LogError("[SWARM] DebugOverlay ausente"); problems++; }
+        else problems += CheckRefs(overlay, "stats", "health");
 
         Debug.Log("[SWARM] Validação concluída: " + problems + " problema(s).");
         return problems;

@@ -47,7 +47,7 @@ Console limpo é pré-requisito, não luxo.
 - [ ] Ajustar `moveSpeed`, `fireRate`, `range` até o movimento parecer bom
 - [ ] Ajustar velocidade/HP dos inimigos até a horda pressionar sem ser injusta
 - [ ] Implementar morte do jogador com clareza (shake + som + painel)
-- [ ] Testar 10 runs seguidas e anotar o minuto de morte
+- [ ] Testar 10 runs seguidas e anotar o minuto de morte (`F1` + CSV automático)
 - [ ] Corrigir o que mais incomodou
 
 **DoD:** 10 runs com duração entre 2 e 6 min, e você quer jogar a 11ª.

@@ -48,6 +48,7 @@ Para conferir as referências: **`SWARM` → `Validar Cena do Protótipo`**.
 | — | tiro é automático |
 | 1 / 2 / 3 | escolher upgrade |
 | R | reiniciar |
+| F1 | overlay de debug (FPS, inimigos, stats) |
 
 ---
 

@@ -36,7 +36,7 @@ C:\Users\scoty\OneDrive\Documentos\Default Project\swarm
 > menu **`SWARM > Montar Protótipo Completo`**.
 > Para checar as referências: **`SWARM > Validar Cena do Protótipo`**.
 
-Controles: **WASD/setas** move · tiro é automático · **1/2/3** escolhe upgrade · **R** reinicia.
+Controles: **WASD/setas** move · tiro é automático · **1/2/3** escolhe upgrade · **R** reinicia · **F1** debug.
 
 > Para recriar do zero em outra máquina, siga [`docs/03-SETUP.md`](docs/03-SETUP.md).
 > Editor usado: **6000.6.1f1** (template 2D URP oficial).

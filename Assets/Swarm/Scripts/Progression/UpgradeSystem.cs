@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 /// <summary>
@@ -37,6 +38,21 @@ public class UpgradeSystem : MonoBehaviour
         }
 
         return result;
+    }
+
+    /// <summary>Resumo legível da build, para o CSV de balanceamento.</summary>
+    public string BuildSummary()
+    {
+        var builder = new StringBuilder();
+
+        foreach (KeyValuePair<UpgradeData, int> pair in _taken)
+        {
+            if (pair.Key == null || pair.Value <= 0) continue;
+            if (builder.Length > 0) builder.Append(", ");
+            builder.Append(pair.Key.title).Append(" x").Append(pair.Value);
+        }
+
+        return builder.ToString();
     }
 
     public void Apply(UpgradeData upgrade, PlayerStats stats, Health health)

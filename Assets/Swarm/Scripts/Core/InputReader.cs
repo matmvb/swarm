@@ -12,7 +12,8 @@ public enum GameKey
     Digit1,
     Digit2,
     Digit3,
-    Restart
+    Restart,
+    ToggleDebug
 }
 
 /// <summary>
@@ -70,6 +71,8 @@ public static class InputReader
                 return keyboard.digit3Key.wasPressedThisFrame || keyboard.numpad3Key.wasPressedThisFrame;
             case GameKey.Restart:
                 return keyboard.rKey.wasPressedThisFrame;
+            case GameKey.ToggleDebug:
+                return keyboard.f1Key.wasPressedThisFrame;
             default:
                 return false;
         }
@@ -84,6 +87,8 @@ public static class InputReader
                 return Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Keypad3);
             case GameKey.Restart:
                 return Input.GetKeyDown(KeyCode.R);
+            case GameKey.ToggleDebug:
+                return Input.GetKeyDown(KeyCode.F1);
             default:
                 return false;
         }
