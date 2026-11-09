@@ -51,6 +51,7 @@ public class DebugOverlay : MonoBehaviour
         if (gameManager != null)
         {
             text.AppendLine("tempo " + HudController.FormatTime(gameManager.Elapsed) +
+                            "   restam " + HudController.FormatTime(gameManager.TimeLeft) +
                             "   kills " + gameManager.Kills +
                             "   dif x" + gameManager.Difficulty.ToString("0.00"));
             text.AppendLine("inimigos vivos " + _enemyCount);

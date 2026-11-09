@@ -16,9 +16,12 @@
 O CSV grava uma linha por run:
 
 ```
-timestamp,version,duration_s,kills,level,build
-2026-11-05 18:22:10,0.1,412.3,318,17,"Munição Pesada x2, Tiro Duplo x1, Ímã x1"
+timestamp,version,duration_s,kills,level,victory,build
+2026-11-09 19:22:10,1.0,412.3,318,17,0,"Munição Pesada x2, Tiro Duplo x1, Ímã x1"
 ```
+
+> `duration_s` usa **ponto** decimal (padrão internacional). `victory = 1` quando você
+> sobrevive aos 10:00 (a run termina em vitória, com +20 Núcleos).
 
 ---
 
@@ -29,8 +32,8 @@ timestamp,version,duration_s,kills,level,build
 1. Abra `Assets/Swarm/Scenes/Swarm.unity`.
 2. Aperte `F1` para ver o overlay.
 3. Jogue **10 runs seguidas**, sem mexer em nada.
-4. A cada morte, anote no papel (ou confie no CSV):
-   - em que minuto morreu;
+4. A cada morte (ou vitória aos 10:00), anote no papel (ou confie no CSV):
+   - em que minuto terminou;
    - o que te matou (horda? tanque? boss?);
    - de 1 a 5, o quanto você quis jogar de novo.
 

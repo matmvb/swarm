@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.IO;
 using System.Text;
 using UnityEngine;
@@ -37,19 +38,20 @@ public class RunLogger : MonoBehaviour
 
             var builder = new StringBuilder();
             if (isNew)
-                builder.AppendLine("timestamp,version,duration_s,kills,level,build");
+                builder.AppendLine("timestamp,version,duration_s,kills,level,victory,build");
 
             string build = upgrades != null ? upgrades.BuildSummary() : string.Empty;
 
-            builder.Append(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")).Append(',')
+            builder.Append(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture)).Append(',')
                    .Append(Application.version).Append(',')
-                   .Append(gameManager.Elapsed.ToString("F1")).Append(',')
+                   .Append(gameManager.Elapsed.ToString("F1", CultureInfo.InvariantCulture)).Append(',')
                    .Append(gameManager.Kills).Append(',')
                    .Append(xp != null ? xp.Level : 0).Append(',')
+                   .Append(gameManager.LastRunVictory ? 1 : 0).Append(',')
                    .Append('"').Append(build.Replace("\"", "'")).Append('"')
                    .AppendLine();
 
-            File.AppendAllText(FilePath, builder.ToString(), Encoding.UTF8);
+            File.AppendAllText(FilePath, builder.ToString(), new UTF8Encoding(false));
             Debug.Log("[SWARM] Run registrada: " + FilePath);
         }
         catch (Exception exception)

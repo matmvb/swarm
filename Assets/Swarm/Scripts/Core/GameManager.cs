@@ -14,9 +14,15 @@ public class GameManager : MonoBehaviour
     [Tooltip("Quanto o HP dos inimigos cresce por minuto. 0.35 = +35% por minuto.")]
     [SerializeField] float hpRampPerMinute = 0.35f;
 
+    [Header("Run")]
+    [Tooltip("Duração da run em segundos. Ao chegar aqui, é vitória (GDD: 10 min).")]
+    [SerializeField] float runDuration = 600f;
+
     public bool IsRunning { get; private set; }
+    public bool LastRunVictory { get; private set; }
     public float Elapsed { get; private set; }
     public int Kills { get; private set; }
+    public float TimeLeft => Mathf.Max(0f, runDuration - Elapsed);
 
     /// <summary>Multiplicador de HP aplicado quando um inimigo nasce.</summary>
     public float Difficulty => 1f + (Elapsed / 60f) * hpRampPerMinute;
@@ -40,6 +46,7 @@ public class GameManager : MonoBehaviour
     {
         Elapsed = 0f;
         Kills = 0;
+        LastRunVictory = false;
         IsRunning = true;
     }
 
@@ -53,7 +60,11 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (IsRunning) Elapsed += Time.deltaTime;
+        if (!IsRunning) return;
+
+        Elapsed += Time.deltaTime;
+
+        if (Elapsed >= runDuration) EndRun(true);
     }
 
     public void RegisterKill()
@@ -63,12 +74,20 @@ public class GameManager : MonoBehaviour
 
     public void EndRun()
     {
+        EndRun(false);
+    }
+
+    public void EndRun(bool victory)
+    {
         if (!IsRunning) return;
 
         IsRunning = false;
+        LastRunVictory = victory;
         Time.timeScale = 0f;
 
         int cores = Mathf.FloorToInt(Kills / 10f) + Mathf.FloorToInt(Elapsed / 60f);
+        if (victory) cores += 20;
+
         SaveSystem.LastCoresEarned = cores;
         SaveSystem.AddCores(cores);
         SaveSystem.ReportRun(Kills, Elapsed);

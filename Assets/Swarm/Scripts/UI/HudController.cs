@@ -164,7 +164,7 @@ public class HudController : MonoBehaviour
         GameManager gameManager = GameManager.Instance;
         var builder = new StringBuilder();
 
-        builder.Append("FIM DA RUN\n\n");
+        builder.Append(gameManager != null && gameManager.LastRunVictory ? "VITÓRIA\n\n" : "FIM DA RUN\n\n");
         if (gameManager != null)
         {
             builder.Append("Tempo    ").Append(FormatTime(gameManager.Elapsed)).Append('\n');
