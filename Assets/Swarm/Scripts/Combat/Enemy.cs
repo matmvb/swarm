@@ -14,7 +14,14 @@ public class Enemy : MonoBehaviour
 
     public EnemyData Data => data;
 
+    /// <summary>Vida normalizada (0..1), usada pela barra do boss.</summary>
+    public float Health01 => _maxHealth > 0f ? Mathf.Clamp01(_health / _maxHealth) : 0f;
+
+    /// <summary>Quando true, outro componente (ex.: BossController) controla o movimento.</summary>
+    [System.NonSerialized] public bool externalControl;
+
     float _health;
+    float _maxHealth;
     bool _dead;
     float _flash;
     Color _baseColor;
@@ -42,6 +49,7 @@ public class Enemy : MonoBehaviour
 
         float multiplier = GameManager.Instance != null ? GameManager.Instance.Difficulty : 1f;
         _health = data != null ? data.maxHealth * multiplier : 10f;
+        _maxHealth = _health;
 
         if (data != null)
         {
@@ -63,6 +71,7 @@ public class Enemy : MonoBehaviour
     void FixedUpdate()
     {
         if (_dead || data == null) return;
+        if (externalControl) return;
 
         if (GameManager.Instance != null && !GameManager.Instance.IsRunning)
         {
@@ -90,8 +99,7 @@ public class Enemy : MonoBehaviour
     }
 
     public void TakeDamage(float amount, bool critical)
-    {
-        if (_dead) return;
+    {        if (_dead) return;
 
         _health -= amount;
         _flash = 1f;

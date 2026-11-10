@@ -28,6 +28,11 @@ public class HudController : MonoBehaviour
     [SerializeField] GameObject gameOverPanel;
     [SerializeField] Text gameOverText;
 
+    [Header("Boss")]
+    [SerializeField] GameObject bossBar;
+    [SerializeField] Image bossFill;
+    [SerializeField] Text bossLabel;
+
     [Header("Referências")]
     [SerializeField] XpSystem xp;
     [SerializeField] Health playerHealth;
@@ -69,6 +74,8 @@ public class HudController : MonoBehaviour
         if (hudHint != null && hudHint.enabled && gameManager.Elapsed > 10f)
             hudHint.enabled = false;
 
+        UpdateBossBar();
+
         if (LevelUpOpen)
         {
             if (InputReader.WasPressed(GameKey.Digit1)) Choose(0);
@@ -86,6 +93,21 @@ public class HudController : MonoBehaviour
     void OnHealthChanged(float current, float max)
     {
         RefreshHp();
+    }
+
+    void UpdateBossBar()
+    {
+        BossController boss = BossController.Active;
+        bool visible = boss != null;
+
+        if (bossBar != null && bossBar.activeSelf != visible)
+            bossBar.SetActive(visible);
+
+        if (bossLabel != null && bossLabel.gameObject.activeSelf != visible)
+            bossLabel.gameObject.SetActive(visible);
+
+        if (visible && bossFill != null)
+            bossFill.fillAmount = boss.Health01;
     }
 
     void RefreshHp()
