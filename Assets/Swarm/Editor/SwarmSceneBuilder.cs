@@ -361,6 +361,9 @@ public static class SwarmSceneBuilder
         Image hpFill = MakeBar(canvasObject.transform, "HpBar", new Vector2(0f, 1f), new Vector2(20f, -125f), new Vector2(260f, 18f), new Color(1f, 0.25f, 0.35f));
         Image xpFill = MakeBar(canvasObject.transform, "XpBar", new Vector2(0.5f, 0f), new Vector2(0f, 18f), new Vector2(1200f, 10f), new Color(0.4f, 1f, 0.5f));
         GameObject bossBar = MakeBossBar(canvasObject.transform, out Image bossFill, out Text bossLabel);
+        Text bossToast = MakeText(canvasObject.transform, "BossToast", new Vector2(0.5f, 1f), new Vector2(0f, -172f), new Vector2(900f, 32f), 24, TextAnchor.MiddleCenter);
+        bossToast.color = new Color(1f, 0.75f, 0.3f);
+        bossToast.gameObject.SetActive(false);
 
         GameObject levelUpPanel = MakePanel(canvasObject.transform, "LevelUpPanel", new Color(0f, 0f, 0f, 0.82f));
         Text levelUpTitle = MakeText(levelUpPanel.transform, "LevelUpTitle", new Vector2(0.5f, 0.5f), new Vector2(0f, 220f), new Vector2(1400f, 80f), 46, TextAnchor.MiddleCenter);
@@ -386,6 +389,7 @@ public static class SwarmSceneBuilder
         SetRef(hud, "bossBar", bossBar);
         SetRef(hud, "bossFill", bossFill);
         SetRef(hud, "bossLabel", bossLabel);
+        SetRef(hud, "bossToast", bossToast);
         SetRef(hud, "xp", xp);
         SetRef(hud, "playerHealth", health);
         SetRef(hud, "upgrades", upgrades);
@@ -612,7 +616,7 @@ public static class SwarmSceneBuilder
         {
             problems += CheckRefs(hud, "timerText", "killsText", "levelText", "hpText", "hudHint",
                 "hpFill", "xpFill", "levelUpPanel", "levelUpTitle", "levelUpOptions",
-                "gameOverPanel", "gameOverText", "bossBar", "bossFill", "bossLabel",
+                "gameOverPanel", "gameOverText", "bossBar", "bossFill", "bossLabel", "bossToast",
                 "xp", "playerHealth", "upgrades", "stats");
         }
 
