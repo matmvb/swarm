@@ -57,6 +57,8 @@ public class BossController : MonoBehaviour
 
     public float Health01 => _enemy != null ? _enemy.Health01 : 1f;
 
+    public Enemy Enemy => _enemy;
+
     public static void ResetRunStats()
     {
         LastFightWon = false;

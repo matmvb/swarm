@@ -24,11 +24,24 @@ public class Weapon : MonoBehaviour
         _cooldown -= Time.deltaTime;
         if (_cooldown > 0f) return;
 
-        Enemy target = Enemy.FindNearest(transform.position, stats.range);
+        Enemy target = FindTarget();
         if (target == null) return;
 
         _cooldown = 1f / Mathf.Max(0.05f, stats.fireRate);
         Fire(target.transform.position);
+    }
+
+    /// <summary>Prioriza o boss quando ele está no alcance; senão, o mais próximo.</summary>
+    Enemy FindTarget()
+    {
+        BossController boss = BossController.Active;
+        if (boss != null && boss.Enemy != null)
+        {
+            float distance = Vector2.Distance(transform.position, boss.transform.position);
+            if (distance <= stats.range) return boss.Enemy;
+        }
+
+        return Enemy.FindNearest(transform.position, stats.range);
     }
 
     void Fire(Vector3 targetPosition)

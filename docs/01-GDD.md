@@ -130,6 +130,7 @@ nucleos = floor(kills / 10) + floor(minutos)
 - Entre ataques, persegue a 1,0 u/s.
 - Depois de cada ataque: **0,8 s de recuperação** (janela de dano).
 - O telegrafo é um **halo vermelho pulsando ao redor do boss + som de aviso**. A escala também pulsa.
+- Durante a luta, a **horda não recebe reforços** e a **arma prioriza o boss** (senão ela gasta os tiros nos adds e a luta dura minutos).
 - Barra de vida do boss aparece no topo da tela enquanto ele estiver vivo.
 
 > Arquivos: `Combat/BossController.cs` e `Combat/EnemyProjectile.cs`.

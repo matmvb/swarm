@@ -49,6 +49,9 @@ public class EnemySpawner : MonoBehaviour
             SpawnBoss();
         }
 
+        // Sem reforços enquanto o boss está vivo: a luta fica legível e focada.
+        if (BossController.Active != null) return;
+
         if (templates.Count == 0) return;
 
         _timer -= Time.deltaTime;
