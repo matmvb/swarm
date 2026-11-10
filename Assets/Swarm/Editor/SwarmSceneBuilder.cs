@@ -810,7 +810,7 @@ public static class SwarmSceneBuilder
         list.Add(EnsureAsset<EnemyData>(ROOT + "/Data/Enemies/Nucleo.asset", data =>
         {
             data.displayName = "Núcleo";
-            data.maxHealth = 600f;
+            data.maxHealth = 1200f;
             data.moveSpeed = 1f;
             data.contactDamage = 15f;
             data.xp = 40;

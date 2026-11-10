@@ -194,6 +194,9 @@ public class HudController : MonoBehaviour
         }
         if (xp != null) builder.Append("Nível    ").Append(xp.Level).Append('\n');
 
+        if (BossController.LastFightWon)
+            builder.Append("Boss     ").Append(BossController.LastFightDuration.ToString("0.0")).Append(" s\n");
+
         builder.Append("\nNúcleos  +").Append(SaveSystem.LastCoresEarned).Append('\n');
         builder.Append("Total    ").Append(SaveSystem.Cores).Append('\n');
         builder.Append("\n[R] JOGAR DE NOVO");

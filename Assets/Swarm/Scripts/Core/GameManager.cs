@@ -47,6 +47,7 @@ public class GameManager : MonoBehaviour
         Elapsed = 0f;
         Kills = 0;
         LastRunVictory = false;
+        BossController.ResetRunStats();
         IsRunning = true;
     }
 
