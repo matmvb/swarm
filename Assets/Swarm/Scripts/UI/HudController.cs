@@ -28,6 +28,12 @@ public class HudController : MonoBehaviour
     [SerializeField] GameObject gameOverPanel;
     [SerializeField] Text gameOverText;
 
+    [Header("Boss")]
+    [SerializeField] GameObject bossBar;
+    [SerializeField] Image bossFill;
+    [SerializeField] Text bossLabel;
+    [SerializeField] Text bossToast;
+
     [Header("Referências")]
     [SerializeField] XpSystem xp;
     [SerializeField] Health playerHealth;
@@ -35,6 +41,8 @@ public class HudController : MonoBehaviour
     [SerializeField] PlayerStats stats;
 
     UpgradeData[] _options;
+    bool _bossWasVisible;
+    float _bossToastTimer;
 
     public bool LevelUpOpen { get; private set; }
 
@@ -42,6 +50,7 @@ public class HudController : MonoBehaviour
     {
         if (levelUpPanel != null) levelUpPanel.SetActive(false);
         if (gameOverPanel != null) gameOverPanel.SetActive(false);
+        if (bossToast != null) bossToast.gameObject.SetActive(false);
 
         if (xp != null) xp.OnChanged += RefreshXp;
         if (playerHealth != null) playerHealth.Changed += OnHealthChanged;
@@ -69,6 +78,14 @@ public class HudController : MonoBehaviour
         if (hudHint != null && hudHint.enabled && gameManager.Elapsed > 10f)
             hudHint.enabled = false;
 
+        UpdateBossBar();
+
+        if (bossToast != null && bossToast.gameObject.activeSelf)
+        {
+            _bossToastTimer -= Time.unscaledDeltaTime;
+            if (_bossToastTimer <= 0f) bossToast.gameObject.SetActive(false);
+        }
+
         if (LevelUpOpen)
         {
             if (InputReader.WasPressed(GameKey.Digit1)) Choose(0);
@@ -86,6 +103,35 @@ public class HudController : MonoBehaviour
     void OnHealthChanged(float current, float max)
     {
         RefreshHp();
+    }
+
+    void UpdateBossBar()
+    {
+        BossController boss = BossController.Active;
+        bool visible = boss != null;
+
+        if (_bossWasVisible && !visible && BossController.LastFightWon)
+            ShowBossToast();
+
+        _bossWasVisible = visible;
+
+        if (bossBar != null && bossBar.activeSelf != visible)
+            bossBar.SetActive(visible);
+
+        if (bossLabel != null && bossLabel.gameObject.activeSelf != visible)
+            bossLabel.gameObject.SetActive(visible);
+
+        if (visible && bossFill != null)
+            bossFill.fillAmount = boss.Health01;
+    }
+
+    void ShowBossToast()
+    {
+        if (bossToast == null) return;
+
+        bossToast.text = "NÚCLEO DESTRUÍDO  ·  " + BossController.LastFightDuration.ToString("0.0") + " s";
+        bossToast.gameObject.SetActive(true);
+        _bossToastTimer = 3f;
     }
 
     void RefreshHp()
@@ -171,6 +217,9 @@ public class HudController : MonoBehaviour
             builder.Append("Kills    ").Append(gameManager.Kills).Append('\n');
         }
         if (xp != null) builder.Append("Nível    ").Append(xp.Level).Append('\n');
+
+        if (BossController.LastFightWon)
+            builder.Append("Boss     ").Append(BossController.LastFightDuration.ToString("0.0")).Append(" s\n");
 
         builder.Append("\nNúcleos  +").Append(SaveSystem.LastCoresEarned).Append('\n');
         builder.Append("Total    ").Append(SaveSystem.Cores).Append('\n');

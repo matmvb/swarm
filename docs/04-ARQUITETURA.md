@@ -39,7 +39,9 @@ Assets/Swarm/
 │   │   ├── Enemy.cs              perseguição, dano, morte
 │   │   ├── EnemyData.cs          ScriptableObject
 │   │   ├── EnemySpawner.cs       curva de dificuldade
-│   │   └── Projectile.cs         projétil com perfuração
+│   │   ├── BossController.cs     rajada radial + investida do boss
+│   │   ├── EnemyProjectile.cs    projétil que fere o jogador
+│   │   └── Projectile.cs         projétil do jogador
 │   ├── Progression/
 │   │   ├── XpSystem.cs           XP, nível, fila
 │   │   ├── UpgradeSystem.cs      sorteio e aplicação
@@ -113,6 +115,14 @@ velocidade respeita a física e mantém as colisões estáveis.
 
 `ENABLE_INPUT_SYSTEM` permite o mesmo código compilar com o pacote novo **ou** com
 o sistema legado. Trocar de input depois não quebra nada.
+
+### Por que `externalControl` no Enemy?
+
+O `Enemy` persegue sozinho. O boss precisa parar, telegrafar e dar dash — um
+comportamento que não cabe no perseguidor genérico. Em vez de duplicar o `Enemy`,
+o `BossController` liga `externalControl = true` e assume o `Rigidbody2D`.
+Um componente, uma responsabilidade: `Enemy` cuida de vida/dano/morte;
+`BossController` cuida de movimento e ataques.
 
 ---
 

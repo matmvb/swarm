@@ -17,6 +17,7 @@ public class Sfx : MonoBehaviour
     AudioClip _pickup;
     AudioClip _levelUp;
     AudioClip _death;
+    AudioClip _warning;
 
     float _lastHitTime;
     float _lastPickupTime;
@@ -35,6 +36,7 @@ public class Sfx : MonoBehaviour
         _pickup = BuildTone("sfx_pickup", 1320f, 0.06f, 38f, 0f);
         _levelUp = BuildArpeggio("sfx_levelup", new[] { 523f, 659f, 784f, 1046f }, 0.085f);
         _death = BuildTone("sfx_death", 110f, 0.55f, 6f, 0.3f);
+        _warning = BuildTone("sfx_warning", 150f, 0.35f, 5f, 0.15f);
     }
 
     void OnDestroy()
@@ -69,6 +71,11 @@ public class Sfx : MonoBehaviour
     public void PlayDeath()
     {
         Play(_death, 0.9f, 1f);
+    }
+
+    public void PlayWarning()
+    {
+        Play(_warning, 0.55f, 1f);
     }
 
     void Play(AudioClip clip, float volume, float pitch)

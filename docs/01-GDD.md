@@ -118,7 +118,23 @@ nucleos = floor(kills / 10) + floor(minutos)
 | Drone | 0:00 | 20 | 2.0 | 6 | 1 | 60 | básico, forma a horda |
 | Corredor | 0:45 | 12 | 3.6 | 4 | 1 | 30 | pune jogador parado |
 | Tanque | 2:00 | 90 | 1.3 | 14 | 3 | 20 | parede que exige dano |
-| **Núcleo (boss)** | 5:00 | 600 | 1.0 | 15 | 40 | evento | clímax do meio da run |
+| **Núcleo (boss)** | 5:00 | 1200 | 1.0 | 15 | 40 | evento | clímax do meio da run |
+
+### Núcleo — padrão de ataque
+
+| Ataque | Gatilho | Telegrafo | Efeito | Como esquivar |
+|---|---|---|---|---|
+| **Rajada radial** | a cada 5 s | 0,75 s com halo vermelho + som | 14 projéteis em círculo, 8 de dano cada | passar entre os projéteis |
+| **Investida** | a cada 11 s | 0,65 s com halo vermelho + som | dash a 10 u/s por 0,5 s | sair da linha reta |
+
+- Entre ataques, persegue a 1,0 u/s.
+- Depois de cada ataque: **0,8 s de recuperação** (janela de dano).
+- O telegrafo é um **halo vermelho pulsando ao redor do boss + som de aviso**. A escala também pulsa.
+- Durante a luta, o **Núcleo limpa o campo** (os inimigos comuns somem), a **horda não recebe reforços** e a **arma prioriza o boss**. Sem isso, o jogador foge da horda, o boss lento sai do alcance e a luta vira 60+ s de tiro nos adds.
+- Barra de vida do boss aparece no topo da tela enquanto ele estiver vivo.
+
+> Arquivos: `Combat/BossController.cs` e `Combat/EnemyProjectile.cs`.
+> Ajuste de dificuldade no Inspector do template `Enemy_Nucleo`.
 
 Regras:
 - Inimigos **não** empurram o jogador (colisor do jogador é trigger).

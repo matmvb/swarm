@@ -81,6 +81,7 @@ public static class SwarmSceneBuilder
 
         GameObject projectileTemplate = CreateProjectileTemplate();
         GameObject orbTemplate = CreateOrbTemplate();
+        GameObject bossProjectileTemplate = CreateBossProjectileTemplate();
         List<Enemy> enemyTemplates = CreateEnemyTemplates(enemies);
 
         Enemy bossTemplate = null;
@@ -88,6 +89,12 @@ public static class SwarmSceneBuilder
         {
             bossTemplate = enemyTemplates[enemyTemplates.Count - 1];
             enemyTemplates.RemoveAt(enemyTemplates.Count - 1);
+        }
+
+        if (bossTemplate != null)
+        {
+            var boss = bossTemplate.gameObject.AddComponent<BossController>();
+            SetRef(boss, "projectilePrefab", bossProjectileTemplate.GetComponent<EnemyProjectile>());
         }
 
         SetRef(player.GetComponent<Weapon>(), "projectilePrefab", projectileTemplate.GetComponent<Projectile>());
@@ -238,6 +245,33 @@ public static class SwarmSceneBuilder
         return go;
     }
 
+    static GameObject CreateBossProjectileTemplate()
+    {
+        var go = new GameObject("BossProjectileTemplate");
+        go.transform.position = new Vector3(6f, -20f, 0f);
+        go.transform.localScale = Vector3.one * 0.35f;
+
+        var sprite = go.AddComponent<SpriteRenderer>();
+        sprite.sprite = _white;
+        sprite.color = new Color(1f, 0.35f, 0.55f);
+        sprite.sortingOrder = 6;
+        ApplySpriteMaterial(sprite);
+
+        var body = go.AddComponent<Rigidbody2D>();
+        body.gravityScale = 0f;
+        body.freezeRotation = true;
+        body.interpolation = RigidbodyInterpolation2D.Interpolate;
+        body.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+
+        var collider = go.AddComponent<CircleCollider2D>();
+        collider.isTrigger = true;
+        collider.radius = 0.5f;
+
+        go.AddComponent<EnemyProjectile>();
+        go.SetActive(false);
+        return go;
+    }
+
     static List<Enemy> CreateEnemyTemplates(List<EnemyData> data)
     {
         var result = new List<Enemy>();
@@ -326,6 +360,10 @@ public static class SwarmSceneBuilder
 
         Image hpFill = MakeBar(canvasObject.transform, "HpBar", new Vector2(0f, 1f), new Vector2(20f, -125f), new Vector2(260f, 18f), new Color(1f, 0.25f, 0.35f));
         Image xpFill = MakeBar(canvasObject.transform, "XpBar", new Vector2(0.5f, 0f), new Vector2(0f, 18f), new Vector2(1200f, 10f), new Color(0.4f, 1f, 0.5f));
+        GameObject bossBar = MakeBossBar(canvasObject.transform, out Image bossFill, out Text bossLabel);
+        Text bossToast = MakeText(canvasObject.transform, "BossToast", new Vector2(0.5f, 1f), new Vector2(0f, -172f), new Vector2(900f, 32f), 24, TextAnchor.MiddleCenter);
+        bossToast.color = new Color(1f, 0.75f, 0.3f);
+        bossToast.gameObject.SetActive(false);
 
         GameObject levelUpPanel = MakePanel(canvasObject.transform, "LevelUpPanel", new Color(0f, 0f, 0f, 0.82f));
         Text levelUpTitle = MakeText(levelUpPanel.transform, "LevelUpTitle", new Vector2(0.5f, 0.5f), new Vector2(0f, 220f), new Vector2(1400f, 80f), 46, TextAnchor.MiddleCenter);
@@ -348,6 +386,10 @@ public static class SwarmSceneBuilder
         SetRef(hud, "levelUpOptions", levelUpOptions);
         SetRef(hud, "gameOverPanel", gameOverPanel);
         SetRef(hud, "gameOverText", gameOverText);
+        SetRef(hud, "bossBar", bossBar);
+        SetRef(hud, "bossFill", bossFill);
+        SetRef(hud, "bossLabel", bossLabel);
+        SetRef(hud, "bossToast", bossToast);
         SetRef(hud, "xp", xp);
         SetRef(hud, "playerHealth", health);
         SetRef(hud, "upgrades", upgrades);
@@ -416,8 +458,51 @@ public static class SwarmSceneBuilder
         return fill;
     }
 
-    static GameObject MakePanel(Transform parent, string name, Color color)
+    static GameObject MakeBossBar(Transform parent, out Image fill, out Text label)
     {
+        var container = new GameObject("BossBar", typeof(RectTransform), typeof(Image));
+        container.transform.SetParent(parent, false);
+
+        var rect = container.GetComponent<RectTransform>();
+        rect.anchorMin = new Vector2(0.5f, 1f);
+        rect.anchorMax = new Vector2(0.5f, 1f);
+        rect.pivot = new Vector2(0.5f, 1f);
+        rect.anchoredPosition = new Vector2(0f, -130f);
+        rect.sizeDelta = new Vector2(760f, 22f);
+
+        var background = container.GetComponent<Image>();
+        background.sprite = _white;
+        background.color = new Color(0f, 0f, 0f, 0.65f);
+        background.raycastTarget = false;
+
+        var fillObject = new GameObject("Fill", typeof(RectTransform), typeof(Image));
+        fillObject.transform.SetParent(container.transform, false);
+
+        var fillRect = fillObject.GetComponent<RectTransform>();
+        fillRect.anchorMin = Vector2.zero;
+        fillRect.anchorMax = Vector2.one;
+        fillRect.offsetMin = Vector2.zero;
+        fillRect.offsetMax = Vector2.zero;
+
+        fill = fillObject.GetComponent<Image>();
+        fill.sprite = _white;
+        fill.color = new Color(1f, 0.20f, 0.28f);
+        fill.type = Image.Type.Filled;
+        fill.fillMethod = Image.FillMethod.Horizontal;
+        fill.fillAmount = 1f;
+        fill.raycastTarget = false;
+
+        label = MakeText(parent, "BossLabel", new Vector2(0.5f, 1f), new Vector2(0f, -106f), new Vector2(760f, 24f), 20, TextAnchor.MiddleCenter);
+        label.text = "NÚCLEO";
+        label.color = new Color(1f, 0.45f, 0.5f);
+
+        container.SetActive(false);
+        label.gameObject.SetActive(false);
+
+        return container;
+    }
+
+    static GameObject MakePanel(Transform parent, string name, Color color)    {
         var go = new GameObject(name, typeof(RectTransform), typeof(Image));
         go.transform.SetParent(parent, false);
 
@@ -531,7 +616,8 @@ public static class SwarmSceneBuilder
         {
             problems += CheckRefs(hud, "timerText", "killsText", "levelText", "hpText", "hudHint",
                 "hpFill", "xpFill", "levelUpPanel", "levelUpTitle", "levelUpOptions",
-                "gameOverPanel", "gameOverText", "xp", "playerHealth", "upgrades", "stats");
+                "gameOverPanel", "gameOverText", "bossBar", "bossFill", "bossLabel", "bossToast",
+                "xp", "playerHealth", "upgrades", "stats");
         }
 
         Enemy[] enemies = Object.FindObjectsByType<Enemy>(FindObjectsInactive.Include, FindObjectsSortMode.None);
@@ -577,6 +663,38 @@ public static class SwarmSceneBuilder
         DebugOverlay overlay = Object.FindFirstObjectByType<DebugOverlay>();
         if (overlay == null) { Debug.LogError("[SWARM] DebugOverlay ausente"); problems++; }
         else problems += CheckRefs(overlay, "stats", "health");
+
+        BossController boss = Object.FindFirstObjectByType<BossController>(FindObjectsInactive.Include);
+        if (boss == null)
+        {
+            Debug.LogError("[SWARM] BossController ausente");
+            problems++;
+        }
+        else
+        {
+            problems += CheckRefs(boss, "projectilePrefab");
+        }
+
+        EnemyProjectile[] enemyProjectiles = Object.FindObjectsByType<EnemyProjectile>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        if (enemyProjectiles.Length != 1)
+        {
+            Debug.LogError("[SWARM] Esperado 1 template de projétil inimigo, achei " + enemyProjectiles.Length);
+            problems++;
+        }
+
+        foreach (EnemyProjectile projectile in enemyProjectiles)
+        {
+            if (projectile.GetComponent<Rigidbody2D>() == null || projectile.GetComponent<Collider2D>() == null)
+            {
+                Debug.LogError("[SWARM] Projétil inimigo sem Rigidbody2D/Collider2D");
+                problems++;
+            }
+            if (projectile.gameObject.activeSelf)
+            {
+                Debug.LogError("[SWARM] Template de projétil inimigo deveria estar inativo");
+                problems++;
+            }
+        }
 
         Debug.Log("[SWARM] Validação concluída: " + problems + " problema(s).");
         return problems;
@@ -696,7 +814,7 @@ public static class SwarmSceneBuilder
         list.Add(EnsureAsset<EnemyData>(ROOT + "/Data/Enemies/Nucleo.asset", data =>
         {
             data.displayName = "Núcleo";
-            data.maxHealth = 600f;
+            data.maxHealth = 1200f;
             data.moveSpeed = 1f;
             data.contactDamage = 15f;
             data.xp = 40;
