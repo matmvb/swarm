@@ -56,8 +56,8 @@ Abra o CSV. Calcule:
 |---|---|---|
 | Morre antes de 3 min | `baseRatePerSecond` 1,2 → 0,9 | EnemySpawner |
 | Morre depois de 9 min | `rateRampPerSecond` 0,028 → 0,036 | EnemySpawner |
-| Level up demora | `xpStepPerLevel` 4 → 3 | XpSystem |
-| Level up demais | `xpStepPerLevel` 4 → 5 | XpSystem |
+| Level up demora | `xpGrowth` 1,3 → 1,2 | XpSystem |
+| Level up demais | `xpGrowth` 1,3 → 1,4 | XpSystem |
 | Tiro "molinho" | `projectileSpeed` 16 → 22 | PlayerStats |
 | Movimento "pesado" | `moveSpeed` 5 → 5,5 | PlayerStats |
 | Horda "vazia" | `maxAlive` 300 → 400 | EnemySpawner |

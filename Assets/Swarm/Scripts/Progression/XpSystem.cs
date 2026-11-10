@@ -13,7 +13,9 @@ public class XpSystem : MonoBehaviour
     [SerializeField] int level = 1;
     [SerializeField] int xp;
     [SerializeField] int xpToNext = 5;
-    [SerializeField] int xpStepPerLevel = 4;
+
+    [Tooltip("Multiplicador do XP por nível. 1.3 = curva exponencial suave (evita level 58 em runs longas).")]
+    [SerializeField] float xpGrowth = 1.3f;
 
     [Header("Referências")]
     [SerializeField] XpOrb orbPrefab;
@@ -61,7 +63,8 @@ public class XpSystem : MonoBehaviour
         {
             xp -= xpToNext;
             level++;
-            xpToNext = 5 + (level - 1) * xpStepPerLevel;
+            float growth = xpGrowth > 1f ? xpGrowth : 1.3f;
+            xpToNext = Mathf.Max(xpToNext + 1, Mathf.RoundToInt(xpToNext * growth));
             _pendingLevelUps++;
         }
 

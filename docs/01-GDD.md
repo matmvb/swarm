@@ -100,7 +100,7 @@ lote   = 1 + floor(rate / 6)                 // 1 → 4
 intervalo = lote / rate
 
 // XP
-xpProximoNivel = 5 + (nivel - 1) * 4         // nv2=5, nv5=17, nv10=41
+xpProximoNivel *= 1.3                    // 5, 7, 9, 12... nv10=57, nv19=463
 
 // Meta-moeda ao morrer
 nucleos = floor(kills / 10) + floor(minutos)

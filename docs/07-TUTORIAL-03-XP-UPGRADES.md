@@ -20,11 +20,12 @@ continuasse rodando, o jogador escolheria no automático e não sentiria a recom
 `Scripts/Progression/XpSystem.cs`:
 
 ```csharp
-xpToNext = 5 + (level - 1) * 4;   // 5, 9, 13, 17, 21...
+xpToNext = Mathf.RoundToInt(xpToNext * 1.3f);   // 5, 7, 9, 12, 15, 20...
 ```
 
-Curva **linear** de propósito: no MVP você quer 12–20 level ups por run, não uma
-curva matemática bonita. Ajuste depois de medir.
+Curva **exponencial** (fator 1.3). Medimos 7 runs: com a curva linear antiga, uma
+run de 10 min chegou ao **nível 58** e maxou todos os upgrades. A exponencial
+mantém 14–20 níveis nas runs normais e impede o snowball de virar passeio.
 
 ### Fila de level ups
 

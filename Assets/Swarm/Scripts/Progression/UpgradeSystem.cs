@@ -37,7 +37,30 @@ public class UpgradeSystem : MonoBehaviour
             candidates.RemoveAt(index);
         }
 
+        // Primeira escolha da run: garante ao menos uma opção ofensiva.
+        // Sem isso, runs com azar no sorteio morrem cedo por falta de dano.
+        if (_taken.Count == 0 && result.Length > 0 && !ContainsOffensive(result))
+        {
+            int offensiveIndex = candidates.FindIndex(IsOffensive);
+            if (offensiveIndex >= 0) result[result.Length - 1] = candidates[offensiveIndex];
+        }
+
         return result;
+    }
+
+    static bool IsOffensive(UpgradeData upgrade)
+    {
+        return upgrade.stat == StatType.Damage
+            || upgrade.stat == StatType.FireRate
+            || upgrade.stat == StatType.Projectiles;
+    }
+
+    static bool ContainsOffensive(UpgradeData[] upgrades)
+    {
+        for (int i = 0; i < upgrades.Length; i++)
+            if (upgrades[i] != null && IsOffensive(upgrades[i])) return true;
+
+        return false;
     }
 
     /// <summary>Resumo legível da build, para o CSV de balanceamento.</summary>
