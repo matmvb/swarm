@@ -68,9 +68,28 @@ public class EnemySpawner : MonoBehaviour
     {
         if (bossTemplate == null) return;
 
+        // O Núcleo limpa o campo: a luta vira um duelo legível.
+        ClearHorde();
+
         Vector2 direction = Random.insideUnitCircle.normalized;
         Vector3 position = target.position + (Vector3)(direction * (spawnRadius + 2f));
         ObjectPool.Spawn(bossTemplate.gameObject, position, Quaternion.identity);
+
+        if (CameraFollow.Instance != null) CameraFollow.Instance.Shake(0.3f, 0.45f);
+    }
+
+    /// <summary>Remove os inimigos comuns (sem XP) para o duelo contra o boss.</summary>
+    static void ClearHorde()
+    {
+        var snapshot = new List<Enemy>(Enemy.All);
+
+        for (int i = 0; i < snapshot.Count; i++)
+        {
+            Enemy enemy = snapshot[i];
+            if (enemy == null) continue;
+            if (enemy.GetComponent<BossController>() != null) continue;
+            ObjectPool.Despawn(enemy.gameObject);
+        }
     }
 
     void SpawnOne(float elapsed)
