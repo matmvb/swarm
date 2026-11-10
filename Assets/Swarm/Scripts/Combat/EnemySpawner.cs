@@ -37,6 +37,12 @@ public class EnemySpawner : MonoBehaviour
 
         float elapsed = GameManager.Instance.Elapsed;
 
+#if UNITY_EDITOR
+        // Atalho de teste: F2 invoca o boss na hora (não existe em build).
+        if (InputReader.WasPressed(GameKey.DebugBoss) && BossController.Active == null)
+            SpawnBoss();
+#endif
+
         if (!_bossSpawned && elapsed >= bossTime)
         {
             _bossSpawned = true;
