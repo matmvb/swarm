@@ -192,6 +192,7 @@ public static class SwarmSceneBuilder
         var weapon = go.AddComponent<Weapon>();
         xp = go.AddComponent<XpSystem>();
         upgrades = go.AddComponent<UpgradeSystem>();
+        go.AddComponent<OrbitalWeapon>();
 
         SetRef(controller, "stats", stats);
         SetRef(controller, "health", health);
@@ -576,6 +577,7 @@ public static class SwarmSceneBuilder
             problems += CheckRefs(player, "stats", "health");
             problems += CheckComponents<Rigidbody2D>(player.gameObject, "Rigidbody2D");
             problems += CheckComponents<CircleCollider2D>(player.gameObject, "CircleCollider2D");
+            problems += CheckComponents<OrbitalWeapon>(player.gameObject, "OrbitalWeapon");
 
             Weapon weapon = player.GetComponent<Weapon>();
             if (weapon == null) { Debug.LogError("[SWARM] Weapon ausente no Player"); problems++; }
@@ -587,7 +589,7 @@ public static class SwarmSceneBuilder
 
             UpgradeSystem upgrades = player.GetComponent<UpgradeSystem>();
             if (upgrades == null) { Debug.LogError("[SWARM] UpgradeSystem ausente no Player"); problems++; }
-            else problems += CheckArray(upgrades, "pool", 12);
+            else problems += CheckArray(upgrades, "pool", 13);
         }
 
         CameraFollow cameraFollow = Object.FindFirstObjectByType<CameraFollow>();
@@ -843,7 +845,8 @@ public static class SwarmSceneBuilder
             Upgrade("Alcance", "Alcance", "+15% de alcance", StatType.Range, 15f, true, 3),
             Upgrade("ProjetilVeloz", "Projétil Veloz", "+15% velocidade do projétil", StatType.ProjectileSpeed, 15f, true, 3),
             Upgrade("Reparo", "Reparo", "Cura 30% da vida máxima", StatType.Heal, 30f, true, 99),
-            Upgrade("NucleoInstavel", "Núcleo Instável", "+25% de dano (raro e forte)", StatType.Damage, 25f, true, 2)
+            Upgrade("NucleoInstavel", "Núcleo Instável", "+25% de dano (raro e forte)", StatType.Damage, 25f, true, 2),
+            Upgrade("OrbeOrbital", "Orbe Orbital", "+1 orbe girando ao seu redor", StatType.Orbitals, 1f, false, 3)
         };
 
         return list;

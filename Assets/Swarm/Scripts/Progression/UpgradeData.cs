@@ -12,7 +12,8 @@ public enum StatType
     PickupRadius,
     CritChance,
     ProjectileSpeed,
-    Heal
+    Heal,
+    Orbitals
 }
 
 /// <summary>
