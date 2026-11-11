@@ -10,12 +10,12 @@ public class OrbitalWeapon : MonoBehaviour
 {
     [Header("Movimento")]
     [SerializeField] float radius = 3f;
-    [SerializeField] float rotationSpeed = 180f;
+    [SerializeField] float rotationSpeed = 160f;
 
     [Header("Combate")]
-    [SerializeField] float damageMultiplier = 0.8f;
+    [SerializeField] float damageMultiplier = 1.6f;
     [SerializeField] float hitInterval = 0.3f;
-    [SerializeField] float hitRadius = 0.45f;
+    [SerializeField] float hitRadius = 0.7f;
 
     [Header("Visual")]
     [SerializeField] float orbScale = 0.45f;

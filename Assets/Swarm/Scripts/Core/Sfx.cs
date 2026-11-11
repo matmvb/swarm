@@ -78,6 +78,11 @@ public class Sfx : MonoBehaviour
         Play(_warning, 0.55f, 1f);
     }
 
+    public void PlayBossDown()
+    {
+        Play(_levelUp, 0.9f, 0.75f);
+    }
+
     void Play(AudioClip clip, float volume, float pitch)
     {
         if (clip == null || _source == null) return;

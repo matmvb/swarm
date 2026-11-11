@@ -38,9 +38,17 @@ public class RunLogger : MonoBehaviour
 
             var builder = new StringBuilder();
             if (isNew)
-                builder.AppendLine("timestamp,version,duration_s,kills,level,victory,build");
+                builder.AppendLine("timestamp,version,duration_s,kills,level,victory,boss_time,build");
 
             string build = upgrades != null ? upgrades.BuildSummary() : string.Empty;
+            string bossTime = "-1";
+
+            if (BossController.SpawnedThisRun)
+            {
+                bossTime = BossController.LastFightWon
+                    ? BossController.LastFightDuration.ToString("F1", CultureInfo.InvariantCulture)
+                    : "0";
+            }
 
             builder.Append(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture)).Append(',')
                    .Append(Application.version).Append(',')
@@ -48,6 +56,7 @@ public class RunLogger : MonoBehaviour
                    .Append(gameManager.Kills).Append(',')
                    .Append(xp != null ? xp.Level : 0).Append(',')
                    .Append(gameManager.LastRunVictory ? 1 : 0).Append(',')
+                   .Append(bossTime).Append(',')
                    .Append('"').Append(build.Replace("\"", "'")).Append('"')
                    .AppendLine();
 

@@ -362,7 +362,7 @@ public static class SwarmSceneBuilder
         Image hpFill = MakeBar(canvasObject.transform, "HpBar", new Vector2(0f, 1f), new Vector2(20f, -125f), new Vector2(260f, 18f), new Color(1f, 0.25f, 0.35f));
         Image xpFill = MakeBar(canvasObject.transform, "XpBar", new Vector2(0.5f, 0f), new Vector2(0f, 18f), new Vector2(1200f, 10f), new Color(0.4f, 1f, 0.5f));
         GameObject bossBar = MakeBossBar(canvasObject.transform, out Image bossFill, out Text bossLabel);
-        Text bossToast = MakeText(canvasObject.transform, "BossToast", new Vector2(0.5f, 1f), new Vector2(0f, -172f), new Vector2(900f, 32f), 24, TextAnchor.MiddleCenter);
+        Text bossToast = MakeText(canvasObject.transform, "BossToast", new Vector2(0.5f, 0.5f), new Vector2(0f, 120f), new Vector2(1000f, 50f), 34, TextAnchor.MiddleCenter);
         bossToast.color = new Color(1f, 0.75f, 0.3f);
         bossToast.gameObject.SetActive(false);
 

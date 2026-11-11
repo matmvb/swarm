@@ -12,6 +12,7 @@ public class BossController : MonoBehaviour
     /// <summary>Duração da última luta vencida (0 se não matou o boss).</summary>
     public static float LastFightDuration { get; private set; }
     public static bool LastFightWon { get; private set; }
+    public static bool SpawnedThisRun { get; private set; }
 
     [Header("Rajada radial")]
     [SerializeField] EnemyProjectile projectilePrefab;
@@ -63,6 +64,7 @@ public class BossController : MonoBehaviour
     {
         LastFightWon = false;
         LastFightDuration = 0f;
+        SpawnedThisRun = false;
     }
 
     void Awake()
@@ -81,6 +83,7 @@ public class BossController : MonoBehaviour
 
         _state = State.Chase;
         _spawnTime = Time.time;
+        SpawnedThisRun = true;
         _nextBurst = Time.time + firstBurstDelay;
         _nextCharge = Time.time + firstChargeDelay;
 
