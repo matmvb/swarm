@@ -143,7 +143,7 @@ Regras:
 
 ---
 
-## 8. Upgrades (MVP: 12)
+## 8. Upgrades (MVP: 13)
 
 | # | Nome | Efeito | Tipo | Máx |
 |---|---|---|---|---|
@@ -159,6 +159,7 @@ Regras:
 | 10 | Projétil Veloz | +15% velocidade do projétil | % | 3 |
 | 11 | Reparo | cura 30% da vida máxima | flat | ilimitado |
 | 12 | Núcleo Instável | +25% dano (raro e forte) | % | 2 |
+| 13 | Orbe Orbital | +1 orbe girando ao seu redor | flat | 3 |
 
 **Regra do sorteio:** nunca oferecer upgrade no máximo; nunca repetir a mesma opção
 na mesma tela; 3 opções sempre que houver 3 candidatos.
@@ -214,7 +215,7 @@ MVP implementa apenas o **contador** de Núcleos + save. As compras entram no Sp
 
 ## 12. Escopo
 
-**MVP (Sprint 0–3, ~4 semanas):** 4 inimigos, 12 upgrades, 1 arma, 1 mapa infinito,
+**MVP (Sprint 0–3, ~4 semanas):** 4 inimigos, 13 upgrades, 2 armas, 1 mapa infinito,
 HUD, level up, game over, restart. **É o que este repositório entrega.**
 
 **v0.5 / demo (Sprint 4–7, +6 semanas):** boss, 2ª arma, 6 inimigos, 20 upgrades,

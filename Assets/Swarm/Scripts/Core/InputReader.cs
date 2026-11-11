@@ -14,7 +14,8 @@ public enum GameKey
     Digit3,
     Restart,
     ToggleDebug,
-    DebugBoss
+    DebugBoss,
+    DebugOrbital
 }
 
 /// <summary>
@@ -76,6 +77,8 @@ public static class InputReader
                 return keyboard.f1Key.wasPressedThisFrame;
             case GameKey.DebugBoss:
                 return keyboard.f2Key.wasPressedThisFrame;
+            case GameKey.DebugOrbital:
+                return keyboard.f3Key.wasPressedThisFrame;
             default:
                 return false;
         }
@@ -94,6 +97,8 @@ public static class InputReader
                 return Input.GetKeyDown(KeyCode.F1);
             case GameKey.DebugBoss:
                 return Input.GetKeyDown(KeyCode.F2);
+            case GameKey.DebugOrbital:
+                return Input.GetKeyDown(KeyCode.F3);
             default:
                 return false;
         }

@@ -20,6 +20,9 @@ public class Enemy : MonoBehaviour
     /// <summary>Quando true, outro componente (ex.: BossController) controla o movimento.</summary>
     [System.NonSerialized] public bool externalControl;
 
+    /// <summary>Cooldown de dano do orbe orbital neste inimigo.</summary>
+    [System.NonSerialized] public float orbitalCooldown;
+
     float _health;
     float _maxHealth;
     bool _dead;
@@ -91,6 +94,8 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
+        if (orbitalCooldown > 0f) orbitalCooldown -= Time.deltaTime;
+
         if (_flash <= 0f) return;
 
         _flash -= Time.deltaTime * 6f;

@@ -26,4 +26,8 @@ public class PlayerStats : MonoBehaviour
     [Range(0f, 1f)]
     public float critChance = 0.05f;
     public float critMultiplier = 2f;
+
+    [Header("Orbe Orbital")]
+    [Tooltip("Quantidade de orbes girando ao redor do jogador (upgrade).")]
+    public int orbitals = 0;
 }

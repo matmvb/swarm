@@ -132,6 +132,10 @@ public class UpgradeSystem : MonoBehaviour
             case StatType.Heal:
                 if (health != null) health.Heal(health.Max * Mathf.Max(0.01f, value));
                 break;
+
+            case StatType.Orbitals:
+                if (stats != null) stats.orbitals = Mathf.Clamp(stats.orbitals + Mathf.RoundToInt(upgrade.amount), 0, 8);
+                break;
         }
     }
 }

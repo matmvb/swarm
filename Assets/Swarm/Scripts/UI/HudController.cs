@@ -131,7 +131,9 @@ public class HudController : MonoBehaviour
 
         bossToast.text = "NÚCLEO DESTRUÍDO  ·  " + BossController.LastFightDuration.ToString("0.0") + " s";
         bossToast.gameObject.SetActive(true);
-        _bossToastTimer = 3f;
+        _bossToastTimer = 4f;
+
+        if (Sfx.Instance != null) Sfx.Instance.PlayBossDown();
     }
 
     void RefreshHp()
