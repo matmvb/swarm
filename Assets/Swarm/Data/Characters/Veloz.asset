@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5edfb105886b814fb5f3a244c5a814e, type: 3}
+  m_Name: Veloz
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterData
+  displayName: VELOZ
+  description: "-20% vida  \xB7  +25% velocidade  \xB7  +10% cad\xEAncia"
+  color: {r: 0.4, g: 1, b: 0.45, a: 1}
+  maxHealthMultiplier: 0.8
+  moveSpeedMultiplier: 1.25
+  damageMultiplier: 1
+  fireRateMultiplier: 1.1

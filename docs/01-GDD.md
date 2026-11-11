@@ -166,6 +166,23 @@ na mesma tela; 3 opções sempre que houver 3 candidatos.
 
 ---
 
+## 8.1 Pilotos (personagens)
+
+Escolha no início da run, com o jogo pausado. Só números — sem habilidade ativa no MVP.
+
+| Piloto | Vida | Velocidade | Dano | Cadência | Fantasia |
+|---|---|---|---|---|---|
+| **Tanque** | +50% | −15% | — | — | aguentar e ficar no meio |
+| **Veloz** | −20% | +25% | — | +10% | kitar e nunca ser tocado |
+| **Atirador** | −10% | — | +25% | −10% | matar antes de chegar perto |
+
+Regras:
+- Multiplicadores aplicados **uma vez**, no início da run (a cena recarrega a cada run).
+- A cor do sprite muda para identificar o piloto.
+- Teclas `1/2/3` escolhem; o jogo fica em `timeScale = 0` até a escolha.
+
+---
+
 ## 9. Curva da run (alvo)
 
 | Minuto | Sensação desejada | Evento |
@@ -215,7 +232,7 @@ MVP implementa apenas o **contador** de Núcleos + save. As compras entram no Sp
 
 ## 12. Escopo
 
-**MVP (Sprint 0–3, ~4 semanas):** 4 inimigos, 13 upgrades, 2 armas, 1 mapa infinito,
+**MVP (Sprint 0–3, ~4 semanas):** 4 inimigos, 13 upgrades, 2 armas, 3 pilotos, 1 mapa infinito,
 HUD, level up, game over, restart. **É o que este repositório entrega.**
 
 **v0.5 / demo (Sprint 4–7, +6 semanas):** boss, 2ª arma, 6 inimigos, 20 upgrades,

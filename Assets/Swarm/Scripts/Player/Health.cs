@@ -54,4 +54,14 @@ public class Health : MonoBehaviour
         if (healToo) Current = Mathf.Min(maxHealth, Current + amount);
         Changed?.Invoke(Current, maxHealth);
     }
+
+    /// <summary>Aplica o multiplicador do piloto escolhido no início da run.</summary>
+    public void ScaleMaxHealth(float multiplier)
+    {
+        if (multiplier <= 0f) return;
+
+        maxHealth = Mathf.Max(1f, maxHealth * multiplier);
+        Current = maxHealth;
+        Changed?.Invoke(Current, maxHealth);
+    }
 }

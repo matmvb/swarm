@@ -34,6 +34,8 @@ Assets/Swarm/
 │   │   ├── PlayerController.cs   movimento + dano de contato
 │   │   ├── PlayerStats.cs        números do jogador
 │   │   ├── Health.cs             vida com eventos
+│   │   ├── CharacterData.cs      ScriptableObject do piloto
+│   │   ├── CharacterSelect.cs    tela de escolha no início
 │   │   ├── OrbitalWeapon.cs      orbes que giram e causam dano
 │   │   └── Weapon.cs             mira e dispara
 │   ├── Combat/
