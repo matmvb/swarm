@@ -33,6 +33,7 @@ public class EnemySpawner : MonoBehaviour
     void Update()
     {
         if (GameManager.Instance == null || !GameManager.Instance.IsRunning) return;
+        if (Time.timeScale <= 0f) return;
         if (target == null) return;
 
         float elapsed = GameManager.Instance.Elapsed;

@@ -69,10 +69,12 @@ public static class SwarmSceneBuilder
 
         List<string> enemyPaths = EnsureEnemyData();
         List<string> upgradePaths = EnsureUpgradeData();
+        List<string> characterPaths = EnsureCharacterData();
         AssetDatabase.SaveAssets();
 
         List<EnemyData> enemies = LoadAssets<EnemyData>(enemyPaths);
         List<UpgradeData> upgrades = LoadAssets<UpgradeData>(upgradePaths);
+        List<CharacterData> characters = LoadAssets<CharacterData>(characterPaths);
 
         GameObject cameraObject = CreateCamera();
         GameObject player = CreatePlayer(out PlayerStats stats, out Health health, out XpSystem xpSystem, out UpgradeSystem upgradeSystem);
@@ -103,7 +105,7 @@ public static class SwarmSceneBuilder
         SetList(upgradeSystem, "pool", ToObjectList(upgrades));
 
         CreateSpawner(player.transform, enemyTemplates, bossTemplate);
-        HudController hud = CreateHud(stats, health, xpSystem, upgradeSystem);
+        HudController hud = CreateHud(stats, health, xpSystem, upgradeSystem, characters);
         SetRef(xpSystem, "hud", hud);
 
         GameObject manager = CreateManager();
@@ -338,7 +340,7 @@ public static class SwarmSceneBuilder
     // HUD
     // ─────────────────────────────────────────────────────────────
 
-    static HudController CreateHud(PlayerStats stats, Health health, XpSystem xp, UpgradeSystem upgrades)
+    static HudController CreateHud(PlayerStats stats, Health health, XpSystem xp, UpgradeSystem upgrades, List<CharacterData> characters)
     {
         var canvasObject = new GameObject("HUD", typeof(RectTransform), typeof(Canvas), typeof(CanvasScaler));
         var canvas = canvasObject.GetComponent<Canvas>();
@@ -374,6 +376,19 @@ public static class SwarmSceneBuilder
         GameObject gameOverPanel = MakePanel(canvasObject.transform, "GameOverPanel", new Color(0.02f, 0.02f, 0.05f, 0.92f));
         Text gameOverText = MakeText(gameOverPanel.transform, "GameOverText", new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(1100f, 640f), 34, TextAnchor.MiddleCenter);
         gameOverText.verticalOverflow = VerticalWrapMode.Overflow;
+
+        GameObject characterPanel = MakePanel(canvasObject.transform, "CharacterSelectPanel", new Color(0.02f, 0.02f, 0.05f, 0.96f));
+        Text characterTitle = MakeText(characterPanel.transform, "CharacterTitle", new Vector2(0.5f, 0.5f), new Vector2(0f, 250f), new Vector2(1400f, 80f), 46, TextAnchor.MiddleCenter);
+        Text characterOptions = MakeText(characterPanel.transform, "CharacterOptions", new Vector2(0.5f, 0.5f), new Vector2(0f, -30f), new Vector2(1100f, 420f), 30, TextAnchor.MiddleCenter);
+        characterOptions.verticalOverflow = VerticalWrapMode.Overflow;
+
+        var characterSelect = canvasObject.AddComponent<CharacterSelect>();
+        SetRef(characterSelect, "panel", characterPanel);
+        SetRef(characterSelect, "title", characterTitle);
+        SetRef(characterSelect, "options", characterOptions);
+        SetList(characterSelect, "characters", ToObjectList(characters));
+        SetRef(characterSelect, "stats", stats);
+        SetRef(characterSelect, "health", health);
 
         SetRef(hud, "timerText", timer);
         SetRef(hud, "killsText", kills);
@@ -622,6 +637,18 @@ public static class SwarmSceneBuilder
                 "xp", "playerHealth", "upgrades", "stats");
         }
 
+        CharacterSelect characterSelect = Object.FindFirstObjectByType<CharacterSelect>();
+        if (characterSelect == null)
+        {
+            Debug.LogError("[SWARM] CharacterSelect ausente");
+            problems++;
+        }
+        else
+        {
+            problems += CheckRefs(characterSelect, "panel", "title", "options", "stats", "health");
+            problems += CheckArray(characterSelect, "characters", 3);
+        }
+
         Enemy[] enemies = Object.FindObjectsByType<Enemy>(FindObjectsInactive.Include, FindObjectsSortMode.None);
         if (enemies.Length != 4) { Debug.LogError("[SWARM] Esperados 4 templates de inimigo, achei " + enemies.Length); problems++; }
 
@@ -825,6 +852,46 @@ public static class SwarmSceneBuilder
             data.color = new Color(1f, 0.15f, 0.15f);
             data.scale = 2.2f;
             data.maxAliveOfType = 1;
+        }));
+
+        return list;
+    }
+
+    static List<string> EnsureCharacterData()
+    {
+        var list = new List<string>();
+
+        list.Add(EnsureAsset<CharacterData>(ROOT + "/Data/Characters/Tanque.asset", character =>
+        {
+            character.displayName = "TANQUE";
+            character.description = "+50% vida  ·  -15% velocidade";
+            character.color = new Color(1f, 0.55f, 0.20f);
+            character.maxHealthMultiplier = 1.5f;
+            character.moveSpeedMultiplier = 0.85f;
+            character.damageMultiplier = 1f;
+            character.fireRateMultiplier = 1f;
+        }));
+
+        list.Add(EnsureAsset<CharacterData>(ROOT + "/Data/Characters/Veloz.asset", character =>
+        {
+            character.displayName = "VELOZ";
+            character.description = "-20% vida  ·  +25% velocidade  ·  +10% cadência";
+            character.color = new Color(0.40f, 1f, 0.45f);
+            character.maxHealthMultiplier = 0.8f;
+            character.moveSpeedMultiplier = 1.25f;
+            character.damageMultiplier = 1f;
+            character.fireRateMultiplier = 1.1f;
+        }));
+
+        list.Add(EnsureAsset<CharacterData>(ROOT + "/Data/Characters/Atirador.asset", character =>
+        {
+            character.displayName = "ATIRADOR";
+            character.description = "-10% vida  ·  +25% dano  ·  -10% cadência";
+            character.color = new Color(1f, 0.90f, 0.35f);
+            character.maxHealthMultiplier = 0.9f;
+            character.moveSpeedMultiplier = 1f;
+            character.damageMultiplier = 1.25f;
+            character.fireRateMultiplier = 0.9f;
         }));
 
         return list;
