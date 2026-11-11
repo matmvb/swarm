@@ -37,6 +37,12 @@ public class OrbitalWeapon : MonoBehaviour
         if (GameManager.Instance == null || !GameManager.Instance.IsRunning) return;
         if (_stats == null) return;
 
+#if UNITY_EDITOR
+        // Atalho de teste: F3 adiciona um orbe (não existe em build).
+        if (InputReader.WasPressed(GameKey.DebugOrbital))
+            _stats.orbitals = Mathf.Clamp(_stats.orbitals + 1, 0, 8);
+#endif
+
         EnsureOrbs(Mathf.Clamp(_stats.orbitals, 0, 8));
 
         if (_orbs.Count == 0) return;
