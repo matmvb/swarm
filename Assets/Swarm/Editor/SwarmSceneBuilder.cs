@@ -378,8 +378,8 @@ public static class SwarmSceneBuilder
         gameOverText.verticalOverflow = VerticalWrapMode.Overflow;
 
         GameObject characterPanel = MakePanel(canvasObject.transform, "CharacterSelectPanel", new Color(0.02f, 0.02f, 0.05f, 0.96f));
-        Text characterTitle = MakeText(characterPanel.transform, "CharacterTitle", new Vector2(0.5f, 0.5f), new Vector2(0f, 250f), new Vector2(1400f, 80f), 46, TextAnchor.MiddleCenter);
-        Text characterOptions = MakeText(characterPanel.transform, "CharacterOptions", new Vector2(0.5f, 0.5f), new Vector2(0f, -30f), new Vector2(1100f, 420f), 30, TextAnchor.MiddleCenter);
+        Text characterTitle = MakeText(characterPanel.transform, "CharacterTitle", new Vector2(0.5f, 0.5f), new Vector2(0f, 300f), new Vector2(1400f, 80f), 46, TextAnchor.MiddleCenter);
+        Text characterOptions = MakeText(characterPanel.transform, "CharacterOptions", new Vector2(0.5f, 0.5f), new Vector2(0f, -50f), new Vector2(1100f, 560f), 26, TextAnchor.MiddleCenter);
         characterOptions.verticalOverflow = VerticalWrapMode.Overflow;
 
         var characterSelect = canvasObject.AddComponent<CharacterSelect>();

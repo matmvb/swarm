@@ -48,7 +48,8 @@ Assets/Swarm/
 │   ├── Progression/
 │   │   ├── XpSystem.cs           XP, nível, fila
 │   │   ├── UpgradeSystem.cs      sorteio e aplicação
-│   │   └── UpgradeData.cs        ScriptableObject
+│   │   ├── UpgradeData.cs        ScriptableObject
+│   │   └── MetaProgression.cs    loja de Núcleos (bônus permanentes)
 │   ├── Pickup/
 │   │   └── XpOrb.cs              coleta magnética
 │   ├── Camera/

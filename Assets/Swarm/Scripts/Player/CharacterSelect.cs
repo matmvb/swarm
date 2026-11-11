@@ -35,6 +35,8 @@ public class CharacterSelect : MonoBehaviour
     {
         if (!_choosing) return;
 
+        if (TryBuyMeta()) return;
+
         int index = -1;
         if (InputReader.WasPressed(GameKey.Digit1)) index = 0;
         else if (InputReader.WasPressed(GameKey.Digit2)) index = 1;
@@ -44,9 +46,31 @@ public class CharacterSelect : MonoBehaviour
         Choose(index);
     }
 
+    bool TryBuyMeta()
+    {
+        for (int i = 0; i < MetaProgression.Upgrades.Length && i < 3; i++)
+        {
+            GameKey key = i == 0 ? GameKey.Digit4 : i == 1 ? GameKey.Digit5 : GameKey.Digit6;
+            if (!InputReader.WasPressed(key)) continue;
+
+            if (MetaProgression.Buy(MetaProgression.Upgrades[i]))
+            {
+                if (options != null) options.text = BuildOptions();
+                if (Sfx.Instance != null) Sfx.Instance.PlayPickup();
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
     string BuildOptions()
     {
         var builder = new StringBuilder();
+
+        builder.AppendLine("<b>PILOTOS</b>");
+        builder.AppendLine();
 
         for (int i = 0; i < characters.Count; i++)
         {
@@ -54,7 +78,24 @@ public class CharacterSelect : MonoBehaviour
             if (character == null) continue;
 
             builder.Append('[').Append(i + 1).Append("]  ").Append(character.displayName).Append('\n');
-            builder.Append("      ").Append(character.description).Append("\n\n");
+            builder.Append("      ").Append(character.description).Append('\n');
+        }
+
+        builder.AppendLine();
+        builder.Append("<b>NÚCLEOS: ").Append(SaveSystem.Cores).AppendLine("</b>");
+
+        for (int i = 0; i < MetaProgression.Upgrades.Length; i++)
+        {
+            MetaUpgrade upgrade = MetaProgression.Upgrades[i];
+            int level = MetaProgression.GetLevel(upgrade);
+
+            builder.Append('[').Append(i + 4).Append("] +5% ").Append(upgrade.title);
+            builder.Append("  (").Append(level).Append('/').Append(upgrade.maxLevel).Append(')');
+
+            if (level >= upgrade.maxLevel) builder.Append("  MAX");
+            else builder.Append("  custo ").Append(MetaProgression.GetCost(upgrade));
+
+            builder.AppendLine();
         }
 
         return builder.ToString().TrimEnd();
@@ -63,6 +104,8 @@ public class CharacterSelect : MonoBehaviour
     void Choose(int index)
     {
         CharacterData character = characters[index];
+
+        MetaProgression.ApplyAll(stats, health);
         if (character != null) Apply(character);
 
         _choosing = false;
