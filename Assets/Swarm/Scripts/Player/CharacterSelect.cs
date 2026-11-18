@@ -8,6 +8,9 @@ using UnityEngine.UI;
 /// </summary>
 public class CharacterSelect : MonoBehaviour
 {
+    /// <summary>Nome do piloto escolhido nesta run (para a telemetria).</summary>
+    public static string SelectedName { get; private set; } = "";
+
     [SerializeField] GameObject panel;
     [SerializeField] Text title;
     [SerializeField] Text options;
@@ -19,6 +22,8 @@ public class CharacterSelect : MonoBehaviour
 
     void Start()
     {
+        SelectedName = "";
+
         if (GameManager.Instance == null) return;
         if (characters == null || characters.Count == 0) return;
 
@@ -104,6 +109,7 @@ public class CharacterSelect : MonoBehaviour
     void Choose(int index)
     {
         CharacterData character = characters[index];
+        SelectedName = character != null ? character.displayName : "";
 
         MetaProgression.ApplyAll(stats, health);
         if (character != null) Apply(character);

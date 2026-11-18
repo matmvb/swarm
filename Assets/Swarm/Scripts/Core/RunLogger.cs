@@ -38,9 +38,10 @@ public class RunLogger : MonoBehaviour
 
             var builder = new StringBuilder();
             if (isNew)
-                builder.AppendLine("timestamp,version,duration_s,kills,level,victory,boss_time,build");
+                builder.AppendLine("timestamp,version,duration_s,kills,level,victory,boss_time,character,meta_damage,meta_health,meta_speed,build");
 
             string build = upgrades != null ? upgrades.BuildSummary() : string.Empty;
+            string character = string.IsNullOrEmpty(CharacterSelect.SelectedName) ? "-" : CharacterSelect.SelectedName;
             string bossTime = "-1";
 
             if (BossController.SpawnedThisRun)
@@ -57,6 +58,10 @@ public class RunLogger : MonoBehaviour
                    .Append(xp != null ? xp.Level : 0).Append(',')
                    .Append(gameManager.LastRunVictory ? 1 : 0).Append(',')
                    .Append(bossTime).Append(',')
+                   .Append('"').Append(character).Append('"').Append(',')
+                   .Append(MetaProgression.GetLevel("damage")).Append(',')
+                   .Append(MetaProgression.GetLevel("health")).Append(',')
+                   .Append(MetaProgression.GetLevel("speed")).Append(',')
                    .Append('"').Append(build.Replace("\"", "'")).Append('"')
                    .AppendLine();
 
