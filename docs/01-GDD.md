@@ -219,14 +219,16 @@ Se acontecer, o jogador não sente que aconteceu.
 
 Moeda: **Núcleos** (ganhos ao morrer, nunca perdidos).
 
-| Melhoria | Custo | Efeito |
-|---|---|---|
-| Núcleo de Dano | 50 | +5% dano permanente |
-| Núcleo de Casco | 50 | +5% vida permanente |
-| Núcleo de Motor | 50 | +5% velocidade permanente |
-| Piloto reserva | 200 | desbloqueia personagem (Sprint 5) |
+| Melhoria | Custo base | Efeito | Máx |
+|---|---|---|---|
+| Dano | 50 | +5% dano permanente | 20 |
+| Casco | 50 | +5% vida permanente | 20 |
+| Motor | 50 | +5% velocidade permanente | 20 |
 
-MVP implementa apenas o **contador** de Núcleos + save. As compras entram no Sprint 5.
+- Custo cresce **1,5× por nível** (50, 75, 113, 169…).
+- Compra na tela de seleção de piloto, teclas **4 / 5 / 6**; o saldo aparece na mesma tela.
+- O bônus é aplicado no início da run, junto com os multiplicadores do piloto.
+- Persistência em `PlayerPrefs` (`meta.damage`, `meta.health`, `meta.speed`).
 
 ---
 

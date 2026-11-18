@@ -12,6 +12,9 @@ public enum GameKey
     Digit1,
     Digit2,
     Digit3,
+    Digit4,
+    Digit5,
+    Digit6,
     Restart,
     ToggleDebug,
     DebugBoss,
@@ -71,6 +74,12 @@ public static class InputReader
                 return keyboard.digit2Key.wasPressedThisFrame || keyboard.numpad2Key.wasPressedThisFrame;
             case GameKey.Digit3:
                 return keyboard.digit3Key.wasPressedThisFrame || keyboard.numpad3Key.wasPressedThisFrame;
+            case GameKey.Digit4:
+                return keyboard.digit4Key.wasPressedThisFrame || keyboard.numpad4Key.wasPressedThisFrame;
+            case GameKey.Digit5:
+                return keyboard.digit5Key.wasPressedThisFrame || keyboard.numpad5Key.wasPressedThisFrame;
+            case GameKey.Digit6:
+                return keyboard.digit6Key.wasPressedThisFrame || keyboard.numpad6Key.wasPressedThisFrame;
             case GameKey.Restart:
                 return keyboard.rKey.wasPressedThisFrame;
             case GameKey.ToggleDebug:
@@ -91,6 +100,12 @@ public static class InputReader
                 return Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Keypad2);
             case GameKey.Digit3:
                 return Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Keypad3);
+            case GameKey.Digit4:
+                return Input.GetKeyDown(KeyCode.Alpha4) || Input.GetKeyDown(KeyCode.Keypad4);
+            case GameKey.Digit5:
+                return Input.GetKeyDown(KeyCode.Alpha5) || Input.GetKeyDown(KeyCode.Keypad5);
+            case GameKey.Digit6:
+                return Input.GetKeyDown(KeyCode.Alpha6) || Input.GetKeyDown(KeyCode.Keypad6);
             case GameKey.Restart:
                 return Input.GetKeyDown(KeyCode.R);
             case GameKey.ToggleDebug:
