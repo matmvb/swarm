@@ -23,7 +23,8 @@ public enum GameKey
     VolumeDown,
     VolumeUp,
     Fullscreen,
-    ResetSave
+    ResetSave,
+    Screenshot
 }
 
 /// <summary>
@@ -103,6 +104,8 @@ public static class InputReader
                 return keyboard.fKey.wasPressedThisFrame;
             case GameKey.ResetSave:
                 return keyboard.rKey.wasPressedThisFrame;
+            case GameKey.Screenshot:
+                return keyboard.f12Key.wasPressedThisFrame;
             default:
                 return false;
         }
@@ -139,6 +142,8 @@ public static class InputReader
                 return Input.GetKeyDown(KeyCode.F);
             case GameKey.ResetSave:
                 return Input.GetKeyDown(KeyCode.R);
+            case GameKey.Screenshot:
+                return Input.GetKeyDown(KeyCode.F12);
             default:
                 return false;
         }

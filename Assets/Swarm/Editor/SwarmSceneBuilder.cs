@@ -190,6 +190,7 @@ public static class SwarmSceneBuilder
         cameraData.renderPostProcessing = true;
 
         go.AddComponent<CameraFollow>();
+        go.AddComponent<ScreenshotCapture>();
         return go;
     }
 
@@ -799,6 +800,13 @@ public static class SwarmSceneBuilder
         if (hitStop == null)
         {
             Debug.LogError("[SWARM] HitStop ausente");
+            problems++;
+        }
+
+        ScreenshotCapture screenshot = Object.FindFirstObjectByType<ScreenshotCapture>();
+        if (screenshot == null)
+        {
+            Debug.LogError("[SWARM] ScreenshotCapture ausente");
             problems++;
         }
 
