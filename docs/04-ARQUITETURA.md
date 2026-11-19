@@ -36,12 +36,15 @@ Assets/Swarm/
 │   │   ├── Health.cs             vida com eventos
 │   │   ├── CharacterData.cs      ScriptableObject do piloto
 │   │   ├── CharacterSelect.cs    tela de escolha no início
+│   │   ├── PlayerRegen.cs        regeneração passiva
 │   │   ├── OrbitalWeapon.cs      orbes que giram e causam dano
 │   │   └── Weapon.cs             mira e dispara
 │   ├── Combat/
 │   │   ├── Enemy.cs              perseguição, dano, morte
 │   │   ├── EnemyData.cs          ScriptableObject
 │   │   ├── EnemySpawner.cs       curva de dificuldade
+│   │   ├── SplitOnDeath.cs       gera fragmentos ao morrer
+│   │   ├── RangedEnemy.cs        mantém distância e atira
 │   │   ├── BossController.cs     rajada radial + investida do boss
 │   │   ├── EnemyProjectile.cs    projétil que fere o jogador
 │   │   └── Projectile.cs         projétil do jogador

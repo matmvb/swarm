@@ -30,4 +30,10 @@ public class PlayerStats : MonoBehaviour
     [Header("Orbe Orbital")]
     [Tooltip("Quantidade de orbes girando ao redor do jogador (upgrade).")]
     public int orbitals = 0;
+    public float orbitalDamage = 1f;
+
+    [Header("Defesa")]
+    [Range(0f, 0.6f)]
+    public float armor = 0f;
+    public float regen = 0f;
 }

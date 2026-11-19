@@ -117,7 +117,9 @@ nucleos = floor(kills / 10) + floor(minutos)
 |---|---|---|---|---|---|---|---|
 | Drone | 0:00 | 20 | 2.0 | 6 | 1 | 60 | básico, forma a horda |
 | Corredor | 0:45 | 12 | 3.6 | 4 | 1 | 30 | pune jogador parado |
+| Divisor | 1:15 | 45 | 1.6 | 8 | 2 | 15 | ao morrer, gera 2 Drones |
 | Tanque | 2:00 | 90 | 1.3 | 14 | 3 | 20 | parede que exige dano |
+| Atirador | 2:30 | 35 | 1.4 | 6 | 3 | 12 | mantém distância e atira |
 | **Núcleo (boss)** | 5:00 | 1200 | 1.0 | 15 | 40 | evento | clímax do meio da run |
 
 ### Núcleo — padrão de ataque
@@ -143,7 +145,7 @@ Regras:
 
 ---
 
-## 8. Upgrades (MVP: 13)
+## 8. Upgrades (MVP: 20)
 
 | # | Nome | Efeito | Tipo | Máx |
 |---|---|---|---|---|
@@ -160,6 +162,13 @@ Regras:
 | 11 | Reparo | cura 30% da vida máxima | flat | ilimitado |
 | 12 | Núcleo Instável | +25% dano (raro e forte) | % | 2 |
 | 13 | Orbe Orbital | +1 orbe girando ao seu redor | flat | 3 |
+| 14 | Orbe Denso | +25% de dano dos orbes | % | 3 |
+| 15 | Placas | +10% de armadura | % | 3 |
+| 16 | Nanorrobôs | +0,5 vida por segundo | flat | 3 |
+| 17 | Ímã Forte | +1 de raio de coleta | flat | 3 |
+| 18 | Calibre Pesado | +20% velocidade do projétil | % | 3 |
+| 19 | Execução | +0,5 multiplicador de crítico | flat | 2 |
+| 20 | Casca Extra | +40 vida máxima | flat | 5 |
 
 **Regra do sorteio:** nunca oferecer upgrade no máximo; nunca repetir a mesma opção
 na mesma tela; 3 opções sempre que houver 3 candidatos.
@@ -234,7 +243,7 @@ Moeda: **Núcleos** (ganhos ao morrer, nunca perdidos).
 
 ## 12. Escopo
 
-**MVP (Sprint 0–3, ~4 semanas):** 4 inimigos, 13 upgrades, 2 armas, 3 pilotos, 1 mapa infinito,
+**MVP (Sprint 0–3, ~4 semanas):** 6 inimigos, 20 upgrades, 2 armas, 3 pilotos, 1 mapa infinito,
 HUD, level up, game over, restart. **É o que este repositório entrega.**
 
 **v0.5 / demo (Sprint 4–7, +6 semanas):** boss, 2ª arma, 6 inimigos, 20 upgrades,

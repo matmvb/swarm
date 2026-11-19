@@ -136,6 +136,26 @@ public class UpgradeSystem : MonoBehaviour
             case StatType.Orbitals:
                 if (stats != null) stats.orbitals = Mathf.Clamp(stats.orbitals + Mathf.RoundToInt(upgrade.amount), 0, 8);
                 break;
+
+            case StatType.OrbDamage:
+                if (stats != null) stats.orbitalDamage = upgrade.percent ? stats.orbitalDamage * (1f + value) : stats.orbitalDamage + value;
+                break;
+
+            case StatType.Armor:
+                if (stats != null)
+                {
+                    stats.armor = Mathf.Clamp(stats.armor + (upgrade.percent ? value : upgrade.amount), 0f, 0.6f);
+                    if (health != null) health.damageTakenMultiplier = 1f - stats.armor;
+                }
+                break;
+
+            case StatType.Regen:
+                if (stats != null) stats.regen += upgrade.amount;
+                break;
+
+            case StatType.CritDamage:
+                if (stats != null) stats.critMultiplier += upgrade.amount;
+                break;
         }
     }
 }

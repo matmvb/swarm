@@ -13,7 +13,11 @@ public enum StatType
     CritChance,
     ProjectileSpeed,
     Heal,
-    Orbitals
+    Orbitals,
+    OrbDamage,
+    Armor,
+    Regen,
+    CritDamage
 }
 
 /// <summary>

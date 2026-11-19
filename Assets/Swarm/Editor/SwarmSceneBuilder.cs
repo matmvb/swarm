@@ -22,7 +22,7 @@ public static class SwarmSceneBuilder
 
     static Sprite _white;
     static Material _spriteMaterial;
-    static Sprite _ship, _hex, _diamond, _square, _octagon, _circle;
+    static Sprite _ship, _hex, _diamond, _square, _octagon, _circle, _ring;
     static Font _font;
 
     [MenuItem("SWARM/Montar Protótipo Completo", priority = 0)]
@@ -74,6 +74,7 @@ public static class SwarmSceneBuilder
         _square = SwarmArt.Square;
         _octagon = SwarmArt.Octagon;
         _circle = SwarmArt.Circle;
+        _ring = SwarmArt.Ring;
         _font = null;
 
         List<string> enemyPaths = EnsureEnemyData();
@@ -96,6 +97,15 @@ public static class SwarmSceneBuilder
         GameObject bossProjectileTemplate = CreateBossProjectileTemplate();
         GameObject burstTemplate = CreateBurstTemplate();
         List<Enemy> enemyTemplates = CreateEnemyTemplates(enemies);
+
+        if (enemyTemplates.Count >= 6)
+        {
+            var splitter = enemyTemplates[3].gameObject.AddComponent<SplitOnDeath>();
+            SetRef(splitter, "fragmentTemplate", enemyTemplates[0]);
+
+            var shooter = enemyTemplates[4].gameObject.AddComponent<RangedEnemy>();
+            SetRef(shooter, "projectilePrefab", bossProjectileTemplate.GetComponent<EnemyProjectile>());
+        }
 
         Enemy bossTemplate = null;
         if (enemyTemplates.Count > 0)
@@ -216,6 +226,7 @@ public static class SwarmSceneBuilder
         upgrades = go.AddComponent<UpgradeSystem>();
         var orbital = go.AddComponent<OrbitalWeapon>();
         SetRef(orbital, "orbSprite", _circle);
+        go.AddComponent<PlayerRegen>();
 
         SetRef(controller, "stats", stats);
         SetRef(controller, "health", health);
@@ -694,6 +705,7 @@ public static class SwarmSceneBuilder
             problems += CheckComponents<Rigidbody2D>(player.gameObject, "Rigidbody2D");
             problems += CheckComponents<CircleCollider2D>(player.gameObject, "CircleCollider2D");
             problems += CheckComponents<OrbitalWeapon>(player.gameObject, "OrbitalWeapon");
+            problems += CheckComponents<PlayerRegen>(player.gameObject, "PlayerRegen");
 
             Weapon weapon = player.GetComponent<Weapon>();
             if (weapon == null) { Debug.LogError("[SWARM] Weapon ausente no Player"); problems++; }
@@ -705,7 +717,7 @@ public static class SwarmSceneBuilder
 
             UpgradeSystem upgrades = player.GetComponent<UpgradeSystem>();
             if (upgrades == null) { Debug.LogError("[SWARM] UpgradeSystem ausente no Player"); problems++; }
-            else problems += CheckArray(upgrades, "pool", 13);
+            else problems += CheckArray(upgrades, "pool", 20);
         }
 
         CameraFollow cameraFollow = Object.FindFirstObjectByType<CameraFollow>();
@@ -721,7 +733,7 @@ public static class SwarmSceneBuilder
         else
         {
             problems += CheckRefs(spawner, "target", "bossTemplate");
-            problems += CheckArray(spawner, "templates", 3);
+            problems += CheckArray(spawner, "templates", 5);
         }
 
         HudController hud = Object.FindFirstObjectByType<HudController>();
@@ -794,8 +806,30 @@ public static class SwarmSceneBuilder
             problems += CheckRefs(optionsMenu, "panel", "title", "options", "characterSelect");
         }
 
+        SplitOnDeath splitOnDeath = Object.FindFirstObjectByType<SplitOnDeath>(FindObjectsInactive.Include);
+        if (splitOnDeath == null)
+        {
+            Debug.LogError("[SWARM] SplitOnDeath ausente");
+            problems++;
+        }
+        else
+        {
+            problems += CheckRefs(splitOnDeath, "fragmentTemplate");
+        }
+
+        RangedEnemy rangedEnemy = Object.FindFirstObjectByType<RangedEnemy>(FindObjectsInactive.Include);
+        if (rangedEnemy == null)
+        {
+            Debug.LogError("[SWARM] RangedEnemy ausente");
+            problems++;
+        }
+        else
+        {
+            problems += CheckRefs(rangedEnemy, "projectilePrefab");
+        }
+
         Enemy[] enemies = Object.FindObjectsByType<Enemy>(FindObjectsInactive.Include, FindObjectsSortMode.None);
-        if (enemies.Length != 4) { Debug.LogError("[SWARM] Esperados 4 templates de inimigo, achei " + enemies.Length); problems++; }
+        if (enemies.Length != 6) { Debug.LogError("[SWARM] Esperados 6 templates de inimigo, achei " + enemies.Length); problems++; }
 
         foreach (Enemy enemy in enemies)
         {
@@ -988,6 +1022,36 @@ public static class SwarmSceneBuilder
             data.maxAliveOfType = 0;
         }));
 
+        list.Add(EnsureAsset<EnemyData>(ROOT + "/Data/Enemies/Divisor.asset", data =>
+        {
+            data.displayName = "Divisor";
+            data.maxHealth = 45f;
+            data.moveSpeed = 1.6f;
+            data.contactDamage = 8f;
+            data.xp = 2;
+            data.minTime = 75f;
+            data.weight = 15f;
+            data.sprite = _ring;
+            data.color = new Color(0.20f, 1f, 0.70f);
+            data.scale = 1.0f;
+            data.maxAliveOfType = 0;
+        }));
+
+        list.Add(EnsureAsset<EnemyData>(ROOT + "/Data/Enemies/Atirador.asset", data =>
+        {
+            data.displayName = "Atirador";
+            data.maxHealth = 35f;
+            data.moveSpeed = 1.4f;
+            data.contactDamage = 6f;
+            data.xp = 3;
+            data.minTime = 150f;
+            data.weight = 12f;
+            data.sprite = _circle;
+            data.color = new Color(0.35f, 0.75f, 1f);
+            data.scale = 0.8f;
+            data.maxAliveOfType = 0;
+        }));
+
         list.Add(EnsureAsset<EnemyData>(ROOT + "/Data/Enemies/Nucleo.asset", data =>
         {
             data.displayName = "Núcleo";
@@ -1048,7 +1112,7 @@ public static class SwarmSceneBuilder
 
     static void AssignEnemySprites(List<EnemyData> enemies)
     {
-        Sprite[] sprites = { _hex, _diamond, _square, _octagon };
+        Sprite[] sprites = { _hex, _diamond, _square, _ring, _circle, _octagon };
 
         for (int i = 0; i < enemies.Count && i < sprites.Length; i++)
         {
@@ -1074,7 +1138,14 @@ public static class SwarmSceneBuilder
             Upgrade("ProjetilVeloz", "Projétil Veloz", "+15% velocidade do projétil", StatType.ProjectileSpeed, 15f, true, 3),
             Upgrade("Reparo", "Reparo", "Cura 30% da vida máxima", StatType.Heal, 30f, true, 99),
             Upgrade("NucleoInstavel", "Núcleo Instável", "+25% de dano (raro e forte)", StatType.Damage, 25f, true, 2),
-            Upgrade("OrbeOrbital", "Orbe Orbital", "+1 orbe girando ao seu redor", StatType.Orbitals, 1f, false, 3)
+            Upgrade("OrbeOrbital", "Orbe Orbital", "+1 orbe girando ao seu redor", StatType.Orbitals, 1f, false, 3),
+            Upgrade("OrbeDenso", "Orbe Denso", "+25% de dano dos orbes", StatType.OrbDamage, 25f, true, 3),
+            Upgrade("Placas", "Placas", "+10% de armadura", StatType.Armor, 10f, true, 3),
+            Upgrade("Nanorrobos", "Nanorrobôs", "+0,5 vida por segundo", StatType.Regen, 0.5f, false, 3),
+            Upgrade("ImaForte", "Ímã Forte", "+1 de raio de coleta", StatType.PickupRadius, 1f, false, 3),
+            Upgrade("CalibrePesado", "Calibre Pesado", "+20% velocidade do projétil", StatType.ProjectileSpeed, 20f, true, 3),
+            Upgrade("Execucao", "Execução", "+0,5 multiplicador de crítico", StatType.CritDamage, 0.5f, false, 2),
+            Upgrade("CascaExtra", "Casca Extra", "+40 de vida máxima", StatType.MaxHealth, 40f, false, 5)
         };
 
         return list;

@@ -95,7 +95,7 @@ public class OrbitalWeapon : MonoBehaviour
 
     void DamageEnemies()
     {
-        float damage = _stats.damage * damageMultiplier;
+        float damage = _stats.damage * damageMultiplier * _stats.orbitalDamage;
 
         for (int i = _orbs.Count - 1; i >= 0; i--)
         {
