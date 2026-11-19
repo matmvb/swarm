@@ -105,6 +105,8 @@ public class BossController : MonoBehaviour
         {
             LastFightWon = true;
             LastFightDuration = Time.time - _spawnTime;
+
+            if (HitStop.Instance != null) HitStop.Instance.Play(0.09f, 0.05f);
         }
 
         HideTelegraph();

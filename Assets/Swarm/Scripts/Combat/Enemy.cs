@@ -124,6 +124,9 @@ public class Enemy : MonoBehaviour
         if (XpSystem.Instance != null && data != null)
             XpSystem.Instance.SpawnOrb(data.xp, transform.position);
 
+        if (DeathBurst.Instance != null)
+            DeathBurst.Instance.Spawn(transform.position, _baseColor);
+
         if (CameraFollow.Instance != null)
         {
             bool big = data != null && data.scale > 1.4f;
