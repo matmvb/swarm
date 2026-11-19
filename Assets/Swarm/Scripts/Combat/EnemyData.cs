@@ -22,6 +22,7 @@ public class EnemyData : ScriptableObject
     public int maxAliveOfType = 0;
 
     [Header("Visual")]
+    public Sprite sprite;
     public Color color = Color.red;
     public float scale = 0.7f;
 }
