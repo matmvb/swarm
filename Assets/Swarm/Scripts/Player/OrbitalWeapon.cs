@@ -30,7 +30,7 @@ public class OrbitalWeapon : MonoBehaviour
     void Awake()
     {
         _stats = GetComponent<PlayerStats>();
-        _playerSprite = GetComponent<SpriteRenderer>();
+        _playerSprite = GetComponentInChildren<SpriteRenderer>();
     }
 
     void Update()

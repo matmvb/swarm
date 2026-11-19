@@ -145,7 +145,7 @@ public class CharacterSelect : MonoBehaviour
             stats.damage *= character.damageMultiplier;
             stats.fireRate *= character.fireRateMultiplier;
 
-            var sprite = stats.GetComponent<SpriteRenderer>();
+            var sprite = stats.GetComponentInChildren<SpriteRenderer>();
             if (sprite != null) sprite.color = character.color;
         }
 

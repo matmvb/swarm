@@ -16,15 +16,20 @@ public class BurstParticle : MonoBehaviour
         _sprite = GetComponentInChildren<SpriteRenderer>();
     }
 
-    public void Init(Vector2 velocity, float lifetime, Color color)
+    public void Init(Vector2 velocity, float lifetime, Color color, float scale = -1f, int sortingOrder = -1)
     {
         _velocity = velocity;
         _life = lifetime;
         _maxLife = Mathf.Max(0.01f, lifetime);
         _color = color;
 
-        if (_sprite != null) _sprite.color = color;
-        transform.localScale = Vector3.one * Random.Range(0.14f, 0.26f);
+        if (_sprite != null)
+        {
+            _sprite.color = color;
+            if (sortingOrder >= 0) _sprite.sortingOrder = sortingOrder;
+        }
+
+        transform.localScale = Vector3.one * (scale > 0f ? scale : Random.Range(0.14f, 0.26f));
     }
 
     void Update()

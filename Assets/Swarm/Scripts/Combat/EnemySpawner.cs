@@ -9,6 +9,7 @@ public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] Transform target;
     [SerializeField] List<Enemy> templates = new List<Enemy>();
+    [SerializeField] SpawnWarning warningPrefab;
 
     [Header("Espaço")]
     [SerializeField] float spawnRadius = 13f;
@@ -76,7 +77,11 @@ public class EnemySpawner : MonoBehaviour
         Vector3 position = target.position + (Vector3)(direction * (spawnRadius + 2f));
         ObjectPool.Spawn(bossTemplate.gameObject, position, Quaternion.identity);
 
-        if (CameraFollow.Instance != null) CameraFollow.Instance.Shake(0.3f, 0.45f);
+        if (CameraFollow.Instance != null)
+        {
+            CameraFollow.Instance.Shake(0.3f, 0.45f);
+            CameraFollow.Instance.ZoomPunch(0.7f, 0.45f);
+        }
     }
 
     /// <summary>Remove os inimigos comuns (sem XP) para o duelo contra o boss.</summary>
@@ -102,6 +107,20 @@ public class EnemySpawner : MonoBehaviour
 
         Vector2 direction = Random.insideUnitCircle.normalized;
         Vector3 position = target.position + (Vector3)(direction * spawnRadius);
+
+        if (warningPrefab != null)
+        {
+            GameObject warningObject = ObjectPool.Spawn(warningPrefab.gameObject, position, Quaternion.identity);
+            if (warningObject != null)
+            {
+                var warning = warningObject.GetComponent<SpawnWarning>();
+                if (warning != null)
+                {
+                    warning.Begin(template, position, 0.35f);
+                    return;
+                }
+            }
+        }
 
         ObjectPool.Spawn(template.gameObject, position, Quaternion.identity);
     }
