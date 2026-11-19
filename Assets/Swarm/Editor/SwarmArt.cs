@@ -19,6 +19,61 @@ public static class SwarmArt
     public static Sprite Circle => Ensure("circle", 32, 0f, 0.44f, 0f);
     public static Sprite Ring => Ensure("ring", 32, 0f, 0.46f, 0.32f);
 
+    /// <summary>Textura de grid (linha de 1 px a cada 32 px, PPU 8 = célula de 4 unidades).</summary>
+    public static Sprite Grid()
+    {
+        EnsureFolder(ShapesFolder);
+
+        string path = ShapesFolder + "/grid.png";
+        string absolute = Path.Combine(Application.dataPath, "Swarm/Art/Shapes/grid.png");
+
+        if (!File.Exists(absolute))
+        {
+            const int size = 128;
+            const int cell = 32;
+
+            var texture = new Texture2D(size, size, TextureFormat.RGBA32, false);
+            var pixels = new Color32[size * size];
+
+            for (int y = 0; y < size; y++)
+            {
+                for (int x = 0; x < size; x++)
+                {
+                    bool line = (x % cell == 0) || (y % cell == 0);
+                    pixels[y * size + x] = line
+                        ? new Color32(255, 255, 255, 255)
+                        : new Color32(255, 255, 255, 0);
+                }
+            }
+
+            texture.SetPixels32(pixels);
+            texture.Apply();
+            File.WriteAllBytes(absolute, texture.EncodeToPNG());
+            Object.DestroyImmediate(texture);
+            AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceUpdate);
+        }
+
+        var importer = AssetImporter.GetAtPath(path) as TextureImporter;
+        if (importer != null)
+        {
+            importer.textureType = TextureImporterType.Sprite;
+            importer.spriteImportMode = SpriteImportMode.Single;
+            importer.spritePixelsPerUnit = 8f;
+            importer.filterMode = FilterMode.Bilinear;
+            importer.textureCompression = TextureImporterCompression.Uncompressed;
+            importer.alphaIsTransparency = true;
+
+            var settings = new TextureImporterSettings();
+            importer.ReadTextureSettings(settings);
+            settings.spriteMeshType = SpriteMeshType.FullRect; // necessário para Tiled
+            importer.SetTextureSettings(settings);
+
+            importer.SaveAndReimport();
+        }
+
+        return AssetDatabase.LoadAssetAtPath<Sprite>(path);
+    }
+
     public static Sprite Ensure(string name, int sides, float rotationDegrees, float radius, float hole, int size = 64)
     {
         EnsureFolder(ShapesFolder);

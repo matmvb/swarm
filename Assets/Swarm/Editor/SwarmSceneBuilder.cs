@@ -22,7 +22,7 @@ public static class SwarmSceneBuilder
 
     static Sprite _white;
     static Material _spriteMaterial;
-    static Sprite _ship, _hex, _diamond, _square, _octagon, _circle, _ring;
+    static Sprite _ship, _hex, _diamond, _square, _octagon, _circle, _ring, _grid;
     static Font _font;
 
     [MenuItem("SWARM/Montar Protótipo Completo", priority = 0)]
@@ -75,6 +75,7 @@ public static class SwarmSceneBuilder
         _octagon = SwarmArt.Octagon;
         _circle = SwarmArt.Circle;
         _ring = SwarmArt.Ring;
+        _grid = SwarmArt.Grid();
         _font = null;
 
         List<string> enemyPaths = EnsureEnemyData();
@@ -90,6 +91,7 @@ public static class SwarmSceneBuilder
         AssetDatabase.SaveAssets();
 
         GameObject cameraObject = CreateCamera();
+        CreateBackgroundGrid(cameraObject.transform);
         GameObject player = CreatePlayer(out PlayerStats stats, out Health health, out XpSystem xpSystem, out UpgradeSystem upgradeSystem);
 
         SetRef(cameraObject.GetComponent<CameraFollow>(), "target", player.transform);
@@ -194,14 +196,34 @@ public static class SwarmSceneBuilder
         return go;
     }
 
-    static GameObject CreatePlayer(out PlayerStats stats, out Health health, out XpSystem xp, out UpgradeSystem upgrades)
+    static void CreateBackgroundGrid(Transform follow)
     {
+        var go = new GameObject("BackgroundGrid");
+        go.transform.position = new Vector3(0f, 0f, 1f);
+
+        var sprite = go.AddComponent<SpriteRenderer>();
+        sprite.sprite = _grid;
+        sprite.color = new Color(0.18f, 0.30f, 0.55f, 0.35f);
+        sprite.drawMode = SpriteDrawMode.Tiled;
+        sprite.size = new Vector2(40f, 24f);
+        sprite.tileMode = SpriteTileMode.Continuous;
+        sprite.sortingOrder = -100;
+        ApplySpriteMaterial(sprite);
+
+        var grid = go.AddComponent<BackgroundGrid>();
+        SetRef(grid, "follow", follow);
+    }
+
+    static GameObject CreatePlayer(out PlayerStats stats, out Health health, out XpSystem xp, out UpgradeSystem upgrades)    {
         var go = new GameObject("Player");
         go.tag = "Player";
         go.transform.position = Vector3.zero;
         go.transform.localScale = Vector3.one * 0.8f;
 
-        var sprite = go.AddComponent<SpriteRenderer>();
+        var visual = new GameObject("Visual");
+        visual.transform.SetParent(go.transform, false);
+
+        var sprite = visual.AddComponent<SpriteRenderer>();
         sprite.sprite = _ship;
         sprite.color = new Color(0.30f, 1f, 0.88f);
         sprite.sortingOrder = 10;
@@ -218,8 +240,8 @@ public static class SwarmSceneBuilder
         collider.radius = 0.5f;
 
         var muzzle = new GameObject("Muzzle");
-        muzzle.transform.SetParent(go.transform, false);
-        muzzle.transform.localPosition = new Vector3(0.55f, 0f, 0f);
+        muzzle.transform.SetParent(visual.transform, false);
+        muzzle.transform.localPosition = new Vector3(0f, 0.55f, 0f);
 
         stats = go.AddComponent<PlayerStats>();
         health = go.AddComponent<Health>();
@@ -231,6 +253,9 @@ public static class SwarmSceneBuilder
         var orbital = go.AddComponent<OrbitalWeapon>();
         SetRef(orbital, "orbSprite", _circle);
         go.AddComponent<PlayerRegen>();
+
+        var playerVisual = go.AddComponent<PlayerVisual>();
+        SetRef(playerVisual, "visual", visual.transform);
 
         SetRef(controller, "stats", stats);
         SetRef(controller, "health", health);
@@ -808,6 +833,28 @@ public static class SwarmSceneBuilder
         {
             Debug.LogError("[SWARM] ScreenshotCapture ausente");
             problems++;
+        }
+
+        BackgroundGrid backgroundGrid = Object.FindFirstObjectByType<BackgroundGrid>();
+        if (backgroundGrid == null)
+        {
+            Debug.LogError("[SWARM] BackgroundGrid ausente");
+            problems++;
+        }
+        else
+        {
+            problems += CheckRefs(backgroundGrid, "follow");
+        }
+
+        PlayerVisual playerVisual = Object.FindFirstObjectByType<PlayerVisual>();
+        if (playerVisual == null)
+        {
+            Debug.LogError("[SWARM] PlayerVisual ausente");
+            problems++;
+        }
+        else
+        {
+            problems += CheckRefs(playerVisual, "visual");
         }
 
         OptionsMenu optionsMenu = Object.FindFirstObjectByType<OptionsMenu>();
