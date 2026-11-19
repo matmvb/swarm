@@ -9,6 +9,7 @@ public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] Transform target;
     [SerializeField] List<Enemy> templates = new List<Enemy>();
+    [SerializeField] SpawnWarning warningPrefab;
 
     [Header("Espaço")]
     [SerializeField] float spawnRadius = 13f;
@@ -106,6 +107,20 @@ public class EnemySpawner : MonoBehaviour
 
         Vector2 direction = Random.insideUnitCircle.normalized;
         Vector3 position = target.position + (Vector3)(direction * spawnRadius);
+
+        if (warningPrefab != null)
+        {
+            GameObject warningObject = ObjectPool.Spawn(warningPrefab.gameObject, position, Quaternion.identity);
+            if (warningObject != null)
+            {
+                var warning = warningObject.GetComponent<SpawnWarning>();
+                if (warning != null)
+                {
+                    warning.Begin(template, position, 0.35f);
+                    return;
+                }
+            }
+        }
 
         ObjectPool.Spawn(template.gameObject, position, Quaternion.identity);
     }

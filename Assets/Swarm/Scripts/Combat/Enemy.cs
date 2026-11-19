@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -136,6 +137,47 @@ public class Enemy : MonoBehaviour
         {
             bool big = data != null && data.scale > 1.4f;
             CameraFollow.Instance.Shake(big ? 0.25f : 0.03f, big ? 0.40f : 0.08f);
+        }
+
+        if (_rb != null) _rb.linearVelocity = Vector2.zero;
+
+        var collider = GetComponent<Collider2D>();
+        if (collider != null) collider.enabled = false;
+
+        bool isBoss = data != null && data.scale > 1.4f;
+        if (isBoss)
+        {
+            ObjectPool.Despawn(gameObject);
+            return;
+        }
+
+        _flash = 0f;
+        StartCoroutine(DeathRoutine());
+    }
+
+    IEnumerator DeathRoutine()
+    {
+        const float duration = 0.12f;
+
+        float time = 0f;
+        Vector3 startScale = transform.localScale;
+        Color startColor = _sprite != null ? _sprite.color : _baseColor;
+
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+            float k = Mathf.Clamp01(time / duration);
+
+            transform.localScale = startScale * (1f + k * 0.35f);
+
+            if (_sprite != null)
+            {
+                Color color = startColor;
+                color.a = 1f - k;
+                _sprite.color = color;
+            }
+
+            yield return null;
         }
 
         ObjectPool.Despawn(gameObject);

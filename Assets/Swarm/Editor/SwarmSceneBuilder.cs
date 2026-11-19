@@ -100,6 +100,7 @@ public static class SwarmSceneBuilder
         GameObject orbTemplate = CreateOrbTemplate();
         GameObject bossProjectileTemplate = CreateBossProjectileTemplate();
         GameObject burstTemplate = CreateBurstTemplate();
+        GameObject warningTemplate = CreateSpawnWarningTemplate();
 
         var thruster = player.AddComponent<ThrusterTrail>();
         SetRef(thruster, "visual", player.transform.Find("Visual"));
@@ -137,7 +138,7 @@ public static class SwarmSceneBuilder
         SetRef(xpSystem, "upgrades", upgradeSystem);
         SetList(upgradeSystem, "pool", ToObjectList(upgrades));
 
-        CreateSpawner(player.transform, enemyTemplates, bossTemplate);
+        CreateSpawner(player.transform, enemyTemplates, bossTemplate, warningTemplate.GetComponent<SpawnWarning>());
         HudController hud = CreateHud(stats, health, xpSystem, upgradeSystem, characters);
         SetRef(xpSystem, "hud", hud);
 
@@ -393,7 +394,7 @@ public static class SwarmSceneBuilder
         return result;
     }
 
-    static void CreateSpawner(Transform target, List<Enemy> templates, Enemy bossTemplate)
+    static void CreateSpawner(Transform target, List<Enemy> templates, Enemy bossTemplate, SpawnWarning warningPrefab)
     {
         var go = new GameObject("EnemySpawner");
         var spawner = go.AddComponent<EnemySpawner>();
@@ -401,6 +402,7 @@ public static class SwarmSceneBuilder
         SetRef(spawner, "target", target);
         SetList(spawner, "templates", ToObjectList(templates));
         SetRef(spawner, "bossTemplate", bossTemplate);
+        SetRef(spawner, "warningPrefab", warningPrefab);
     }
 
     static GameObject CreateManager()
@@ -417,9 +419,25 @@ public static class SwarmSceneBuilder
         go.AddComponent<HitStop>();
     }
 
-    static GameObject CreateBurstTemplate()
+    static GameObject CreateSpawnWarningTemplate()
     {
-        var go = new GameObject("BurstParticleTemplate");
+        var go = new GameObject("SpawnWarningTemplate");
+        go.transform.position = new Vector3(6f, -42f, 0f);
+        go.transform.localScale = Vector3.one * 0.7f;
+
+        var sprite = go.AddComponent<SpriteRenderer>();
+        sprite.sprite = _ring;
+        sprite.color = new Color(1f, 0.25f, 0.30f, 0.7f);
+        sprite.sortingOrder = 2;
+        ApplySpriteMaterial(sprite);
+
+        go.AddComponent<SpawnWarning>();
+        go.SetActive(false);
+        return go;
+    }
+
+    static GameObject CreateBurstTemplate()
+    {        var go = new GameObject("BurstParticleTemplate");
         go.transform.position = new Vector3(0f, -35f, 0f);
         go.transform.localScale = Vector3.one * 0.2f;
 
@@ -486,6 +504,11 @@ public static class SwarmSceneBuilder
         Text timer = MakeText(canvasObject.transform, "Timer", new Vector2(0.5f, 1f), new Vector2(0f, -40f), new Vector2(420f, 60f), 40, TextAnchor.MiddleCenter);
         Text kills = MakeText(canvasObject.transform, "Kills", new Vector2(0f, 1f), new Vector2(150f, -40f), new Vector2(280f, 50f), 28, TextAnchor.MiddleLeft);
         Text level = MakeText(canvasObject.transform, "Level", new Vector2(1f, 1f), new Vector2(-150f, -40f), new Vector2(280f, 50f), 28, TextAnchor.MiddleRight);
+
+        Color accent = new Color(0.65f, 1f, 0.95f);
+        timer.color = accent;
+        timer.fontStyle = FontStyle.Bold;
+        level.color = accent;
         Text hpText = MakeText(canvasObject.transform, "HpText", new Vector2(0f, 1f), new Vector2(150f, -95f), new Vector2(280f, 40f), 22, TextAnchor.MiddleLeft);
         Text hint = MakeText(canvasObject.transform, "Hint", new Vector2(0.5f, 1f), new Vector2(0f, -82f), new Vector2(1000f, 30f), 18, TextAnchor.MiddleCenter);
         hint.text = "WASD move  ·  tiro automático  ·  1/2/3 escolhe upgrade";
@@ -500,15 +523,20 @@ public static class SwarmSceneBuilder
 
         GameObject levelUpPanel = MakePanel(canvasObject.transform, "LevelUpPanel", new Color(0f, 0f, 0f, 0.82f));
         Text levelUpTitle = MakeText(levelUpPanel.transform, "LevelUpTitle", new Vector2(0.5f, 0.5f), new Vector2(0f, 220f), new Vector2(1400f, 80f), 46, TextAnchor.MiddleCenter);
+        levelUpTitle.color = accent;
+        levelUpTitle.fontStyle = FontStyle.Bold;
         Text levelUpOptions = MakeText(levelUpPanel.transform, "LevelUpOptions", new Vector2(0.5f, 0.5f), new Vector2(0f, -40f), new Vector2(1100f, 380f), 30, TextAnchor.MiddleCenter);
         levelUpOptions.verticalOverflow = VerticalWrapMode.Overflow;
 
         GameObject gameOverPanel = MakePanel(canvasObject.transform, "GameOverPanel", new Color(0.02f, 0.02f, 0.05f, 0.92f));
         Text gameOverText = MakeText(gameOverPanel.transform, "GameOverText", new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(1100f, 640f), 34, TextAnchor.MiddleCenter);
         gameOverText.verticalOverflow = VerticalWrapMode.Overflow;
+        gameOverText.fontStyle = FontStyle.Bold;
 
         GameObject characterPanel = MakePanel(canvasObject.transform, "CharacterSelectPanel", new Color(0.02f, 0.02f, 0.05f, 0.96f));
         Text characterTitle = MakeText(characterPanel.transform, "CharacterTitle", new Vector2(0.5f, 0.5f), new Vector2(0f, 300f), new Vector2(1400f, 80f), 46, TextAnchor.MiddleCenter);
+        characterTitle.color = accent;
+        characterTitle.fontStyle = FontStyle.Bold;
         Text characterOptions = MakeText(characterPanel.transform, "CharacterOptions", new Vector2(0.5f, 0.5f), new Vector2(0f, -50f), new Vector2(1100f, 560f), 26, TextAnchor.MiddleCenter);
         characterOptions.verticalOverflow = VerticalWrapMode.Overflow;
 
@@ -522,6 +550,8 @@ public static class SwarmSceneBuilder
 
         GameObject optionsPanel = MakePanel(canvasObject.transform, "OptionsPanel", new Color(0.02f, 0.02f, 0.05f, 0.97f));
         Text optionsTitle = MakeText(optionsPanel.transform, "OptionsTitle", new Vector2(0.5f, 0.5f), new Vector2(0f, 260f), new Vector2(1400f, 80f), 46, TextAnchor.MiddleCenter);
+        optionsTitle.color = accent;
+        optionsTitle.fontStyle = FontStyle.Bold;
         Text optionsText = MakeText(optionsPanel.transform, "OptionsText", new Vector2(0.5f, 0.5f), new Vector2(0f, -20f), new Vector2(1100f, 380f), 30, TextAnchor.MiddleCenter);
         optionsText.verticalOverflow = VerticalWrapMode.Overflow;
 
@@ -784,7 +814,7 @@ public static class SwarmSceneBuilder
         }
         else
         {
-            problems += CheckRefs(spawner, "target", "bossTemplate");
+            problems += CheckRefs(spawner, "target", "bossTemplate", "warningPrefab");
             problems += CheckArray(spawner, "templates", 5);
         }
 
@@ -836,6 +866,21 @@ public static class SwarmSceneBuilder
             if (particle.gameObject.activeSelf)
             {
                 Debug.LogError("[SWARM] Template de partícula deveria estar inativo");
+                problems++;
+            }
+        }
+
+        SpawnWarning[] warnings = Object.FindObjectsByType<SpawnWarning>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        if (warnings.Length != 1)
+        {
+            Debug.LogError("[SWARM] Esperado 1 template de aviso, achei " + warnings.Length);
+            problems++;
+        }
+        foreach (SpawnWarning warning in warnings)
+        {
+            if (warning.gameObject.activeSelf)
+            {
+                Debug.LogError("[SWARM] Template de aviso deveria estar inativo");
                 problems++;
             }
         }
