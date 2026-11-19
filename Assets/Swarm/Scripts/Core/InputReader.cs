@@ -18,7 +18,12 @@ public enum GameKey
     Restart,
     ToggleDebug,
     DebugBoss,
-    DebugOrbital
+    DebugOrbital,
+    Options,
+    VolumeDown,
+    VolumeUp,
+    Fullscreen,
+    ResetSave
 }
 
 /// <summary>
@@ -88,6 +93,16 @@ public static class InputReader
                 return keyboard.f2Key.wasPressedThisFrame;
             case GameKey.DebugOrbital:
                 return keyboard.f3Key.wasPressedThisFrame;
+            case GameKey.Options:
+                return keyboard.oKey.wasPressedThisFrame;
+            case GameKey.VolumeDown:
+                return keyboard.minusKey.wasPressedThisFrame;
+            case GameKey.VolumeUp:
+                return keyboard.equalsKey.wasPressedThisFrame;
+            case GameKey.Fullscreen:
+                return keyboard.fKey.wasPressedThisFrame;
+            case GameKey.ResetSave:
+                return keyboard.rKey.wasPressedThisFrame;
             default:
                 return false;
         }
@@ -114,6 +129,16 @@ public static class InputReader
                 return Input.GetKeyDown(KeyCode.F2);
             case GameKey.DebugOrbital:
                 return Input.GetKeyDown(KeyCode.F3);
+            case GameKey.Options:
+                return Input.GetKeyDown(KeyCode.O);
+            case GameKey.VolumeDown:
+                return Input.GetKeyDown(KeyCode.Minus);
+            case GameKey.VolumeUp:
+                return Input.GetKeyDown(KeyCode.Equals);
+            case GameKey.Fullscreen:
+                return Input.GetKeyDown(KeyCode.F);
+            case GameKey.ResetSave:
+                return Input.GetKeyDown(KeyCode.R);
             default:
                 return false;
         }

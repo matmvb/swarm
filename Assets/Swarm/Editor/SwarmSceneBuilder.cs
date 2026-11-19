@@ -461,6 +461,17 @@ public static class SwarmSceneBuilder
         SetRef(characterSelect, "stats", stats);
         SetRef(characterSelect, "health", health);
 
+        GameObject optionsPanel = MakePanel(canvasObject.transform, "OptionsPanel", new Color(0.02f, 0.02f, 0.05f, 0.97f));
+        Text optionsTitle = MakeText(optionsPanel.transform, "OptionsTitle", new Vector2(0.5f, 0.5f), new Vector2(0f, 260f), new Vector2(1400f, 80f), 46, TextAnchor.MiddleCenter);
+        Text optionsText = MakeText(optionsPanel.transform, "OptionsText", new Vector2(0.5f, 0.5f), new Vector2(0f, -20f), new Vector2(1100f, 380f), 30, TextAnchor.MiddleCenter);
+        optionsText.verticalOverflow = VerticalWrapMode.Overflow;
+
+        var optionsMenu = canvasObject.AddComponent<OptionsMenu>();
+        SetRef(optionsMenu, "panel", optionsPanel);
+        SetRef(optionsMenu, "title", optionsTitle);
+        SetRef(optionsMenu, "options", optionsText);
+        SetRef(optionsMenu, "characterSelect", characterSelect);
+
         SetRef(hud, "timerText", timer);
         SetRef(hud, "killsText", kills);
         SetRef(hud, "levelText", level);
@@ -770,6 +781,17 @@ public static class SwarmSceneBuilder
         {
             Debug.LogError("[SWARM] HitStop ausente");
             problems++;
+        }
+
+        OptionsMenu optionsMenu = Object.FindFirstObjectByType<OptionsMenu>();
+        if (optionsMenu == null)
+        {
+            Debug.LogError("[SWARM] OptionsMenu ausente");
+            problems++;
+        }
+        else
+        {
+            problems += CheckRefs(optionsMenu, "panel", "title", "options", "characterSelect");
         }
 
         Enemy[] enemies = Object.FindObjectsByType<Enemy>(FindObjectsInactive.Include, FindObjectsSortMode.None);
