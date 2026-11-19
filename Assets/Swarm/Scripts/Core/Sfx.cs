@@ -12,6 +12,7 @@ public class Sfx : MonoBehaviour
     [SerializeField] float masterVolume = 0.35f;
 
     AudioSource _source;
+    AudioSource _musicSource;
     AudioClip _shoot;
     AudioClip _hit;
     AudioClip _pickup;
@@ -37,6 +38,14 @@ public class Sfx : MonoBehaviour
         _levelUp = BuildArpeggio("sfx_levelup", new[] { 523f, 659f, 784f, 1046f }, 0.085f);
         _death = BuildTone("sfx_death", 110f, 0.55f, 6f, 0.3f);
         _warning = BuildTone("sfx_warning", 150f, 0.35f, 5f, 0.15f);
+
+        _musicSource = gameObject.AddComponent<AudioSource>();
+        _musicSource.playOnAwake = false;
+        _musicSource.loop = true;
+        _musicSource.spatialBlend = 0f;
+        _musicSource.volume = 0.22f;
+        _musicSource.clip = BuildMusic();
+        _musicSource.Play();
     }
 
     void OnDestroy()
@@ -88,6 +97,68 @@ public class Sfx : MonoBehaviour
         if (clip == null || _source == null) return;
         _source.pitch = pitch;
         _source.PlayOneShot(clip, volume * masterVolume);
+    }
+
+    /// <summary>
+    /// Loop ambiente de 16 s: pad lento (Am-F-C-G), drone grave e arpejo esparso.
+    /// Gerado por código para não depender de asset nem licença.
+    /// </summary>
+    static AudioClip BuildMusic()
+    {
+        const int sampleRate = 22050;
+        const float chordDuration = 4f;
+        const float beat = 0.5f;
+
+        float[][] chords =
+        {
+            new[] { 110.00f, 261.63f, 329.63f }, // Am
+            new[] { 87.31f, 220.00f, 261.63f },  // F
+            new[] { 130.81f, 329.63f, 392.00f }, // C
+            new[] { 98.00f, 246.94f, 293.66f }   // G
+        };
+
+        int samplesPerChord = Mathf.RoundToInt(sampleRate * chordDuration);
+        int length = samplesPerChord * chords.Length;
+        var data = new float[length];
+
+        for (int c = 0; c < chords.Length; c++)
+        {
+            int offset = c * samplesPerChord;
+            float[] chord = chords[c];
+
+            for (int i = 0; i < samplesPerChord; i++)
+            {
+                float t = i / (float)sampleRate;
+                float attack = Mathf.Clamp01(t / 1f);
+                float release = Mathf.Clamp01((chordDuration - t) / 1f);
+                float envelope = Mathf.Min(attack, release);
+
+                float pad = 0f;
+                for (int n = 0; n < chord.Length; n++)
+                    pad += Mathf.Sin(2f * Mathf.PI * chord[n] * t) * 0.12f;
+
+                float drone = Mathf.Sin(2f * Mathf.PI * chord[0] * 0.5f * t) * 0.10f;
+
+                float beatTime = t % beat;
+                int beatIndex = Mathf.FloorToInt(t / beat);
+                float note = chord[beatIndex % chord.Length] * 2f;
+                float arp = Mathf.Sin(2f * Mathf.PI * note * beatTime) * Mathf.Exp(-beatTime * 6f) * 0.06f;
+
+                data[offset + i] = (pad * envelope + drone * envelope + arp) * 0.9f;
+            }
+        }
+
+        int fade = Mathf.RoundToInt(sampleRate * 0.02f);
+        for (int i = 0; i < fade; i++)
+        {
+            float k = i / (float)fade;
+            data[i] *= k;
+            data[length - 1 - i] *= k;
+        }
+
+        var clip = AudioClip.Create("swarm_music", length, 1, sampleRate, false);
+        clip.SetData(data, 0);
+        return clip;
     }
 
     static AudioClip BuildTone(string name, float frequency, float duration, float decay, float noise)
