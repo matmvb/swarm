@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum StatType
@@ -18,6 +19,15 @@ public enum StatType
     Armor,
     Regen,
     CritDamage
+}
+
+/// <summary>Efeito adicional de um upgrade (além do principal).</summary>
+[System.Serializable]
+public class UpgradeEffect
+{
+    public StatType stat;
+    public float amount;
+    public bool percent;
 }
 
 /// <summary>
@@ -44,4 +54,7 @@ public class UpgradeData : ScriptableObject
 
     [Tooltip("Só é oferecido depois que este upgrade já foi escolhido ao menos uma vez.")]
     public UpgradeData prerequisite;
+
+    [Tooltip("Efeitos adicionais aplicados junto com o principal.")]
+    public List<UpgradeEffect> extraEffects = new List<UpgradeEffect>();
 }

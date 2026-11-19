@@ -13,9 +13,13 @@ MonoBehaviour:
   m_Name: Execucao
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeData
   title: "Execu\xE7\xE3o"
-  description: "+0,5 multiplicador de cr\xEDtico"
+  description: "+0,5 multiplicador de cr\xEDtico e +5% de cr\xEDtico"
   stat: 15
   amount: 0.5
   percent: 0
   maxStacks: 2
   prerequisite: {fileID: 11400000, guid: 6b808638c8993e142b5eb8cf617cae2f, type: 2}
+  extraEffects:
+  - stat: 8
+    amount: 5
+    percent: 1

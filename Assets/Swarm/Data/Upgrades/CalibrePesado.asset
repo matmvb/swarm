@@ -13,8 +13,13 @@ MonoBehaviour:
   m_Name: CalibrePesado
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeData
   title: Calibre Pesado
-  description: "+20% velocidade do proj\xE9til"
+  description: "+20% velocidade do proj\xE9til e +1 perfura\xE7\xE3o"
   stat: 9
   amount: 20
   percent: 1
   maxStacks: 3
+  prerequisite: {fileID: 0}
+  extraEffects:
+  - stat: 5
+    amount: 1
+    percent: 0

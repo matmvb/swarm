@@ -1121,6 +1121,40 @@ public static class SwarmSceneBuilder
     {
         Link("OrbeDenso", "OrbeOrbital");
         Link("Execucao", "MiraFria");
+        ConfigureExtras();
+    }
+
+    /// <summary>Diferencia os pares redundantes com um segundo efeito.</summary>
+    static void ConfigureExtras()
+    {
+        AddExtra("NucleoInstavel", StatType.CritChance, 5f, true, "+25% de dano e +5% de crítico");
+        AddExtra("CalibrePesado", StatType.Pierce, 1f, false, "+20% velocidade do projétil e +1 perfuração");
+        AddExtra("CascaExtra", StatType.Regen, 0.3f, false, "+40 de vida máxima e +0,3 vida/s");
+        AddExtra("ImaForte", StatType.MoveSpeed, 5f, true, "+1 de raio de coleta e +5% de velocidade");
+        AddExtra("Execucao", StatType.CritChance, 5f, true, "+0,5 multiplicador de crítico e +5% de crítico");
+    }
+
+    static void AddExtra(string file, StatType stat, float amount, bool percent, string description)
+    {
+        var upgrade = AssetDatabase.LoadAssetAtPath<UpgradeData>(ROOT + "/Data/Upgrades/" + file + ".asset");
+        if (upgrade == null) return;
+
+        upgrade.description = description;
+
+        bool exists = false;
+        for (int i = 0; i < upgrade.extraEffects.Count; i++)
+        {
+            if (upgrade.extraEffects[i] != null && upgrade.extraEffects[i].stat == stat)
+            {
+                exists = true;
+                break;
+            }
+        }
+
+        if (!exists)
+            upgrade.extraEffects.Add(new UpgradeEffect { stat = stat, amount = amount, percent = percent });
+
+        EditorUtility.SetDirty(upgrade);
     }
 
     static void Link(string targetFile, string prerequisiteFile)

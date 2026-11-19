@@ -13,8 +13,13 @@ MonoBehaviour:
   m_Name: CascaExtra
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeData
   title: Casca Extra
-  description: "+40 de vida m\xE1xima"
+  description: "+40 de vida m\xE1xima e +0,3 vida/s"
   stat: 3
   amount: 40
   percent: 0
   maxStacks: 5
+  prerequisite: {fileID: 0}
+  extraEffects:
+  - stat: 14
+    amount: 0.3
+    percent: 0
