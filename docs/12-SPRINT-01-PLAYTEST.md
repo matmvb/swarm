@@ -16,12 +16,15 @@
 O CSV grava uma linha por run:
 
 ```
-timestamp,version,duration_s,kills,level,victory,build
-2026-11-09 19:22:10,1.0,412.3,318,17,0,"Munição Pesada x2, Tiro Duplo x1, Ímã x1"
+timestamp,version,duration_s,kills,level,victory,boss_time,character,meta_damage,meta_health,meta_speed,build
+2026-11-18 19:22:10,1.0,412.3,318,17,0,13.2,"TANQUE",8,0,0,"Munição Pesada x2, Tiro Duplo x1"
 ```
 
-> `duration_s` usa **ponto** decimal (padrão internacional). `victory = 1` quando você
-> sobrevive aos 10:00 (a run termina em vitória, com +20 Núcleos).
+- `duration_s`: ponto decimal (padrão internacional).
+- `victory`: 1 quando sobrevive aos 10:00 (+20 Núcleos).
+- `boss_time`: -1 sem boss · 0 nasceu e não matou · >0 segundos da luta.
+- `character`: piloto escolhido.
+- `meta_*`: níveis comprados na loja de Núcleos.
 
 ---
 

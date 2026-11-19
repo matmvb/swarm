@@ -38,7 +38,12 @@ public static class MetaProgression
 
     public static int GetLevel(MetaUpgrade upgrade)
     {
-        return PlayerPrefs.GetInt("meta." + upgrade.id, 0);
+        return GetLevel(upgrade.id);
+    }
+
+    public static int GetLevel(string id)
+    {
+        return PlayerPrefs.GetInt("meta." + id, 0);
     }
 
     public static int GetCost(MetaUpgrade upgrade)

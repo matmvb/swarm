@@ -43,6 +43,10 @@ public class HudController : MonoBehaviour
     UpgradeData[] _options;
     bool _bossWasVisible;
     float _bossToastTimer;
+    float _hudClock;
+    int _shownSeconds = -1;
+    int _shownKills = -1;
+    int _shownLevel = -1;
 
     public bool LevelUpOpen { get; private set; }
 
@@ -72,8 +76,26 @@ public class HudController : MonoBehaviour
         GameManager gameManager = GameManager.Instance;
         if (gameManager == null) return;
 
-        if (timerText != null) timerText.text = FormatTime(gameManager.Elapsed);
-        if (killsText != null) killsText.text = "KILLS " + gameManager.Kills;
+        // HUD a 10 Hz e só quando o valor muda: evita TextGenerator/UGUI rebuild
+        // e alocação de string a cada frame (era a maior fonte de GC).
+        _hudClock -= Time.unscaledDeltaTime;
+        if (_hudClock <= 0f)
+        {
+            _hudClock = 0.1f;
+
+            int seconds = Mathf.FloorToInt(gameManager.Elapsed);
+            if (timerText != null && seconds != _shownSeconds)
+            {
+                _shownSeconds = seconds;
+                timerText.text = FormatTime(seconds);
+            }
+
+            if (killsText != null && gameManager.Kills != _shownKills)
+            {
+                _shownKills = gameManager.Kills;
+                killsText.text = "KILLS " + gameManager.Kills;
+            }
+        }
 
         if (hudHint != null && hudHint.enabled && gameManager.Elapsed > 10f)
             hudHint.enabled = false;
@@ -154,8 +176,11 @@ public class HudController : MonoBehaviour
         if (xpFill != null)
             xpFill.fillAmount = xp.XpToNext > 0 ? (float)xp.Xp / xp.XpToNext : 0f;
 
-        if (levelText != null)
+        if (levelText != null && xp.Level != _shownLevel)
+        {
+            _shownLevel = xp.Level;
             levelText.text = "NÍVEL " + xp.Level;
+        }
     }
 
     public void ShowLevelUp(UpgradeData[] options)
@@ -232,7 +257,12 @@ public class HudController : MonoBehaviour
 
     public static string FormatTime(float seconds)
     {
-        int total = Mathf.Max(0, Mathf.FloorToInt(seconds));
+        return FormatTime(Mathf.Max(0, Mathf.FloorToInt(seconds)));
+    }
+
+    public static string FormatTime(int totalSeconds)
+    {
+        int total = Mathf.Max(0, totalSeconds);
         return (total / 60).ToString("00") + ":" + (total % 60).ToString("00");
     }
 }
