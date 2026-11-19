@@ -24,6 +24,12 @@ public class UpgradeSystem : MonoBehaviour
             _taken.TryGetValue(upgrade, out int taken);
             if (taken >= upgrade.maxStacks) continue;
 
+            if (upgrade.prerequisite != null)
+            {
+                _taken.TryGetValue(upgrade.prerequisite, out int prerequisiteTaken);
+                if (prerequisiteTaken <= 0) continue;
+            }
+
             candidates.Add(upgrade);
         }
 

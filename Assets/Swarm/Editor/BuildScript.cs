@@ -41,7 +41,7 @@ public static class BuildScript
 
         PlayerSettings.companyName = "Scoty";
         PlayerSettings.productName = "SWARM";
-        PlayerSettings.bundleVersion = "0.8.0";
+        PlayerSettings.bundleVersion = "0.8.1";
         PlayerSettings.fullScreenMode = FullScreenMode.FullScreenWindow;
         PlayerSettings.defaultScreenWidth = 1920;
         PlayerSettings.defaultScreenHeight = 1080;

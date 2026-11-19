@@ -86,6 +86,8 @@ public static class SwarmSceneBuilder
         List<UpgradeData> upgrades = LoadAssets<UpgradeData>(upgradePaths);
         List<CharacterData> characters = LoadAssets<CharacterData>(characterPaths);
         AssignEnemySprites(enemies);
+        LinkPrerequisites();
+        AssetDatabase.SaveAssets();
 
         GameObject cameraObject = CreateCamera();
         GameObject player = CreatePlayer(out PlayerStats stats, out Health health, out XpSystem xpSystem, out UpgradeSystem upgradeSystem);
@@ -1110,8 +1112,19 @@ public static class SwarmSceneBuilder
         return list;
     }
 
-    static void AssignEnemySprites(List<EnemyData> enemies)
+    static void LinkPrerequisites()
     {
+        var target = AssetDatabase.LoadAssetAtPath<UpgradeData>(ROOT + "/Data/Upgrades/OrbeDenso.asset");
+        var prerequisite = AssetDatabase.LoadAssetAtPath<UpgradeData>(ROOT + "/Data/Upgrades/OrbeOrbital.asset");
+
+        if (target != null && prerequisite != null && target.prerequisite == null)
+        {
+            target.prerequisite = prerequisite;
+            EditorUtility.SetDirty(target);
+        }
+    }
+
+    static void AssignEnemySprites(List<EnemyData> enemies)    {
         Sprite[] sprites = { _hex, _diamond, _square, _ring, _circle, _octagon };
 
         for (int i = 0; i < enemies.Count && i < sprites.Length; i++)

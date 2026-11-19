@@ -162,7 +162,7 @@ Regras:
 | 11 | Reparo | cura 30% da vida máxima | flat | ilimitado |
 | 12 | Núcleo Instável | +25% dano (raro e forte) | % | 2 |
 | 13 | Orbe Orbital | +1 orbe girando ao seu redor | flat | 3 |
-| 14 | Orbe Denso | +25% de dano dos orbes | % | 3 |
+| 14 | Orbe Denso | +25% de dano dos orbes (requer Orbe Orbital) | % | 3 |
 | 15 | Placas | +10% de armadura | % | 3 |
 | 16 | Nanorrobôs | +0,5 vida por segundo | flat | 3 |
 | 17 | Ímã Forte | +1 de raio de coleta | flat | 3 |
@@ -171,7 +171,7 @@ Regras:
 | 20 | Casca Extra | +40 vida máxima | flat | 5 |
 
 **Regra do sorteio:** nunca oferecer upgrade no máximo; nunca repetir a mesma opção
-na mesma tela; 3 opções sempre que houver 3 candidatos.
+na mesma tela; 3 opções sempre que houver 3 candidatos; nunca oferecer upgrade cujo pré-requisito ainda não foi escolhido.
 
 ---
 
