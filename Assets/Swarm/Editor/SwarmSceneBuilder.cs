@@ -100,6 +100,14 @@ public static class SwarmSceneBuilder
         GameObject orbTemplate = CreateOrbTemplate();
         GameObject bossProjectileTemplate = CreateBossProjectileTemplate();
         GameObject burstTemplate = CreateBurstTemplate();
+
+        var thruster = player.AddComponent<ThrusterTrail>();
+        SetRef(thruster, "visual", player.transform.Find("Visual"));
+        SetRef(thruster, "template", burstTemplate.GetComponent<BurstParticle>());
+
+        var muzzleFlashObject = new GameObject("MuzzleFlash");
+        var muzzleFlash = muzzleFlashObject.AddComponent<MuzzleFlash>();
+        SetRef(muzzleFlash, "template", burstTemplate.GetComponent<BurstParticle>());
         List<Enemy> enemyTemplates = CreateEnemyTemplates(enemies);
 
         if (enemyTemplates.Count >= 6)
@@ -286,6 +294,17 @@ public static class SwarmSceneBuilder
         var collider = go.AddComponent<CircleCollider2D>();
         collider.isTrigger = true;
         collider.radius = 0.5f;
+
+        var trail = go.AddComponent<TrailRenderer>();
+        trail.time = 0.08f;
+        trail.startWidth = 0.14f;
+        trail.endWidth = 0f;
+        trail.sharedMaterial = _spriteMaterial;
+        trail.startColor = new Color(0.6f, 1f, 1f, 0.85f);
+        trail.endColor = new Color(0.6f, 1f, 1f, 0f);
+        trail.sortingOrder = 4;
+        trail.minVertexDistance = 0.03f;
+        trail.textureMode = LineTextureMode.Stretch;
 
         go.AddComponent<Projectile>();
         go.SetActive(false);
@@ -855,6 +874,28 @@ public static class SwarmSceneBuilder
         else
         {
             problems += CheckRefs(playerVisual, "visual");
+        }
+
+        MuzzleFlash muzzleFlash = Object.FindFirstObjectByType<MuzzleFlash>();
+        if (muzzleFlash == null)
+        {
+            Debug.LogError("[SWARM] MuzzleFlash ausente");
+            problems++;
+        }
+        else
+        {
+            problems += CheckRefs(muzzleFlash, "template");
+        }
+
+        ThrusterTrail thruster = Object.FindFirstObjectByType<ThrusterTrail>();
+        if (thruster == null)
+        {
+            Debug.LogError("[SWARM] ThrusterTrail ausente");
+            problems++;
+        }
+        else
+        {
+            problems += CheckRefs(thruster, "visual", "template");
         }
 
         OptionsMenu optionsMenu = Object.FindFirstObjectByType<OptionsMenu>();

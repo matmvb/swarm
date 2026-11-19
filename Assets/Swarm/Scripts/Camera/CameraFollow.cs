@@ -13,15 +13,23 @@ public class CameraFollow : MonoBehaviour
 
     Vector3 _basePosition;
     Vector3 _velocity;
+    Camera _camera;
+    float _baseSize;
 
     float _shakeTime;
     float _shakeDuration;
     float _shakeAmplitude;
 
+    float _zoomTime;
+    float _zoomDuration;
+    float _zoomAmount;
+
     void Awake()
     {
         Instance = this;
         _basePosition = transform.position;
+        _camera = GetComponent<Camera>();
+        if (_camera != null) _baseSize = _camera.orthographicSize;
     }
 
     void OnDestroy()
@@ -39,6 +47,16 @@ public class CameraFollow : MonoBehaviour
         _shakeAmplitude = amplitude;
         _shakeDuration = duration;
         _shakeTime = duration;
+    }
+
+    /// <summary>Zoom de impacto: fecha e volta (orthographicSize - amount).</summary>
+    public void ZoomPunch(float amount, float duration)
+    {
+        if (_camera == null || amount <= 0f || duration <= 0f) return;
+
+        _zoomAmount = amount;
+        _zoomDuration = duration;
+        _zoomTime = duration;
     }
 
     void LateUpdate()
@@ -59,5 +77,19 @@ public class CameraFollow : MonoBehaviour
         }
 
         transform.position = position;
+
+        if (_camera != null)
+        {
+            if (_zoomTime > 0f)
+            {
+                _zoomTime -= Time.unscaledDeltaTime;
+                float k = _zoomDuration > 0f ? Mathf.Clamp01(_zoomTime / _zoomDuration) : 0f;
+                _camera.orthographicSize = _baseSize - _zoomAmount * Mathf.Sin(k * Mathf.PI);
+            }
+            else
+            {
+                _camera.orthographicSize = _baseSize;
+            }
+        }
     }
 }

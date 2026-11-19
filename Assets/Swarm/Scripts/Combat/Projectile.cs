@@ -11,6 +11,7 @@ public class Projectile : MonoBehaviour
 
     Rigidbody2D _rb;
     SpriteRenderer _sprite;
+    TrailRenderer _trail;
     float _damage;
     int _pierce;
     float _speed;
@@ -26,6 +27,7 @@ public class Projectile : MonoBehaviour
         _rb.gravityScale = 0f;
         _rb.freezeRotation = true;
         _sprite = GetComponentInChildren<SpriteRenderer>();
+        _trail = GetComponent<TrailRenderer>();
     }
 
     public void Init(Vector2 direction, float damage, int pierce, float speed, float lifetime, bool critical)
@@ -37,6 +39,7 @@ public class Projectile : MonoBehaviour
         _critical = critical;
 
         _hits.Clear();
+        if (_trail != null) _trail.Clear();
 
         if (_sprite != null) _sprite.color = critical ? CriticalColor : NormalColor;
 

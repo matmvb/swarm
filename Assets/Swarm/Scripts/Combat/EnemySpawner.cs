@@ -76,7 +76,11 @@ public class EnemySpawner : MonoBehaviour
         Vector3 position = target.position + (Vector3)(direction * (spawnRadius + 2f));
         ObjectPool.Spawn(bossTemplate.gameObject, position, Quaternion.identity);
 
-        if (CameraFollow.Instance != null) CameraFollow.Instance.Shake(0.3f, 0.45f);
+        if (CameraFollow.Instance != null)
+        {
+            CameraFollow.Instance.Shake(0.3f, 0.45f);
+            CameraFollow.Instance.ZoomPunch(0.7f, 0.45f);
+        }
     }
 
     /// <summary>Remove os inimigos comuns (sem XP) para o duelo contra o boss.</summary>

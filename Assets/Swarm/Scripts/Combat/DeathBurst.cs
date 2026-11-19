@@ -35,7 +35,7 @@ public class DeathBurst : MonoBehaviour
             if (particle == null) continue;
 
             Vector2 direction = Random.insideUnitCircle.normalized;
-            particle.Init(direction * Random.Range(2f, 5f), Random.Range(0.25f, 0.45f), color);
+            particle.Init(direction * Random.Range(2f, 5f), Random.Range(0.25f, 0.45f), color, -1f, 7);
         }
     }
 }
