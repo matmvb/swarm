@@ -159,7 +159,7 @@ Regras:
 | 8 | Mira Fria | +5% crítico | flat | 4 |
 | 9 | Alcance | +15% alcance | % | 3 |
 | 10 | Projétil Veloz | +15% velocidade do projétil | % | 3 |
-| 11 | Reparo | cura 30% da vida máxima | flat | ilimitado |
+| 11 | Reparo | cura 30% da vida máxima (só com vida < 90%) | flat | ilimitado |
 | 12 | Núcleo Instável | +25% dano (raro e forte) | % | 2 |
 | 13 | Orbe Orbital | +1 orbe girando ao seu redor | flat | 3 |
 | 14 | Orbe Denso | +25% de dano dos orbes (requer Orbe Orbital) | % | 3 |
@@ -167,11 +167,11 @@ Regras:
 | 16 | Nanorrobôs | +0,5 vida por segundo | flat | 3 |
 | 17 | Ímã Forte | +1 de raio de coleta | flat | 3 |
 | 18 | Calibre Pesado | +20% velocidade do projétil | % | 3 |
-| 19 | Execução | +0,5 multiplicador de crítico | flat | 2 |
+| 19 | Execução | +0,5 multiplicador de crítico (requer Mira Fria) | flat | 2 |
 | 20 | Casca Extra | +40 vida máxima | flat | 5 |
 
 **Regra do sorteio:** nunca oferecer upgrade no máximo; nunca repetir a mesma opção
-na mesma tela; 3 opções sempre que houver 3 candidatos; nunca oferecer upgrade cujo pré-requisito ainda não foi escolhido.
+na mesma tela; 3 opções sempre que houver 3 candidatos; nunca oferecer upgrade cujo pré-requisito ainda não foi escolhido; nunca oferecer cura com a vida acima de 90%.
 
 ---
 

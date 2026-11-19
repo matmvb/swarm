@@ -18,3 +18,4 @@ MonoBehaviour:
   amount: 0.5
   percent: 0
   maxStacks: 2
+  prerequisite: {fileID: 11400000, guid: 6b808638c8993e142b5eb8cf617cae2f, type: 2}

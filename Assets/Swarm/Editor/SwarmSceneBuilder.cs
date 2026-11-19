@@ -226,6 +226,7 @@ public static class SwarmSceneBuilder
         var weapon = go.AddComponent<Weapon>();
         xp = go.AddComponent<XpSystem>();
         upgrades = go.AddComponent<UpgradeSystem>();
+        SetRef(upgrades, "playerHealth", health);
         var orbital = go.AddComponent<OrbitalWeapon>();
         SetRef(orbital, "orbSprite", _circle);
         go.AddComponent<PlayerRegen>();
@@ -719,7 +720,11 @@ public static class SwarmSceneBuilder
 
             UpgradeSystem upgrades = player.GetComponent<UpgradeSystem>();
             if (upgrades == null) { Debug.LogError("[SWARM] UpgradeSystem ausente no Player"); problems++; }
-            else problems += CheckArray(upgrades, "pool", 20);
+            else
+            {
+                problems += CheckArray(upgrades, "pool", 20);
+                problems += CheckRefs(upgrades, "playerHealth");
+            }
         }
 
         CameraFollow cameraFollow = Object.FindFirstObjectByType<CameraFollow>();
@@ -1114,8 +1119,14 @@ public static class SwarmSceneBuilder
 
     static void LinkPrerequisites()
     {
-        var target = AssetDatabase.LoadAssetAtPath<UpgradeData>(ROOT + "/Data/Upgrades/OrbeDenso.asset");
-        var prerequisite = AssetDatabase.LoadAssetAtPath<UpgradeData>(ROOT + "/Data/Upgrades/OrbeOrbital.asset");
+        Link("OrbeDenso", "OrbeOrbital");
+        Link("Execucao", "MiraFria");
+    }
+
+    static void Link(string targetFile, string prerequisiteFile)
+    {
+        var target = AssetDatabase.LoadAssetAtPath<UpgradeData>(ROOT + "/Data/Upgrades/" + targetFile + ".asset");
+        var prerequisite = AssetDatabase.LoadAssetAtPath<UpgradeData>(ROOT + "/Data/Upgrades/" + prerequisiteFile + ".asset");
 
         if (target != null && prerequisite != null && target.prerequisite == null)
         {

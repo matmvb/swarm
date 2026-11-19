@@ -8,6 +8,7 @@ using UnityEngine;
 public class UpgradeSystem : MonoBehaviour
 {
     [SerializeField] List<UpgradeData> pool = new List<UpgradeData>();
+    [SerializeField] Health playerHealth;
 
     readonly Dictionary<UpgradeData, int> _taken = new Dictionary<UpgradeData, int>();
 
@@ -23,6 +24,11 @@ public class UpgradeSystem : MonoBehaviour
 
             _taken.TryGetValue(upgrade, out int taken);
             if (taken >= upgrade.maxStacks) continue;
+
+            // Cura com a vida quase cheia é escolha desperdiçada.
+            if (upgrade.stat == StatType.Heal && playerHealth != null &&
+                playerHealth.Current >= playerHealth.Max * 0.9f)
+                continue;
 
             if (upgrade.prerequisite != null)
             {
