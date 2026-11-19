@@ -94,6 +94,7 @@ public static class SwarmSceneBuilder
         GameObject projectileTemplate = CreateProjectileTemplate();
         GameObject orbTemplate = CreateOrbTemplate();
         GameObject bossProjectileTemplate = CreateBossProjectileTemplate();
+        GameObject burstTemplate = CreateBurstTemplate();
         List<Enemy> enemyTemplates = CreateEnemyTemplates(enemies);
 
         Enemy bossTemplate = null;
@@ -121,6 +122,10 @@ public static class SwarmSceneBuilder
         GameObject manager = CreateManager();
         CreateSfx();
         CreateGlobalVolume();
+
+        var burstObject = new GameObject("DeathBurst");
+        var deathBurst = burstObject.AddComponent<DeathBurst>();
+        SetRef(deathBurst, "template", burstTemplate.GetComponent<BurstParticle>());
 
         var runLogger = manager.AddComponent<RunLogger>();
         SetRef(runLogger, "xp", xpSystem);
@@ -350,6 +355,24 @@ public static class SwarmSceneBuilder
     {
         var go = new GameObject("Sfx");
         go.AddComponent<Sfx>();
+        go.AddComponent<HitStop>();
+    }
+
+    static GameObject CreateBurstTemplate()
+    {
+        var go = new GameObject("BurstParticleTemplate");
+        go.transform.position = new Vector3(0f, -35f, 0f);
+        go.transform.localScale = Vector3.one * 0.2f;
+
+        var sprite = go.AddComponent<SpriteRenderer>();
+        sprite.sprite = _circle;
+        sprite.color = Color.white;
+        sprite.sortingOrder = 7;
+        ApplySpriteMaterial(sprite);
+
+        go.AddComponent<BurstParticle>();
+        go.SetActive(false);
+        return go;
     }
 
     static void CreateGlobalVolume()
@@ -399,6 +422,7 @@ public static class SwarmSceneBuilder
         scaler.matchWidthOrHeight = 0.5f;
 
         var hud = canvasObject.AddComponent<HudController>();
+        Image damageFlash = MakeFlash(canvasObject.transform);
 
         Text timer = MakeText(canvasObject.transform, "Timer", new Vector2(0.5f, 1f), new Vector2(0f, -40f), new Vector2(420f, 60f), 40, TextAnchor.MiddleCenter);
         Text kills = MakeText(canvasObject.transform, "Kills", new Vector2(0f, 1f), new Vector2(150f, -40f), new Vector2(280f, 50f), 28, TextAnchor.MiddleLeft);
@@ -444,6 +468,7 @@ public static class SwarmSceneBuilder
         SetRef(hud, "hudHint", hint);
         SetRef(hud, "hpFill", hpFill);
         SetRef(hud, "xpFill", xpFill);
+        SetRef(hud, "damageFlash", damageFlash);
         SetRef(hud, "levelUpPanel", levelUpPanel);
         SetRef(hud, "levelUpTitle", levelUpTitle);
         SetRef(hud, "levelUpOptions", levelUpOptions);
@@ -484,8 +509,26 @@ public static class SwarmSceneBuilder
         return text;
     }
 
-    static Image MakeBar(Transform parent, string name, Vector2 anchor, Vector2 position, Vector2 size, Color color)
+    static Image MakeFlash(Transform parent)
     {
+        var go = new GameObject("DamageFlash", typeof(RectTransform), typeof(Image));
+        go.transform.SetParent(parent, false);
+
+        var rect = go.GetComponent<RectTransform>();
+        rect.anchorMin = Vector2.zero;
+        rect.anchorMax = Vector2.one;
+        rect.offsetMin = Vector2.zero;
+        rect.offsetMax = Vector2.zero;
+
+        var image = go.GetComponent<Image>();
+        image.sprite = _white;
+        image.color = new Color(1f, 0.10f, 0.15f, 0f);
+        image.raycastTarget = false;
+
+        return image;
+    }
+
+    static Image MakeBar(Transform parent, string name, Vector2 anchor, Vector2 position, Vector2 size, Color color)    {
         var background = new GameObject(name, typeof(RectTransform), typeof(Image));
         background.transform.SetParent(parent, false);
 
@@ -680,7 +723,7 @@ public static class SwarmSceneBuilder
         {
             problems += CheckRefs(hud, "timerText", "killsText", "levelText", "hpText", "hudHint",
                 "hpFill", "xpFill", "levelUpPanel", "levelUpTitle", "levelUpOptions",
-                "gameOverPanel", "gameOverText", "bossBar", "bossFill", "bossLabel", "bossToast",
+                "gameOverPanel", "gameOverText", "bossBar", "bossFill", "bossLabel", "bossToast", "damageFlash",
                 "xp", "playerHealth", "upgrades", "stats");
         }
 
@@ -694,6 +737,39 @@ public static class SwarmSceneBuilder
         {
             problems += CheckRefs(characterSelect, "panel", "title", "options", "stats", "health");
             problems += CheckArray(characterSelect, "characters", 3);
+        }
+
+        DeathBurst deathBurst = Object.FindFirstObjectByType<DeathBurst>();
+        if (deathBurst == null)
+        {
+            Debug.LogError("[SWARM] DeathBurst ausente");
+            problems++;
+        }
+        else
+        {
+            problems += CheckRefs(deathBurst, "template");
+        }
+
+        BurstParticle[] burstParticles = Object.FindObjectsByType<BurstParticle>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        if (burstParticles.Length != 1)
+        {
+            Debug.LogError("[SWARM] Esperado 1 template de partícula, achei " + burstParticles.Length);
+            problems++;
+        }
+        foreach (BurstParticle particle in burstParticles)
+        {
+            if (particle.gameObject.activeSelf)
+            {
+                Debug.LogError("[SWARM] Template de partícula deveria estar inativo");
+                problems++;
+            }
+        }
+
+        HitStop hitStop = Object.FindFirstObjectByType<HitStop>();
+        if (hitStop == null)
+        {
+            Debug.LogError("[SWARM] HitStop ausente");
+            problems++;
         }
 
         Enemy[] enemies = Object.FindObjectsByType<Enemy>(FindObjectsInactive.Include, FindObjectsSortMode.None);

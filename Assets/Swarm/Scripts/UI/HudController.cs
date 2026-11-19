@@ -18,6 +18,7 @@ public class HudController : MonoBehaviour
     [Header("Barras")]
     [SerializeField] Image hpFill;
     [SerializeField] Image xpFill;
+    [SerializeField] Image damageFlash;
 
     [Header("Level Up")]
     [SerializeField] GameObject levelUpPanel;
@@ -47,6 +48,8 @@ public class HudController : MonoBehaviour
     int _shownSeconds = -1;
     int _shownKills = -1;
     int _shownLevel = -1;
+    float _flashAlpha;
+    float _lastHealth = -1f;
 
     public bool LevelUpOpen { get; private set; }
 
@@ -62,6 +65,7 @@ public class HudController : MonoBehaviour
 
         RefreshHp();
         RefreshXp();
+        if (playerHealth != null) _lastHealth = playerHealth.Current;
     }
 
     void OnDestroy()
@@ -108,6 +112,12 @@ public class HudController : MonoBehaviour
             if (_bossToastTimer <= 0f) bossToast.gameObject.SetActive(false);
         }
 
+        if (damageFlash != null && _flashAlpha > 0f)
+        {
+            _flashAlpha = Mathf.Max(0f, _flashAlpha - Time.unscaledDeltaTime * 2f);
+            damageFlash.color = new Color(1f, 0.10f, 0.15f, _flashAlpha);
+        }
+
         if (LevelUpOpen)
         {
             if (InputReader.WasPressed(GameKey.Digit1)) Choose(0);
@@ -124,6 +134,10 @@ public class HudController : MonoBehaviour
 
     void OnHealthChanged(float current, float max)
     {
+        if (_lastHealth >= 0f && current < _lastHealth - 0.01f)
+            _flashAlpha = 0.35f;
+
+        _lastHealth = current;
         RefreshHp();
     }
 
