@@ -20,5 +20,6 @@ MonoBehaviour:
   minTime: 0
   weight: 60
   maxAliveOfType: 0
+  sprite: {fileID: 21300000, guid: 4fe05659afa731342a712e05584def62, type: 3}
   color: {r: 1, g: 0.3, b: 0.45, a: 1}
   scale: 0.7

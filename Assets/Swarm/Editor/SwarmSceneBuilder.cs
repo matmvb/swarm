@@ -4,6 +4,8 @@ using System.IO;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -20,6 +22,7 @@ public static class SwarmSceneBuilder
 
     static Sprite _white;
     static Material _spriteMaterial;
+    static Sprite _ship, _hex, _diamond, _square, _octagon, _circle;
     static Font _font;
 
     [MenuItem("SWARM/Montar Protótipo Completo", priority = 0)]
@@ -65,6 +68,12 @@ public static class SwarmSceneBuilder
         EnsureFolders();
         _white = EnsureWhiteSprite();
         _spriteMaterial = EnsureSpriteMaterial();
+        _ship = SwarmArt.Ship;
+        _hex = SwarmArt.Hex;
+        _diamond = SwarmArt.Diamond;
+        _square = SwarmArt.Square;
+        _octagon = SwarmArt.Octagon;
+        _circle = SwarmArt.Circle;
         _font = null;
 
         List<string> enemyPaths = EnsureEnemyData();
@@ -75,6 +84,7 @@ public static class SwarmSceneBuilder
         List<EnemyData> enemies = LoadAssets<EnemyData>(enemyPaths);
         List<UpgradeData> upgrades = LoadAssets<UpgradeData>(upgradePaths);
         List<CharacterData> characters = LoadAssets<CharacterData>(characterPaths);
+        AssignEnemySprites(enemies);
 
         GameObject cameraObject = CreateCamera();
         GameObject player = CreatePlayer(out PlayerStats stats, out Health health, out XpSystem xpSystem, out UpgradeSystem upgradeSystem);
@@ -110,6 +120,7 @@ public static class SwarmSceneBuilder
 
         GameObject manager = CreateManager();
         CreateSfx();
+        CreateGlobalVolume();
 
         var runLogger = manager.AddComponent<RunLogger>();
         SetRef(runLogger, "xp", xpSystem);
@@ -157,6 +168,10 @@ public static class SwarmSceneBuilder
         // Câmera criada por script não vem com AudioListener: sem isso, o jogo fica mudo.
         go.AddComponent<AudioListener>();
 
+        var cameraData = go.GetComponent<UniversalAdditionalCameraData>();
+        if (cameraData == null) cameraData = go.AddComponent<UniversalAdditionalCameraData>();
+        cameraData.renderPostProcessing = true;
+
         go.AddComponent<CameraFollow>();
         return go;
     }
@@ -169,7 +184,7 @@ public static class SwarmSceneBuilder
         go.transform.localScale = Vector3.one * 0.8f;
 
         var sprite = go.AddComponent<SpriteRenderer>();
-        sprite.sprite = _white;
+        sprite.sprite = _ship;
         sprite.color = new Color(0.30f, 1f, 0.88f);
         sprite.sortingOrder = 10;
         ApplySpriteMaterial(sprite);
@@ -194,7 +209,8 @@ public static class SwarmSceneBuilder
         var weapon = go.AddComponent<Weapon>();
         xp = go.AddComponent<XpSystem>();
         upgrades = go.AddComponent<UpgradeSystem>();
-        go.AddComponent<OrbitalWeapon>();
+        var orbital = go.AddComponent<OrbitalWeapon>();
+        SetRef(orbital, "orbSprite", _circle);
 
         SetRef(controller, "stats", stats);
         SetRef(controller, "health", health);
@@ -211,7 +227,7 @@ public static class SwarmSceneBuilder
         go.transform.localScale = Vector3.one * 0.22f;
 
         var sprite = go.AddComponent<SpriteRenderer>();
-        sprite.sprite = _white;
+        sprite.sprite = _diamond;
         sprite.color = new Color(0.6f, 1f, 1f);
         sprite.sortingOrder = 5;
         ApplySpriteMaterial(sprite);
@@ -238,7 +254,7 @@ public static class SwarmSceneBuilder
         go.transform.localScale = Vector3.one * 0.3f;
 
         var sprite = go.AddComponent<SpriteRenderer>();
-        sprite.sprite = _white;
+        sprite.sprite = _circle;
         sprite.color = new Color(0.4f, 1f, 0.5f);
         sprite.sortingOrder = 4;
         ApplySpriteMaterial(sprite);
@@ -255,7 +271,7 @@ public static class SwarmSceneBuilder
         go.transform.localScale = Vector3.one * 0.35f;
 
         var sprite = go.AddComponent<SpriteRenderer>();
-        sprite.sprite = _white;
+        sprite.sprite = _circle;
         sprite.color = new Color(1f, 0.35f, 0.55f);
         sprite.sortingOrder = 6;
         ApplySpriteMaterial(sprite);
@@ -289,7 +305,7 @@ public static class SwarmSceneBuilder
             go.transform.position = new Vector3(0f, -30f - i * 3f, 0f);
 
             var sprite = go.AddComponent<SpriteRenderer>();
-            sprite.sprite = _white;
+            sprite.sprite = enemyData.sprite != null ? enemyData.sprite : _white;
             sprite.color = enemyData.color;
             sprite.sortingOrder = 3;
             ApplySpriteMaterial(sprite);
@@ -334,6 +350,37 @@ public static class SwarmSceneBuilder
     {
         var go = new GameObject("Sfx");
         go.AddComponent<Sfx>();
+    }
+
+    static void CreateGlobalVolume()
+    {
+        EnsureFolder(ROOT + "/Settings");
+
+        string path = ROOT + "/Settings/NeonProfile.asset";
+        var profile = AssetDatabase.LoadAssetAtPath<VolumeProfile>(path);
+
+        if (profile == null)
+        {
+            profile = ScriptableObject.CreateInstance<VolumeProfile>();
+            AssetDatabase.CreateAsset(profile, path);
+
+            var bloom = profile.Add<Bloom>(true);
+            bloom.intensity.Override(0.75f);
+            bloom.threshold.Override(0.55f);
+            bloom.scatter.Override(0.65f);
+
+            var vignette = profile.Add<Vignette>(true);
+            vignette.intensity.Override(0.25f);
+            vignette.smoothness.Override(0.4f);
+
+            EditorUtility.SetDirty(profile);
+        }
+
+        var go = new GameObject("Global Volume");
+        var volume = go.AddComponent<Volume>();
+        volume.isGlobal = true;
+        volume.priority = 0f;
+        volume.sharedProfile = profile;
     }
 
     // ─────────────────────────────────────────────────────────────
@@ -807,6 +854,7 @@ public static class SwarmSceneBuilder
             data.xp = 1;
             data.minTime = 0f;
             data.weight = 60f;
+            data.sprite = _hex;
             data.color = new Color(1f, 0.30f, 0.45f);
             data.scale = 0.7f;
             data.maxAliveOfType = 0;
@@ -821,6 +869,7 @@ public static class SwarmSceneBuilder
             data.xp = 1;
             data.minTime = 45f;
             data.weight = 30f;
+            data.sprite = _diamond;
             data.color = new Color(1f, 0.55f, 0.20f);
             data.scale = 0.55f;
             data.maxAliveOfType = 0;
@@ -835,6 +884,7 @@ public static class SwarmSceneBuilder
             data.xp = 3;
             data.minTime = 120f;
             data.weight = 20f;
+            data.sprite = _square;
             data.color = new Color(0.75f, 0.20f, 1f);
             data.scale = 1.4f;
             data.maxAliveOfType = 0;
@@ -849,6 +899,7 @@ public static class SwarmSceneBuilder
             data.xp = 40;
             data.minTime = 300f;
             data.weight = 4f;
+            data.sprite = _octagon;
             data.color = new Color(1f, 0.15f, 0.15f);
             data.scale = 2.2f;
             data.maxAliveOfType = 1;
@@ -895,6 +946,18 @@ public static class SwarmSceneBuilder
         }));
 
         return list;
+    }
+
+    static void AssignEnemySprites(List<EnemyData> enemies)
+    {
+        Sprite[] sprites = { _hex, _diamond, _square, _octagon };
+
+        for (int i = 0; i < enemies.Count && i < sprites.Length; i++)
+        {
+            if (enemies[i] == null || enemies[i].sprite != null) continue;
+            enemies[i].sprite = sprites[i];
+            EditorUtility.SetDirty(enemies[i]);
+        }
     }
 
     static List<string> EnsureUpgradeData()
@@ -1008,6 +1071,7 @@ public static class SwarmSceneBuilder
         EnsureFolder(ROOT + "/Data/Enemies");
         EnsureFolder(ROOT + "/Data/Upgrades");
         EnsureFolder(ROOT + "/Scenes");
+        EnsureFolder(ROOT + "/Settings");
     }
 
     static void EnsureFolder(string path)
