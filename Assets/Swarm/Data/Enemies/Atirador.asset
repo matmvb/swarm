@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc9911fb96baa9e4d8f60b554a9fee89, type: 3}
+  m_Name: Atirador
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyData
+  displayName: Atirador
+  maxHealth: 35
+  moveSpeed: 1.4
+  contactDamage: 6
+  xp: 3
+  minTime: 150
+  weight: 12
+  maxAliveOfType: 0
+  sprite: {fileID: 21300000, guid: fb768999ab08aa34ab1813566094f80c, type: 3}
+  color: {r: 0.35, g: 0.75, b: 1, a: 1}
+  scale: 0.8

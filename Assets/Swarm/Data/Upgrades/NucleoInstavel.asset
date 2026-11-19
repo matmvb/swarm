@@ -13,8 +13,13 @@ MonoBehaviour:
   m_Name: NucleoInstavel
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeData
   title: "N\xFAcleo Inst\xE1vel"
-  description: +25% de dano (raro e forte)
+  description: "+25% de dano e +5% de cr\xEDtico"
   stat: 0
   amount: 25
   percent: 1
   maxStacks: 2
+  prerequisite: {fileID: 0}
+  extraEffects:
+  - stat: 8
+    amount: 5
+    percent: 1

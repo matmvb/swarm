@@ -17,4 +17,4 @@ MonoBehaviour:
   stat: 10
   amount: 30
   percent: 1
-  maxStacks: 99
+  maxStacks: 5

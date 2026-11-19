@@ -9,6 +9,9 @@ public class Health : MonoBehaviour
 {
     [SerializeField] float maxHealth = 100f;
 
+    /// <summary>1 = dano cheio. A armadura dos upgrades reduz este valor.</summary>
+    public float damageTakenMultiplier = 1f;
+
     public float Current { get; private set; }
     public float Max => maxHealth;
     public bool IsDead => Current <= 0f;
@@ -32,7 +35,7 @@ public class Health : MonoBehaviour
     {
         if (IsDead || amount <= 0f) return;
 
-        Current = Mathf.Max(0f, Current - amount);
+        Current = Mathf.Max(0f, Current - amount * damageTakenMultiplier);
         Changed?.Invoke(Current, maxHealth);
 
         if (Current <= 0f) Died?.Invoke();

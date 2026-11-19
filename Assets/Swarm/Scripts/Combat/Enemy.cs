@@ -17,6 +17,9 @@ public class Enemy : MonoBehaviour
     /// <summary>Vida normalizada (0..1), usada pela barra do boss.</summary>
     public float Health01 => _maxHealth > 0f ? Mathf.Clamp01(_health / _maxHealth) : 0f;
 
+    /// <summary>Avisa quando este inimigo morre (antes de voltar ao pool).</summary>
+    public event System.Action Died;
+
     /// <summary>Quando true, outro componente (ex.: BossController) controla o movimento.</summary>
     [System.NonSerialized] public bool externalControl;
 
@@ -118,6 +121,8 @@ public class Enemy : MonoBehaviour
     void Die()
     {
         _dead = true;
+
+        Died?.Invoke();
 
         if (GameManager.Instance != null) GameManager.Instance.RegisterKill();
 
