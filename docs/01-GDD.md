@@ -159,7 +159,7 @@ Regras:
 | 8 | Mira Fria | +5% crítico | flat | 4 |
 | 9 | Alcance | +15% alcance | % | 3 |
 | 10 | Projétil Veloz | +15% velocidade do projétil | % | 3 |
-| 11 | Reparo | cura 30% da vida máxima (só com vida < 90%) | flat | ilimitado |
+| 11 | Reparo | cura 30% da vida máxima (só com vida < 90%) | flat | 5 |
 | 12 | Núcleo Instável | +25% dano (raro e forte) | % | 2 |
 | 13 | Orbe Orbital | +1 orbe girando ao seu redor | flat | 3 |
 | 14 | Orbe Denso | +25% de dano dos orbes (requer Orbe Orbital) | % | 3 |

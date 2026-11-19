@@ -1160,7 +1160,7 @@ public static class SwarmSceneBuilder
             Upgrade("MiraFria", "Mira Fria", "+5% de crítico", StatType.CritChance, 5f, true, 4),
             Upgrade("Alcance", "Alcance", "+15% de alcance", StatType.Range, 15f, true, 3),
             Upgrade("ProjetilVeloz", "Projétil Veloz", "+15% velocidade do projétil", StatType.ProjectileSpeed, 15f, true, 3),
-            Upgrade("Reparo", "Reparo", "Cura 30% da vida máxima", StatType.Heal, 30f, true, 99),
+            Upgrade("Reparo", "Reparo", "Cura 30% da vida máxima", StatType.Heal, 30f, true, 5),
             Upgrade("NucleoInstavel", "Núcleo Instável", "+25% de dano (raro e forte)", StatType.Damage, 25f, true, 2),
             Upgrade("OrbeOrbital", "Orbe Orbital", "+1 orbe girando ao seu redor", StatType.Orbitals, 1f, false, 3),
             Upgrade("OrbeDenso", "Orbe Denso", "+25% de dano dos orbes", StatType.OrbDamage, 25f, true, 3),
