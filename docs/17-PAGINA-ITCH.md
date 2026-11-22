@@ -71,7 +71,7 @@ Obrigado por jogar. 🎮
 
 | Item | Especificação |
 |---|---|
-| Build | `Builds/SWARM-windows.zip` (~38 MB) |
+| Build | `Builds/SWARM-windows.zip` (0.9.8, ~39 MB) |
 | Cover | 630 × 500 |
 | Screenshots | 5 × 1920 × 1080 |
 | GIFs | 3 (6–10 s cada) |
