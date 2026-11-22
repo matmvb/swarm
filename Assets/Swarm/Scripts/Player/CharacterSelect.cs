@@ -30,6 +30,13 @@ public class CharacterSelect : MonoBehaviour
         SelectedName = "";
         InputBlocked = false;
 
+        // Se o menu principal já chamou Begin() (restart rápido), não esconde o painel.
+        if (!_choosing && panel != null) panel.SetActive(false);
+    }
+
+    /// <summary>Chamado pelo menu principal ao apertar Jogar.</summary>
+    public void Begin()
+    {
         if (GameManager.Instance == null) return;
         if (characters == null || characters.Count == 0) return;
 

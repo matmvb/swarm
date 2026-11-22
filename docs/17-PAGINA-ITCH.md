@@ -48,10 +48,12 @@ Sobreviva até 10:00 para vencer.
 
 | Tecla | Ação |
 |---|---|
+| ENTER | jogar (menu principal) |
 | WASD / setas | mover |
 | 1 / 2 / 3 | escolher piloto / upgrade |
 | 4 / 5 / 6 | comprar melhorias permanentes |
 | O | opções (volume, tela cheia, reset) |
+| ESC | pausar / continuar |
 | R | reiniciar |
 | F1 | overlay de debug |
 | F12 | screenshot |

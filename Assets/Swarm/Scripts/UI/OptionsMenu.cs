@@ -6,6 +6,8 @@ using UnityEngine.UI;
 /// </summary>
 public class OptionsMenu : MonoBehaviour
 {
+    public static OptionsMenu Instance { get; private set; }
+
     [SerializeField] GameObject panel;
     [SerializeField] Text title;
     [SerializeField] Text options;
@@ -13,6 +15,18 @@ public class OptionsMenu : MonoBehaviour
 
     bool _open;
     float _resetConfirmUntil;
+
+    public bool IsOpen => _open;
+
+    void Awake()
+    {
+        Instance = this;
+    }
+
+    void OnDestroy()
+    {
+        if (Instance == this) Instance = null;
+    }
 
     void Start()
     {
@@ -24,8 +38,12 @@ public class OptionsMenu : MonoBehaviour
     {
         if (!_open)
         {
-            if (characterSelect != null && characterSelect.IsChoosing && InputReader.WasPressed(GameKey.Options))
-                Open();
+            bool menuOpen =
+                (MainMenu.Instance != null && MainMenu.Instance.IsOpen) ||
+                (PauseMenu.Instance != null && PauseMenu.Instance.IsOpen) ||
+                (characterSelect != null && characterSelect.IsChoosing);
+
+            if (menuOpen && InputReader.WasPressed(GameKey.Options)) Open();
             return;
         }
 

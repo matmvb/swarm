@@ -24,6 +24,9 @@ public class GameManager : MonoBehaviour
     public int Kills { get; private set; }
     public float TimeLeft => Mathf.Max(0f, runDuration - Elapsed);
 
+    /// <summary>Quando true, ao carregar a cena o menu principal pula direto para os pilotos.</summary>
+    public static bool AutoStartRun { get; set; }
+
     /// <summary>Multiplicador de HP aplicado quando um inimigo nasce.</summary>
     public float Difficulty => 1f + (Elapsed / 60f) * hpRampPerMinute;
 
@@ -98,6 +101,12 @@ public class GameManager : MonoBehaviour
 
     public void Restart()
     {
+        Restart(true);
+    }
+
+    public void Restart(bool autoStart)
+    {
+        AutoStartRun = autoStart;
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }

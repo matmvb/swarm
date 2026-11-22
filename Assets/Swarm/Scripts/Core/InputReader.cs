@@ -24,7 +24,11 @@ public enum GameKey
     VolumeUp,
     Fullscreen,
     ResetSave,
-    Screenshot
+    Screenshot,
+    Confirm,
+    Back,
+    MainMenuKey,
+    Quit
 }
 
 /// <summary>
@@ -106,6 +110,14 @@ public static class InputReader
                 return keyboard.rKey.wasPressedThisFrame;
             case GameKey.Screenshot:
                 return keyboard.f12Key.wasPressedThisFrame;
+            case GameKey.Confirm:
+                return keyboard.enterKey.wasPressedThisFrame || keyboard.numpadEnterKey.wasPressedThisFrame;
+            case GameKey.Back:
+                return keyboard.escapeKey.wasPressedThisFrame;
+            case GameKey.MainMenuKey:
+                return keyboard.mKey.wasPressedThisFrame;
+            case GameKey.Quit:
+                return keyboard.qKey.wasPressedThisFrame;
             default:
                 return false;
         }
@@ -144,6 +156,14 @@ public static class InputReader
                 return Input.GetKeyDown(KeyCode.R);
             case GameKey.Screenshot:
                 return Input.GetKeyDown(KeyCode.F12);
+            case GameKey.Confirm:
+                return Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter);
+            case GameKey.Back:
+                return Input.GetKeyDown(KeyCode.Escape);
+            case GameKey.MainMenuKey:
+                return Input.GetKeyDown(KeyCode.M);
+            case GameKey.Quit:
+                return Input.GetKeyDown(KeyCode.Q);
             default:
                 return false;
         }

@@ -505,40 +505,99 @@ public static class SwarmSceneBuilder
         Text kills = MakeText(canvasObject.transform, "Kills", new Vector2(0f, 1f), new Vector2(150f, -40f), new Vector2(280f, 50f), 28, TextAnchor.MiddleLeft);
         Text level = MakeText(canvasObject.transform, "Level", new Vector2(1f, 1f), new Vector2(-150f, -40f), new Vector2(280f, 50f), 28, TextAnchor.MiddleRight);
 
-        Color accent = new Color(0.65f, 1f, 0.95f);
+        Color accent = UIPalette.AccentSoft;
         timer.color = accent;
         timer.fontStyle = FontStyle.Bold;
         level.color = accent;
-        Text hpText = MakeText(canvasObject.transform, "HpText", new Vector2(0f, 1f), new Vector2(150f, -95f), new Vector2(280f, 40f), 22, TextAnchor.MiddleLeft);
-        Text hint = MakeText(canvasObject.transform, "Hint", new Vector2(0.5f, 1f), new Vector2(0f, -82f), new Vector2(1000f, 30f), 18, TextAnchor.MiddleCenter);
-        hint.text = "WASD move  ·  tiro automático  ·  1/2/3 escolhe upgrade";
-        hint.color = new Color(1f, 1f, 1f, 0.4f);
+        kills.color = UIPalette.Text;
 
-        Image hpFill = MakeBar(canvasObject.transform, "HpBar", new Vector2(0f, 1f), new Vector2(20f, -125f), new Vector2(260f, 18f), new Color(1f, 0.25f, 0.35f));
-        Image xpFill = MakeBar(canvasObject.transform, "XpBar", new Vector2(0.5f, 0f), new Vector2(0f, 18f), new Vector2(1200f, 10f), new Color(0.4f, 1f, 0.5f));
+        Text hpText = MakeText(canvasObject.transform, "HpText", new Vector2(0f, 1f), new Vector2(150f, -95f), new Vector2(280f, 40f), 22, TextAnchor.MiddleLeft);
+        hpText.color = UIPalette.Text;
+
+        Text hint = MakeText(canvasObject.transform, "Hint", new Vector2(0.5f, 1f), new Vector2(0f, -82f), new Vector2(1000f, 30f), 18, TextAnchor.MiddleCenter);
+        hint.text = "WASD move  ·  tiro automático  ·  1/2/3 escolhe upgrade  ·  ESC pausa";
+        hint.color = new Color(UIPalette.Muted.r, UIPalette.Muted.g, UIPalette.Muted.b, 0.55f);
+
+        Image hpFill = MakeBar(canvasObject.transform, "HpBar", new Vector2(0f, 1f), new Vector2(20f, -125f), new Vector2(260f, 18f), UIPalette.Danger);
+        Image xpFill = MakeBar(canvasObject.transform, "XpBar", new Vector2(0.5f, 0f), new Vector2(0f, 18f), new Vector2(1200f, 10f), UIPalette.Exp);
         GameObject bossBar = MakeBossBar(canvasObject.transform, out Image bossFill, out Text bossLabel);
         Text bossToast = MakeText(canvasObject.transform, "BossToast", new Vector2(0.5f, 0.5f), new Vector2(0f, 120f), new Vector2(1000f, 50f), 34, TextAnchor.MiddleCenter);
-        bossToast.color = new Color(1f, 0.75f, 0.3f);
+        bossToast.color = UIPalette.Warning;
         bossToast.gameObject.SetActive(false);
 
-        GameObject levelUpPanel = MakePanel(canvasObject.transform, "LevelUpPanel", new Color(0f, 0f, 0f, 0.82f));
+        GameObject levelUpPanel = MakePanel(canvasObject.transform, "LevelUpPanel", new Color(UIPalette.Panel.r, UIPalette.Panel.g, UIPalette.Panel.b, 0.88f));
         Text levelUpTitle = MakeText(levelUpPanel.transform, "LevelUpTitle", new Vector2(0.5f, 0.5f), new Vector2(0f, 220f), new Vector2(1400f, 80f), 46, TextAnchor.MiddleCenter);
         levelUpTitle.color = accent;
         levelUpTitle.fontStyle = FontStyle.Bold;
         Text levelUpOptions = MakeText(levelUpPanel.transform, "LevelUpOptions", new Vector2(0.5f, 0.5f), new Vector2(0f, -40f), new Vector2(1100f, 380f), 30, TextAnchor.MiddleCenter);
         levelUpOptions.verticalOverflow = VerticalWrapMode.Overflow;
+        levelUpOptions.color = UIPalette.Text;
 
-        GameObject gameOverPanel = MakePanel(canvasObject.transform, "GameOverPanel", new Color(0.02f, 0.02f, 0.05f, 0.92f));
+        GameObject gameOverPanel = MakePanel(canvasObject.transform, "GameOverPanel", UIPalette.Panel);
         Text gameOverText = MakeText(gameOverPanel.transform, "GameOverText", new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(1100f, 640f), 34, TextAnchor.MiddleCenter);
         gameOverText.verticalOverflow = VerticalWrapMode.Overflow;
         gameOverText.fontStyle = FontStyle.Bold;
+        gameOverText.color = UIPalette.Text;
 
-        GameObject characterPanel = MakePanel(canvasObject.transform, "CharacterSelectPanel", new Color(0.02f, 0.02f, 0.05f, 0.96f));
+        GameObject mainMenuPanel = MakePanel(canvasObject.transform, "MainMenuPanel", UIPalette.PanelSolid);
+        Text mainTitle = MakeText(mainMenuPanel.transform, "MainTitle", new Vector2(0.5f, 0.5f), new Vector2(0f, 190f), new Vector2(1400f, 120f), 72, TextAnchor.MiddleCenter);
+        mainTitle.text = "S W A R M";
+        mainTitle.color = UIPalette.Accent;
+        mainTitle.fontStyle = FontStyle.Bold;
+
+        Text mainTagline = MakeText(mainMenuPanel.transform, "MainTagline", new Vector2(0.5f, 0.5f), new Vector2(0f, 108f), new Vector2(1400f, 40f), 22, TextAnchor.MiddleCenter);
+        mainTagline.text = "SPACE INVADERS NA DOSE DE SURVIVORS";
+        mainTagline.color = UIPalette.Muted;
+
+        Text mainPlay = MakeText(mainMenuPanel.transform, "MainPlay", new Vector2(0.5f, 0.5f), new Vector2(0f, 18f), new Vector2(1400f, 60f), 34, TextAnchor.MiddleCenter);
+        mainPlay.text = "<color=#4DFFE0>[ENTER]</color>   JOGAR";
+        mainPlay.color = UIPalette.Text;
+
+        Text mainOptions = MakeText(mainMenuPanel.transform, "MainOptions", new Vector2(0.5f, 0.5f), new Vector2(0f, -42f), new Vector2(1400f, 40f), 24, TextAnchor.MiddleCenter);
+        mainOptions.text = "<color=#4DFFE0>[O]</color>   OPÇÕES";
+        mainOptions.color = UIPalette.Muted;
+
+        Text mainQuit = MakeText(mainMenuPanel.transform, "MainQuit", new Vector2(0.5f, 0.5f), new Vector2(0f, -92f), new Vector2(1400f, 40f), 24, TextAnchor.MiddleCenter);
+        mainQuit.text = "<color=#4DFFE0>[ESC]</color>   SAIR";
+        mainQuit.color = UIPalette.Muted;
+
+        Text mainVersion = MakeText(mainMenuPanel.transform, "MainVersion", new Vector2(0.5f, 0.5f), new Vector2(0f, -226f), new Vector2(1400f, 30f), 18, TextAnchor.MiddleCenter);
+        mainVersion.text = "DEMO 0.9.6   ·   FEITO COM UNITY";
+        mainVersion.color = UIPalette.Muted;
+
+        GameObject pausePanel = MakePanel(canvasObject.transform, "PausePanel", new Color(UIPalette.Panel.r, UIPalette.Panel.g, UIPalette.Panel.b, 0.88f));
+        Text pauseTitle = MakeText(pausePanel.transform, "PauseTitle", new Vector2(0.5f, 0.5f), new Vector2(0f, 200f), new Vector2(1400f, 80f), 60, TextAnchor.MiddleCenter);
+        pauseTitle.text = "PAUSA";
+        pauseTitle.color = UIPalette.Accent;
+        pauseTitle.fontStyle = FontStyle.Bold;
+
+        Text pauseResume = MakeText(pausePanel.transform, "PauseResume", new Vector2(0.5f, 0.5f), new Vector2(0f, 80f), new Vector2(1400f, 50f), 30, TextAnchor.MiddleCenter);
+        pauseResume.text = "<color=#4DFFE0>[ESC]</color>   CONTINUAR";
+        pauseResume.color = UIPalette.Text;
+
+        Text pauseOptions = MakeText(pausePanel.transform, "PauseOptions", new Vector2(0.5f, 0.5f), new Vector2(0f, 20f), new Vector2(1400f, 40f), 24, TextAnchor.MiddleCenter);
+        pauseOptions.text = "<color=#4DFFE0>[O]</color>   OPÇÕES";
+        pauseOptions.color = UIPalette.Muted;
+
+        Text pauseRestart = MakeText(pausePanel.transform, "PauseRestart", new Vector2(0.5f, 0.5f), new Vector2(0f, -30f), new Vector2(1400f, 40f), 24, TextAnchor.MiddleCenter);
+        pauseRestart.text = "<color=#4DFFE0>[R]</color>   REINICIAR";
+        pauseRestart.color = UIPalette.Muted;
+
+        Text pauseMain = MakeText(pausePanel.transform, "PauseMain", new Vector2(0.5f, 0.5f), new Vector2(0f, -80f), new Vector2(1400f, 40f), 24, TextAnchor.MiddleCenter);
+        pauseMain.text = "<color=#4DFFE0>[M]</color>   MENU PRINCIPAL";
+        pauseMain.color = UIPalette.Muted;
+
+        Text pauseQuit = MakeText(pausePanel.transform, "PauseQuit", new Vector2(0.5f, 0.5f), new Vector2(0f, -130f), new Vector2(1400f, 40f), 24, TextAnchor.MiddleCenter);
+        pauseQuit.text = "<color=#4DFFE0>[Q]</color>   SAIR";
+        pauseQuit.color = UIPalette.Muted;
+
+        GameObject characterPanel = MakePanel(canvasObject.transform, "CharacterSelectPanel", UIPalette.Panel);
         Text characterTitle = MakeText(characterPanel.transform, "CharacterTitle", new Vector2(0.5f, 0.5f), new Vector2(0f, 300f), new Vector2(1400f, 80f), 46, TextAnchor.MiddleCenter);
         characterTitle.color = accent;
         characterTitle.fontStyle = FontStyle.Bold;
         Text characterOptions = MakeText(characterPanel.transform, "CharacterOptions", new Vector2(0.5f, 0.5f), new Vector2(0f, -50f), new Vector2(1100f, 560f), 26, TextAnchor.MiddleCenter);
         characterOptions.verticalOverflow = VerticalWrapMode.Overflow;
+        characterOptions.color = UIPalette.Text;
 
         var characterSelect = canvasObject.AddComponent<CharacterSelect>();
         SetRef(characterSelect, "panel", characterPanel);
@@ -548,18 +607,29 @@ public static class SwarmSceneBuilder
         SetRef(characterSelect, "stats", stats);
         SetRef(characterSelect, "health", health);
 
-        GameObject optionsPanel = MakePanel(canvasObject.transform, "OptionsPanel", new Color(0.02f, 0.02f, 0.05f, 0.97f));
+        GameObject optionsPanel = MakePanel(canvasObject.transform, "OptionsPanel", UIPalette.PanelSolid);
         Text optionsTitle = MakeText(optionsPanel.transform, "OptionsTitle", new Vector2(0.5f, 0.5f), new Vector2(0f, 260f), new Vector2(1400f, 80f), 46, TextAnchor.MiddleCenter);
         optionsTitle.color = accent;
         optionsTitle.fontStyle = FontStyle.Bold;
         Text optionsText = MakeText(optionsPanel.transform, "OptionsText", new Vector2(0.5f, 0.5f), new Vector2(0f, -20f), new Vector2(1100f, 380f), 30, TextAnchor.MiddleCenter);
         optionsText.verticalOverflow = VerticalWrapMode.Overflow;
+        optionsText.color = UIPalette.Text;
 
         var optionsMenu = canvasObject.AddComponent<OptionsMenu>();
         SetRef(optionsMenu, "panel", optionsPanel);
         SetRef(optionsMenu, "title", optionsTitle);
         SetRef(optionsMenu, "options", optionsText);
         SetRef(optionsMenu, "characterSelect", characterSelect);
+
+        var mainMenu = canvasObject.AddComponent<MainMenu>();
+        SetRef(mainMenu, "panel", mainMenuPanel);
+        SetRef(mainMenu, "characterSelect", characterSelect);
+
+        var pauseMenu = canvasObject.AddComponent<PauseMenu>();
+        SetRef(pauseMenu, "panel", pausePanel);
+        SetRef(pauseMenu, "options", optionsMenu);
+        SetRef(pauseMenu, "hud", hud);
+        SetRef(pauseMenu, "characterSelect", characterSelect);
 
         SetRef(hud, "timerText", timer);
         SetRef(hud, "killsText", kills);
@@ -952,6 +1022,28 @@ public static class SwarmSceneBuilder
         else
         {
             problems += CheckRefs(optionsMenu, "panel", "title", "options", "characterSelect");
+        }
+
+        MainMenu mainMenu = Object.FindFirstObjectByType<MainMenu>();
+        if (mainMenu == null)
+        {
+            Debug.LogError("[SWARM] MainMenu ausente");
+            problems++;
+        }
+        else
+        {
+            problems += CheckRefs(mainMenu, "panel", "characterSelect");
+        }
+
+        PauseMenu pauseMenu = Object.FindFirstObjectByType<PauseMenu>();
+        if (pauseMenu == null)
+        {
+            Debug.LogError("[SWARM] PauseMenu ausente");
+            problems++;
+        }
+        else
+        {
+            problems += CheckRefs(pauseMenu, "panel", "options", "hud", "characterSelect");
         }
 
         SplitOnDeath splitOnDeath = Object.FindFirstObjectByType<SplitOnDeath>(FindObjectsInactive.Include);
