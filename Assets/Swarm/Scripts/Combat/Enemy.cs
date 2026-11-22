@@ -35,6 +35,7 @@ public class Enemy : MonoBehaviour
     Color _flashColor = Color.white;
     SpriteRenderer _sprite;
     Rigidbody2D _rb;
+    Collider2D _collider;
     Transform _target;
 
     void Awake()
@@ -43,6 +44,7 @@ public class Enemy : MonoBehaviour
         _rb.gravityScale = 0f;
         _rb.freezeRotation = true;
         _sprite = GetComponentInChildren<SpriteRenderer>();
+        _collider = GetComponent<Collider2D>();
     }
 
     void OnEnable()
@@ -53,6 +55,11 @@ public class Enemy : MonoBehaviour
         _flash = 0f;
         _flashColor = Color.white;
         _target = PlayerController.PlayerTransform;
+        orbitalCooldown = 0f;
+
+        // A rotina de morte desliga o colisor; ao voltar do pool, ele precisa voltar.
+        if (_collider != null) _collider.enabled = true;
+        if (_rb != null) _rb.linearVelocity = Vector2.zero;
 
         float multiplier = GameManager.Instance != null ? GameManager.Instance.Difficulty : 1f;
         _health = data != null ? data.maxHealth * multiplier : 10f;
@@ -108,7 +115,8 @@ public class Enemy : MonoBehaviour
     }
 
     public void TakeDamage(float amount, bool critical)
-    {        if (_dead) return;
+    {
+        if (_dead) return;
 
         _health -= amount;
         _flash = 1f;
@@ -141,8 +149,7 @@ public class Enemy : MonoBehaviour
 
         if (_rb != null) _rb.linearVelocity = Vector2.zero;
 
-        var collider = GetComponent<Collider2D>();
-        if (collider != null) collider.enabled = false;
+        if (_collider != null) _collider.enabled = false;
 
         bool isBoss = data != null && data.scale > 1.4f;
         if (isBoss)

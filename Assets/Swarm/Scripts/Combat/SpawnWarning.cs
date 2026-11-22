@@ -48,6 +48,13 @@ public class SpawnWarning : MonoBehaviour
 
         if (_timer > 0f) return;
 
+        // Durante o duelo do boss a horda não recebe reforços.
+        if (BossController.Active != null)
+        {
+            ObjectPool.Despawn(gameObject);
+            return;
+        }
+
         if (_template != null)
             ObjectPool.Spawn(_template.gameObject, _position, Quaternion.identity);
 

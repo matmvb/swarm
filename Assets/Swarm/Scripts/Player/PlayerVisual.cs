@@ -19,7 +19,19 @@ public class PlayerVisual : MonoBehaviour
 
         Vector2 direction = Vector2.zero;
 
-        Enemy target = Enemy.FindNearest(transform.position, facingRange);
+        PlayerStats stats = PlayerController.Instance != null ? PlayerController.Instance.Stats : null;
+        float range = stats != null ? stats.range : facingRange;
+
+        // Mesma prioridade da arma: boss no alcance, senão o mais próximo no alcance.
+        Enemy target = null;
+        if (BossController.Active != null && BossController.Active.Enemy != null)
+        {
+            float bossDistance = Vector2.Distance(transform.position, BossController.Active.transform.position);
+            if (bossDistance <= range) target = BossController.Active.Enemy;
+        }
+
+        if (target == null) target = Enemy.FindNearest(transform.position, range);
+
         if (target != null)
         {
             direction = (Vector2)target.transform.position - (Vector2)transform.position;

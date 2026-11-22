@@ -50,6 +50,9 @@ public static class ObjectPool
     {
         if (instance == null) return;
 
+        // Já foi devolvido (ex.: dois triggers no mesmo passo de física).
+        if (!instance.activeSelf) return;
+
         if (!Origin.TryGetValue(instance, out GameObject prefab) || prefab == null)
         {
             Object.Destroy(instance);

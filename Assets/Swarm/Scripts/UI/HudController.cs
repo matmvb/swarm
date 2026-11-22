@@ -231,8 +231,12 @@ public class HudController : MonoBehaviour
 
     void Choose(int index)
     {
-        if (_options != null && index < _options.Length && upgrades != null)
-            upgrades.Apply(_options[index], stats, playerHealth);
+        if (_options != null && _options.Length > 0)
+        {
+            // Tecla de uma opção que não existe não deve consumir o level up.
+            if (index >= _options.Length) return;
+            if (upgrades != null) upgrades.Apply(_options[index], stats, playerHealth);
+        }
 
         _options = null;
         LevelUpOpen = false;
