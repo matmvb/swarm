@@ -28,6 +28,50 @@ public static class BuildScript
         if (!ok) EditorApplication.Exit(1);
     }
 
+    static void ApplyAppIcon()
+    {
+        const string iconPath = "Assets/Swarm/Art/AppIcon.png";
+
+        var importer = AssetImporter.GetAtPath(iconPath) as TextureImporter;
+        if (importer != null)
+        {
+            importer.textureType = TextureImporterType.Default;
+            importer.alphaIsTransparency = true;
+            importer.mipmapEnabled = false;
+            importer.maxTextureSize = 1024;
+            importer.textureCompression = TextureImporterCompression.Uncompressed;
+            importer.SaveAndReimport();
+        }
+
+        var icon = AssetDatabase.LoadAssetAtPath<Texture2D>(iconPath);
+        if (icon == null)
+        {
+            Debug.LogWarning("[SWARM] Ícone não encontrado: " + iconPath);
+            return;
+        }
+
+        Texture2D[] template = PlayerSettings.GetIconsForTargetGroup(BuildTargetGroup.Standalone);
+        int slotCount = template != null ? template.Length : 0;
+        if (slotCount == 0)
+        {
+            Debug.LogWarning("[SWARM] Nenhum slot de ícone para Standalone.");
+            return;
+        }
+
+        Debug.Log("[SWARM] Ícone: " + slotCount + " slots preenchidos com 1 PNG");
+
+        var icons = new Texture2D[slotCount];
+        for (int i = 0; i < slotCount; i++)
+            icons[i] = icon;
+
+        PlayerSettings.SetIconsForTargetGroup(BuildTargetGroup.Standalone, icons);
+        AssetDatabase.SaveAssets();
+
+        Texture2D[] applied = PlayerSettings.GetIconsForTargetGroup(BuildTargetGroup.Standalone);
+        Debug.Log("[SWARM] Ícone do app aplicado: " + iconPath + " (" +
+                  (applied != null ? applied.Length : 0) + " ícone(s))");
+    }
+
     static bool Build()
     {
         if (!BuildPipeline.IsBuildTargetSupported(BuildTargetGroup.Standalone, BuildTarget.StandaloneWindows64))
@@ -41,13 +85,15 @@ public static class BuildScript
 
         PlayerSettings.companyName = "Scoty";
         PlayerSettings.productName = "SWARM";
-        PlayerSettings.bundleVersion = "0.9.6";
+        PlayerSettings.bundleVersion = "0.9.7";
         PlayerSettings.fullScreenMode = FullScreenMode.FullScreenWindow;
         PlayerSettings.defaultScreenWidth = 1920;
         PlayerSettings.defaultScreenHeight = 1080;
         PlayerSettings.runInBackground = true;
         PlayerSettings.resizableWindow = true;
         PlayerSettings.SetScriptingBackend(BuildTargetGroup.Standalone, ScriptingImplementation.Mono2x);
+
+        ApplyAppIcon();
 
         var options = new BuildPlayerOptions
         {

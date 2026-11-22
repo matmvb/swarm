@@ -97,15 +97,15 @@ MENU PRINCIPAL
 | Grid de fundo | Procedural |
 | Capa 630×500 | Gerada |
 | Fonte | Embutida (recomendo pixel TTF) |
-| Ícone do executável | **Ausente** (Unity default) |
+| Ícone do executável | **Gerado (1024) e aplicado no BuildScript** |
 | Rastro do projétil | TrailRenderer com material Sprite-Unlit (verificar na build) |
 
 ### Recomendações
 
-1. **Ícone 1024×1024** do jogo (nave ciano no fundo escuro) + configurar no `BuildScript`.
-2. **Fonte pixel** para títulos.
-3. **Testar o TrailRenderer** na build; se sumir, trocar por material de partícula.
-4. **Painel de controles** no menu (lista de teclas) — hoje as teclas estão nos próprios botões.
+1. **Fonte pixel** para títulos.
+2. **Testar o TrailRenderer** na build; se sumir, trocar por material de partícula.
+3. **Painel de controles** no menu (lista de teclas) — hoje as teclas estão nos próprios botões.
+4. **Ícones 16–1024**: o BuildScript preenche os 8 slots do Standalone com o PNG 1024; a Unity reduz.
 
 ---
 

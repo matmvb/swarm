@@ -562,7 +562,7 @@ public static class SwarmSceneBuilder
         mainQuit.color = UIPalette.Muted;
 
         Text mainVersion = MakeText(mainMenuPanel.transform, "MainVersion", new Vector2(0.5f, 0.5f), new Vector2(0f, -226f), new Vector2(1400f, 30f), 18, TextAnchor.MiddleCenter);
-        mainVersion.text = "DEMO 0.9.6   ·   FEITO COM UNITY";
+        mainVersion.text = "DEMO 0.9.7   ·   FEITO COM UNITY";
         mainVersion.color = UIPalette.Muted;
 
         GameObject pausePanel = MakePanel(canvasObject.transform, "PausePanel", new Color(UIPalette.Panel.r, UIPalette.Panel.g, UIPalette.Panel.b, 0.88f));
