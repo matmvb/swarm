@@ -459,8 +459,16 @@ public static class SwarmSceneBuilder
         string path = ROOT + "/Settings/NeonProfile.asset";
         var profile = AssetDatabase.LoadAssetAtPath<VolumeProfile>(path);
 
-        if (profile == null)
+        bool valid = profile != null &&
+                     profile.components != null &&
+                     profile.components.Count == 2 &&
+                     profile.components[0] is Bloom &&
+                     profile.components[1] is Vignette;
+
+        if (!valid)
         {
+            if (profile != null) AssetDatabase.DeleteAsset(path);
+
             profile = ScriptableObject.CreateInstance<VolumeProfile>();
             AssetDatabase.CreateAsset(profile, path);
 
@@ -468,12 +476,17 @@ public static class SwarmSceneBuilder
             bloom.intensity.Override(0.75f);
             bloom.threshold.Override(0.55f);
             bloom.scatter.Override(0.65f);
+            bloom.hideFlags = HideFlags.HideInHierarchy;
+            AssetDatabase.AddObjectToAsset(bloom, profile);
 
             var vignette = profile.Add<Vignette>(true);
             vignette.intensity.Override(0.25f);
             vignette.smoothness.Override(0.4f);
+            vignette.hideFlags = HideFlags.HideInHierarchy;
+            AssetDatabase.AddObjectToAsset(vignette, profile);
 
             EditorUtility.SetDirty(profile);
+            AssetDatabase.SaveAssets();
         }
 
         var go = new GameObject("Global Volume");
@@ -562,7 +575,7 @@ public static class SwarmSceneBuilder
         mainQuit.color = UIPalette.Muted;
 
         Text mainVersion = MakeText(mainMenuPanel.transform, "MainVersion", new Vector2(0.5f, 0.5f), new Vector2(0f, -226f), new Vector2(1400f, 30f), 18, TextAnchor.MiddleCenter);
-        mainVersion.text = "DEMO 0.9.7   ·   FEITO COM UNITY";
+        mainVersion.text = "DEMO 0.9.8   ·   FEITO COM UNITY";
         mainVersion.color = UIPalette.Muted;
 
         GameObject pausePanel = MakePanel(canvasObject.transform, "PausePanel", new Color(UIPalette.Panel.r, UIPalette.Panel.g, UIPalette.Panel.b, 0.88f));

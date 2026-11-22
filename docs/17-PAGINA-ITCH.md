@@ -21,7 +21,7 @@ Tudo o que você precisa para publicar a demo. Copie e cole no itch.io.
 
 ## Descrição curta
 
-> Um bullet heaven neon: sobreviva 10 minutos, escolha um upgrade a cada 20 segundos e derrube o Núcleo.
+> Um bullet heaven neon: sobreviva 10 minutos, escolha um upgrade a cada nível e derrube o Núcleo.
 
 ---
 
@@ -30,7 +30,7 @@ Tudo o que você precisa para publicar a demo. Copie e cole no itch.io.
 **SWARM** é um survivor-like 2D onde você não aperta "atirar" — o sistema atira por você.
 Sua decisão é **para onde ir** e **qual upgrade escolher**.
 
-Cada run dura até 10 minutos. A cada ~20 segundos o jogo congela e oferece 3 upgrades.
+Cada run dura até 10 minutos. Ao subir de nível (no começo, a cada ~20 segundos) o jogo congela e oferece 3 upgrades.
 Às 5:00 o **Núcleo** nasce, limpa a horda e transforma a run em um duelo.
 Sobreviva até 10:00 para vencer.
 
@@ -121,3 +121,20 @@ Sem narração. Cortes a cada 1,5–2 s. Legenda grande.
 - [ ] Depois de 3 dias de feedback, tornar **Public**
 
 > O save da build é separado do editor. A primeira run começa com 0 Núcleos e sem meta.
+
+---
+
+## Status para publicação (0.9.8)
+
+| Item | Status |
+|---|---|
+| Build Windows | ✅ `Builds/Windows` + `Builds/SWARM-windows.zip` |
+| Ícone do executável | ✅ 1024 aplicado nos 8 slots |
+| Cover 630×500 | ✅ `docs/press/cover-630x500.png` |
+| Bloom + vinheta na build | ✅ perfil e shaders corrigidos |
+| Screenshots | ⬜ 0 de 5 |
+| GIFs | ⬜ 0 de 3 |
+| Trailer | ⬜ não gravado |
+| Teste em outra máquina | ⬜ pendente |
+
+**Bloqueio atual:** a build está tecnicamente pronta, mas a página ainda não tem screenshots, GIFs nem trailer. Para publicar, faltam esses assets e o teste em uma máquina limpa.

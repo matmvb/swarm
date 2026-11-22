@@ -116,3 +116,12 @@ MENU PRINCIPAL
 - Opções acessível dos três contextos.
 - Paleta única e hierarquia tipográfica em todos os painéis.
 - HUD com cores semânticas e dica de pausa.
+
+---
+
+## 8. Correções de build (0.9.8)
+
+- **Shader stripping do URP desligado** para pós-processamento e variantes 2D. Antes, o build removia Bloom, vinheta e todos os passes; o log do player confirmava `shader ... stripped from the build`.
+- **NeonProfile regenerado**: Bloom e Vignette agora são sub-assets reais do perfil. Antes os dois componentes estavam com `fileID: 0`, então nem no editor o efeito existia.
+- **ZIP de release limpo**: sem `SWARM_BackUpThisFolder_ButDontShipItWithYourGame`, sem PDBs, com `SWARM.exe` na raiz.
+- Versão **0.9.8** no executável, no menu e no `ProjectSettings`.
