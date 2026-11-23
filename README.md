@@ -1,70 +1,217 @@
-# SWARM — Bullet Heaven (protótipo)
+<p align="center">
+  <img src="docs/press/og-1200x630.png" alt="SWARM — bullet heaven 2D, demo 0.9.8 para Windows" width="100%">
+</p>
 
-Releitura de **Space Invaders** como *bullet heaven* (estilo Vampire Survivors):
-tiro automático, milhares de inimigos, upgrades a cada ~20 segundos e runs de 10 minutos.
+<h1 align="center">SWARM</h1>
 
-> **Pitch:** *"Space Invaders na dose de Survivors."*
+<p align="center">
+  <strong>Space Invaders na dose de Survivors.</strong><br>
+  Bullet heaven 2D com tiro automático, upgrades por nível, boss às 5:00 e runs de 10 minutos.
+</p>
+
+<p align="center">
+  <a href="https://matmvb.itch.io/swarm"><strong>Playtest no itch.io</strong></a>
+  ·
+  <a href="https://matmvb.github.io/swarm/feedback/"><strong>Enviar feedback</strong></a>
+  ·
+  <a href="https://matmvb.github.io/swarm/">Página do projeto</a>
+</p>
+
+<p align="center">
+  <img alt="Unity" src="https://img.shields.io/badge/Unity-6000.6.1f1-000?logo=unity&logoColor=white">
+  <img alt="Windows" src="https://img.shields.io/badge/Windows-10%2F11-0078D6?logo=windows">
+  <img alt="Status" src="https://img.shields.io/badge/status-playtest%200.9.8-4DFFE0">
+  <img alt="Feito com C#" src="https://img.shields.io/badge/C%23-239120?logo=csharp&logoColor=white">
+</p>
 
 ---
 
-## O que tem aqui
+## Sobre
 
-| Pasta | Conteúdo |
+**SWARM** é um survivor-like 2D onde você não aperta "atirar" — o sistema atira por você.
+Sua decisão é **para onde ir** e **qual upgrade escolher**.
+
+Cada run dura até 10 minutos. Ao subir de nível, o jogo congela e oferece 3 upgrades.
+Às 5:00 o **Núcleo** nasce, limpa a horda e transforma a run em um duelo.
+Sobreviva até 10:00 para vencer.
+
+> O playtest é fechado. O link e a senha do itch.io são enviados no convite.
+> A página pública do jogo fica em [matmvb.itch.io/swarm](https://matmvb.itch.io/swarm).
+
+---
+
+## O que tem na demo 0.9.8
+
+| Conteúdo | Detalhe |
 |---|---|
-| `docs/` | GDD, plano de desenvolvimento, guia de setup, arquitetura, 5 tutoriais, performance e publicação |
-| `Assets/Swarm/Scripts/` | Scripts C# prontos (gameplay completo do protótipo) |
-| `Assets/Swarm/Editor/` | Gerador automático de cena + assets (menu `SWARM`) |
+| **6 inimigos** | horda, corredor, tanque, divisor, atirador e boss |
+| **Boss** | rajada radial + investida, com telegrafo legível |
+| **20 upgrades** | pré-requisitos, efeitos duplos, limites de stack |
+| **3 pilotos** | Tanque, Veloz e Atirador |
+| **2 armas** | tiro automático e orbes orbitais |
+| **Meta-progressão** | gaste Núcleos em bônus permanentes |
+| **Áudio procedural** | trilha e SFX sintetizados em tempo real |
+| **Visual neon** | formas geométricas, bloom, vinheta e grid |
 
-Este repositório é um **overlay**: a pasta `Assets/Swarm` é copiada para dentro de um
-projeto Unity vazio. Não copie `ProjectSettings`, `Packages` nem `Library` — a Unity cria esses.
+Sem loot boxes, anúncios ou pay-to-win.
 
 ---
 
-## Quickstart (30 min)
+## Jogar o playtest
 
-O projeto **já está pronto** no Windows:
+1. Receba o link e a senha no convite.
+2. Baixe o ZIP e extraia a pasta inteira.
+3. Execute `SWARM.exe`.
+4. Jogue uma run até o boss (5:00) ou até morrer.
+5. Responda o [feedback de 3 minutos](https://matmvb.github.io/swarm/feedback/).
+
+### Requisitos
+
+| Item | Valor |
+|---|---|
+| Sistema | Windows 10/11, 64-bit |
+| Gráficos | DirectX 11/12 |
+| Espaço | ~110 MB extraídos |
+| Entrada | teclado; analógico esquerdo opcional |
+| Instalação | não precisa; extraia e execute |
+
+> **SmartScreen:** o executável não é assinado. Se o Windows avisar, clique em
+> **Mais informações → Executar assim mesmo**.
+> **Áudio:** se abrir mudo, aperte `O` e depois `+`.
+
+---
+
+## Controles
+
+| Tecla | Ação |
+|---|---|
+| `WASD` / setas | mover |
+| `ENTER` | jogar (menu principal) |
+| `1` / `2` / `3` | escolher piloto ou upgrade |
+| `4` / `5` / `6` | comprar melhorias permanentes |
+| `O` | opções |
+| `ESC` | pausar / continuar |
+| `R` | reiniciar |
+| `F1` | overlay de debug (opcional) |
+| `F12` | screenshot |
+
+---
+
+## Stack
+
+| Camada | Tecnologia |
+|---|---|
+| Engine | Unity **6000.6.1f1** |
+| Render | URP 17.6 · 2D Renderer |
+| Input | Input System 1.19 |
+| Linguagem | C# |
+| Build | Windows 64-bit · Mono |
+| Arte | sprites e efeitos procedurais |
+| Áudio | síntese procedural em runtime |
+| UI | Canvas + Text legado |
+
+---
+
+## Estrutura do repositório
 
 ```
-C:\Users\scoty\OneDrive\Documentos\Default Project\swarm
+Assets/Swarm/
+  Art/            sprites, materiais e ícone
+  Data/           ScriptableObjects de inimigos, upgrades e pilotos
+  Editor/         gerador de cena, validador e build
+  Scenes/         cena Swarm.unity
+  Scripts/        gameplay, UI, progressão, áudio e telemetria
+docs/             GDD, plano, arquitetura, tutoriais e playtest
+Builds/           builds locais (ignoradas pelo Git)
 ```
 
-1. Abra o **Unity Hub** → **Add project from disk** → selecione a pasta acima.
-2. Espere o primeiro import (3–6 min).
-3. Abra a cena **`Assets/Swarm/Scenes/Swarm.unity`** (já gerada) e aperte **Play**.
+---
 
-> Se você alterar scripts/valores e quiser recriar a cena do zero:
-> menu **`SWARM > Montar Protótipo Completo`**.
-> Para checar as referências: **`SWARM > Validar Cena do Protótipo`**.
+## Documentação
 
-Controles: **WASD/setas** move · tiro é automático · **1/2/3** escolhe upgrade · **R** reinicia · **F1** debug.
-
-> Para recriar do zero em outra máquina, siga [`docs/03-SETUP.md`](docs/03-SETUP.md).
-> Editor usado: **6000.6.1f1** (template 2D URP oficial).
+| Documento | Conteúdo |
+|---|---|
+| [GDD](docs/01-GDD.md) | o jogo em números |
+| [Plano de desenvolvimento](docs/02-PLANO-DEV.md) | sprints e escopo |
+| [Setup](docs/03-SETUP.md) | ambiente e primeiro Play |
+| [Arquitetura](docs/04-ARQUITETURA.md) | como o código se organiza |
+| [Tutoriais](docs/05-TUTORIAL-01-MOVIMENTO.md) | movimento, combate, XP, juice e build |
+| [Performance e QA](docs/10-PERFORMANCE-QA.md) | checklist de qualidade |
+| [Publicação](docs/11-PUBLICACAO.md) | itch.io, Steam e marketing |
+| [Playtest externo](docs/20-PLAYTEST-EXTERNO.md) | como convidar e coletar feedback |
+| [Página do itch](docs/17-PAGINA-ITCH.md) | copy e ficha do projeto |
 
 ---
 
-## Ordem de leitura
+## Desenvolvimento
 
-1. [`docs/01-GDD.md`](docs/01-GDD.md) — o jogo em números (leia antes de codar)
-2. [`docs/03-SETUP.md`](docs/03-SETUP.md) — ambiente e primeiro Play
-3. [`docs/04-ARQUITETURA.md`](docs/04-ARQUITETURA.md) — como o código se organiza
-4. [`docs/05-TUTORIAL-01-MOVIMENTO.md`](docs/05-TUTORIAL-01-MOVIMENTO.md) → tutorial 05
-5. [`docs/02-PLANO-DEV.md`](docs/02-PLANO-DEV.md) — sprints e cronograma
-6. [`docs/10-PERFORMANCE-QA.md`](docs/10-PERFORMANCE-QA.md) e [`docs/11-PUBLICACAO.md`](docs/11-PUBLICACAO.md)
+### Abrir o projeto
+
+1. Instale **Unity 6000.6.1f1** pelo Unity Hub.
+2. **Add project from disk** → selecione a pasta do repositório.
+3. Abra `Assets/Swarm/Scenes/Swarm.unity`.
+4. Aperte **Play**.
+
+### Regenerar a cena
+
+Menu **`SWARM > Montar Protótipo Completo`**.
+Para validar referências: **`SWARM > Validar Cena do Protótipo`**.
+
+### Gerar build Windows
+
+Menu **`SWARM > Build Windows`**.
+
+Batch:
+
+```bash
+Unity.exe -batchmode -quit \
+  -projectPath "C:\caminho\swarm" \
+  -executeMethod BuildScript.BuildWindowsBatch
+```
+
+A build sai em `Builds/Windows/SWARM.exe`.
 
 ---
 
-## Estado atual
+## Changelog recente
 
-- [x] Loop núcleo jogável (mover, atirar, matar, morrer)
-- [x] Inimigos com escalonamento de dificuldade
-- [x] XP, level up e escolha de 3 upgrades
-- [x] Juice básico (flash, camera shake, SFX procedurais)
-- [x] Meta-moeda + save (PlayerPrefs)
-- [x] Gerador automático de cena e dados
-- [x] Cena gerada e validada (0 referências quebradas)
-- [ ] Arte definitiva
-- [ ] Boss, armas e personagens (Sprint 4)
-- [ ] Build publicável (Sprint 7)
+### 0.9.8
 
-> Protótipo usa **quadrados coloridos** de propósito: primeiro o loop, depois a arte.
+- Menu principal e tela de pausa.
+- Paleta única de UI e hierarquia tipográfica.
+- Ícone 1024 aplicado nos 8 slots do executável.
+- Correção do Bloom/Vinheta no build (shader stripping + perfil).
+- Página de playtest, feedback e política de privacidade no GitHub Pages.
+- Correções de lógica no pool de inimigos, alvo da nave e level up.
+
+### 0.9.4
+
+- Boss, orbes, telemetria CSV, 3 pilotos e meta-progressão.
+- Build Windows publicada.
+
+---
+
+## Feedback
+
+O playtest é anônimo e leva cerca de 3 minutos:
+
+**[Enviar feedback →](https://matmvb.github.io/swarm/feedback/)**
+
+Se encontrar um bug, envie também:
+
+```
+%USERPROFILE%\AppData\LocalLow\Scoty\SWARM\Player.log
+%USERPROFILE%\AppData\LocalLow\Scoty\SWARM\swarm-runs.csv
+```
+
+---
+
+## Contato
+
+- itch.io: [matmvb.itch.io/swarm](https://matmvb.itch.io/swarm)
+- Página do projeto: [matmvb.github.io/swarm](https://matmvb.github.io/swarm/)
+- Feedback: [formulário de playtest](https://matmvb.github.io/swarm/feedback/)
+
+<p align="center">
+  <sub>SWARM · demo 0.9.8 · feito com Unity 6.6 · 2026</sub>
+</p>

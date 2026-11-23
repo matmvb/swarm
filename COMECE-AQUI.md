@@ -10,6 +10,7 @@ C:\Users\scoty\OneDrive\Documentos\Default Project\swarm
 |---|---|
 | Editor | **Unity 6000.6.1f1** (já instalado na sua máquina) |
 | Template | 2D (URP) oficial — URP 17.6.0, Input System 1.19.0 |
+| Versão | **0.9.8** (playtest) |
 | Cena do jogo | gerada pelo menu `SWARM` em `Assets/Swarm/Scenes/Swarm.unity` |
 
 ---
@@ -44,12 +45,16 @@ Para conferir as referências: **`SWARM` → `Validar Cena do Protótipo`**.
 
 | Tecla | Ação |
 |---|---|
-| WASD / setas | mover |
-| — | tiro é automático |
-| 1 / 2 / 3 | escolher upgrade |
-| R | reiniciar |
-| F1 | overlay de debug (FPS, inimigos, stats) |
-| F3 | (editor) adiciona um orbe orbital |
+| `WASD` / setas | mover |
+| `ENTER` | jogar (menu principal) |
+| `1` / `2` / `3` | escolher piloto ou upgrade |
+| `4` / `5` / `6` | comprar melhorias permanentes |
+| `O` | opções |
+| `ESC` | pausar / continuar |
+| `R` | reiniciar |
+| `F1` | overlay de debug (FPS, inimigos, stats) |
+| `F3` | (editor) adiciona um orbe orbital |
+| `F12` | screenshot |
 
 ---
 

@@ -200,6 +200,7 @@ fetch('https://SEU_PROJETO.supabase.co/rest/v1/feedback', {
   reduzem spam.
 - Colete o mínimo: nome é opcional, e-mail não é pedido.
 - Avise no formulário que as respostas serão usadas para melhorar o jogo.
+- A política de privacidade pública está em `docs/privacidade.html` e linkada no formulário.
 - LGPD: guarde só o necessário, apague depois da análise e não publique respostas
   com dados pessoais.
 - Se usar Supabase, RLS insert-only e nunca `select` para `anon`.

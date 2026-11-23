@@ -134,9 +134,13 @@ Sem narração. Cortes a cada 1,5–2 s. Legenda grande.
 | Ícone do executável | ✅ 1024 aplicado nos 8 slots |
 | Cover 630×500 | ✅ `docs/press/cover-630x500.png` |
 | Bloom + vinheta na build | ✅ perfil e shaders corrigidos |
-| Screenshots | ⬜ 0 de 5 |
+| Página itch (Restricted + senha) | ✅ publicada e testada |
+| Página do projeto (GitHub Pages) | ✅ landing, feedback, privacidade e 404 |
+| Feedback online | ✅ Formspree recebendo respostas |
+| Screenshots de gameplay | ⬜ 0 de 5 (só a capa na página) |
 | GIFs | ⬜ 0 de 3 |
 | Trailer | ⬜ não gravado |
 | Teste em outra máquina | ⬜ pendente |
 
-**Bloqueio atual:** a build está tecnicamente pronta, mas a página ainda não tem screenshots, GIFs nem trailer. Para publicar, faltam esses assets e o teste em uma máquina limpa.
+**Status:** o playtest restrito está no ar e pode ser enviado aos testadores.
+Para tornar a página pública, faltam screenshots de gameplay, GIFs, trailer e o teste em uma máquina limpa.

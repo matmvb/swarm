@@ -3,7 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SWARM — Feedback de playtest</title>
+<title>Feedback de playtest — SWARM</title>
+<meta name="description" content="Formulário de feedback do playtest do SWARM. 3 minutos, anônimo, sem coleta automática de dados.">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#05070f">
+<meta name="color-scheme" content="dark">
+<link rel="canonical" href="https://matmvb.github.io/swarm/feedback/">
+<link rel="icon" type="image/png" sizes="32x32" href="../press/favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../press/apple-touch-icon.png">
 <style>
   :root {
     --bg: #05070f;
@@ -185,6 +192,20 @@
     transition: transform .06s ease, filter .15s ease;
   }
 
+  a.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 11px 16px;
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 650;
+  }
+
+  a.button:hover { border-color: var(--accent); }
+
   button:active { transform: translateY(1px); }
   button:hover { filter: brightness(1.08); }
 
@@ -251,6 +272,39 @@
 
   a { color: var(--accent); }
 
+  .back {
+    display: inline-block;
+    margin-bottom: 22px;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: .9rem;
+  }
+
+  .back:hover { color: var(--accent); }
+
+  .success {
+    border-color: rgba(77, 255, 224, .45);
+    background: linear-gradient(180deg, rgba(77, 255, 224, .08), rgba(11, 16, 32, .95));
+  }
+
+  .success h2 { color: var(--accent); }
+
+  .success .actions { margin-top: 18px; }
+
+  a:focus-visible,
+  button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      transition-duration: .01ms !important;
+      animation-duration: .01ms !important;
+    }
+  }
+
   @media (max-width: 560px) {
     main { padding-top: 26px; }
     .card { padding: 16px; }
@@ -260,15 +314,25 @@
 </head>
 <body>
 <main>
+  <a class="back" href="../">← Voltar para o SWARM</a>
+
   <header>
     <div class="badge">Playtest · Demo 0.9.8</div>
     <h1>SWARM</h1>
-    <p class="note">Feedback de playtest · 3 minutos · sem coleta automática de dados</p>
+    <p class="note">Feedback de playtest · 3 minutos · anônimo · 10 perguntas obrigatórias</p>
   </header>
 
-  <div class="card">
+  <div class="card" id="introCard">
     <p>Obrigado por testar! Responda depois de jogar pelo menos uma run.</p>
-    <p class="note">Esta página só envia quando você clica em <strong>Enviar feedback</strong>. Se o envio automático estiver desativado, use <strong>Copiar respostas</strong> ou <strong>Baixar .txt</strong> e mande para o dev.</p>
+    <p class="note">
+      Esta página só envia quando você clica em <strong>Enviar feedback</strong>.
+      Se o envio automático estiver desativado, use <strong>Copiar respostas</strong> ou
+      <strong>Baixar .txt</strong> e mande para o dev.
+    </p>
+    <p class="note" id="privacyNote">
+      Não envie dados pessoais sensíveis. Veja a
+      <a href="../privacidade.html">política de privacidade</a>.
+    </p>
   </div>
 
   <form id="feedback" novalidate>
@@ -406,7 +470,7 @@
       <fieldset>
         <legend>Consentimento</legend>
         <div class="choices">
-          <label><input type="checkbox" id="consent" name="consent" required> Concordo em enviar estas respostas para melhorar o jogo.</label>
+          <label><input type="checkbox" id="consent" name="consent" required aria-describedby="privacyNote"> Concordo em enviar estas respostas para melhorar o jogo.</label>
         </div>
       </fieldset>
 
@@ -442,8 +506,22 @@
     </div>
   </form>
 
+  <div id="successPanel" class="card success hidden" role="status" aria-live="polite">
+    <h2>Feedback enviado. Obrigado!</h2>
+    <p>Sua resposta foi registrada. Isso ajuda a decidir o que ajustar na próxima build.</p>
+    <p class="note">
+      Se você marcou um bug, envie também o <code>Player.log</code> e o
+      <code>swarm-runs.csv</code> no chat do playtest. Eles ficam em
+      <code>%USERPROFILE%\AppData\LocalLow\Scoty\SWARM\</code>.
+    </p>
+    <div class="actions">
+      <button type="button" class="primary" id="againBtn">Enviar outro feedback</button>
+      <a class="button" href="../">Voltar ao site</a>
+    </div>
+  </div>
+
   <footer>
-    <p>SWARM · demo 0.9.8 · <a href="../">página inicial</a></p>
+    <p>SWARM · demo 0.9.8 · <a href="../">página inicial</a> · <a href="../privacidade.html">privacidade</a></p>
     <p>Esta página não usa cookies nem analytics. As respostas só são enviadas quando você clica em <strong>Enviar feedback</strong>; no modo local, elas ficam no navegador até você copiar ou baixar o texto.</p>
   </footer>
 </main>
@@ -465,6 +543,8 @@
   const sendBtn = document.getElementById('sendBtn');
   const sendNote = document.getElementById('sendNote');
   const bugDetails = document.getElementById('bugDetails');
+  const successPanel = document.getElementById('successPanel');
+  const introCard = document.getElementById('introCard');
 
   sendNote.textContent = hasEndpoint
     ? 'Envio direto ativado. Ao enviar, as respostas vão para o painel do desenvolvedor.'
@@ -586,6 +666,10 @@
       form.reset();
       updateRanges();
       bugDetails.classList.add('hidden');
+      form.classList.add('hidden');
+      introCard.classList.add('hidden');
+      successPanel.classList.remove('hidden');
+      successPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
     } catch (error) {
       output.textContent = buildSummary();
       outputWrap.classList.remove('hidden');
@@ -652,6 +736,14 @@
   });
 
   document.getElementById('sendBtn').addEventListener('click', sendFeedback);
+
+  document.getElementById('againBtn').addEventListener('click', () => {
+    successPanel.classList.add('hidden');
+    introCard.classList.remove('hidden');
+    form.classList.remove('hidden');
+    status.textContent = '';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
 
   document.getElementById('copyBtn').addEventListener('click', async () => {
     const text = showOutput();

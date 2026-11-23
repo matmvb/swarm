@@ -38,9 +38,11 @@ Foram criadas duas submissões de teste:
 ```text
 TESTE AUTOMATICO
 TESTE AUTOMATICO 2
+(anônimo, 23/11 21:23 UTC — runs 1, "Antes de 3 min")
 ```
 
-Apague as duas no painel do Formspree.
+Apague as três no painel do Formspree. A terceira foi um teste local que acabou
+enviando para o endpoint real; ela não tem nome.
 
 > Confira a caixa de entrada/spam: o Formspree deve enviar e-mail de notificação.
 > Se não chegar, ative as notificações nas configurações do formulário.
@@ -78,7 +80,7 @@ O link sem `?password=swarmtest` mostra a tela de senha. O link com a senha abre
 
 - [x] Publicar o projeto no itch (Restrito + senha).
 - [x] Testar o link do itch com senha.
-- [ ] Apagar as submissões **TESTE AUTOMATICO** e **TESTE AUTOMATICO 2** no Formspree.
+- [ ] Apagar as três submissões de teste no Formspree.
 - [ ] Confirmar o e-mail de notificação do Formspree.
 - [ ] Enviar o link do feedback para os testadores.
 - [ ] Acompanhar as respostas e triar com `docs/feedback/triage.csv`.

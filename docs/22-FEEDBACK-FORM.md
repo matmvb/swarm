@@ -148,6 +148,9 @@ Ela tem o mesmo conteúdo do formulário, no visual do jogo. Funciona em dois mo
 O envio automático está pronto para **Formspree** (ou qualquer endpoint JSON).
 O passo a passo está em `docs/23-FEEDBACK-BACKEND.md`.
 
+A página também tem `noindex`, link para a política de privacidade, consentimento
+obrigatório e um painel de sucesso depois do envio.
+
 ### Como ativar o envio
 
 1. Crie um formulário no Formspree e copie o endpoint.
