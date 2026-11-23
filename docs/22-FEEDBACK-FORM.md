@@ -180,6 +180,14 @@ const FEEDBACK_ENDPOINT = 'https://formspree.io/f/SEU_ID';
 https://matmvb.github.io/swarm/feedback/
 ```
 
+A página inicial em `docs/index.html` fica em:
+
+```
+https://matmvb.github.io/swarm/
+```
+
+Ela tem os botões **Jogar no itch.io** e **Enviar feedback**.
+
 **Netlify Drop (sem git):**
 
 1. Abra `app.netlify.com/drop`.

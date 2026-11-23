@@ -25,7 +25,8 @@ const FEEDBACK_ENDPOINT = '';
 ## Publicar
 
 **GitHub Pages:** Settings → Pages → branch `main` → pasta `/docs`.
-URL: `https://matmvb.github.io/swarm/feedback/`
+URL da página inicial: `https://matmvb.github.io/swarm/`
+URL do feedback: `https://matmvb.github.io/swarm/feedback/`
 
 **Netlify Drop:** arraste esta pasta em `app.netlify.com/drop`.
 
