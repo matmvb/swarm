@@ -140,6 +140,7 @@ Builds/           builds locais (ignoradas pelo Git)
 | [Publicação](docs/11-PUBLICACAO.md) | itch.io, Steam e marketing |
 | [Playtest externo](docs/20-PLAYTEST-EXTERNO.md) | como convidar e coletar feedback |
 | [Página do itch](docs/17-PAGINA-ITCH.md) | copy e ficha do projeto |
+| [Brief de sprites](docs/26-ART-BRIEF-SPRITES.md) | naves, inimigos, tamanhos e Piskel |
 | [Auditoria da página](docs/25-AUDITORIA-PAGINA-GITHUB.md) | SEO, Pages, feedback e privacidade |
 
 ---
