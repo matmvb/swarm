@@ -123,6 +123,11 @@ butler push Builds/SWARM-windows.zip usuario/swarm:windows --userversion 0.9.8
 
 ## 5. Formulário de feedback
 
+O formulário completo, com perguntas, seções, lógica condicional e planilha de triagem, está em `docs/22-FEEDBACK-FORM.md`. Há duas opções:
+
+- **Google Forms** (recomendado): coleta automática em planilha.
+- **Página HTML** `docs/feedback/index.html`: visual do jogo, sem servidor; o testador copia ou baixa o texto e envia.
+
 Use Google Forms, Typeform ou Tally. Deixe **anônimo**; peça e-mail só se a pessoa quiser receber atualizações.
 
 ### Estrutura sugerida (10 perguntas)

@@ -1,0 +1,573 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SWARM — Feedback de playtest</title>
+<style>
+  :root {
+    --bg: #05070f;
+    --panel: #0b1020;
+    --text: #ebf7ff;
+    --muted: #8fa3b8;
+    --accent: #4dffe0;
+    --accent-soft: #a6fff2;
+    --danger: #ff4d59;
+    --warning: #ffbf4d;
+    --line: #1c2940;
+    --input: #070b14;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background:
+      radial-gradient(circle at 50% 0%, rgba(77, 255, 224, .10), transparent 38rem),
+      radial-gradient(circle at 10% 80%, rgba(255, 77, 89, .06), transparent 30rem),
+      var(--bg);
+    color: var(--text);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, sans-serif;
+    line-height: 1.5;
+  }
+
+  main {
+    width: min(860px, 100%);
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+  }
+
+  header { margin-bottom: 28px; }
+
+  .badge {
+    display: inline-block;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 5px 12px;
+    color: var(--accent);
+    font-size: .78rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    margin: 14px 0 4px;
+    color: var(--accent);
+    font-size: clamp(2.4rem, 8vw, 4rem);
+    line-height: .95;
+    letter-spacing: .18em;
+    text-shadow: 0 0 28px rgba(77, 255, 224, .28);
+  }
+
+  h2 {
+    margin: 0 0 4px;
+    font-size: 1.05rem;
+    color: var(--accent-soft);
+    letter-spacing: .04em;
+  }
+
+  p { margin: 8px 0; }
+
+  .note { color: var(--muted); font-size: .92rem; }
+
+  .card {
+    background: rgba(11, 16, 32, .92);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 20px;
+    margin: 14px 0;
+    box-shadow: 0 18px 50px rgba(0, 0, 0, .22);
+  }
+
+  fieldset {
+    margin: 18px 0 0;
+    padding: 0;
+    border: 0;
+  }
+
+  legend {
+    padding: 0;
+    margin: 0 0 8px;
+    font-weight: 650;
+  }
+
+  label { display: block; }
+
+  .field { margin-top: 16px; }
+
+  input[type="text"],
+  textarea,
+  select {
+    width: 100%;
+    margin-top: 6px;
+    padding: 10px 12px;
+    color: var(--text);
+    background: var(--input);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    font: inherit;
+  }
+
+  input[type="text"]:focus,
+  textarea:focus,
+  select:focus {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+    border-color: transparent;
+  }
+
+  textarea { min-height: 92px; resize: vertical; }
+
+  .choices {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  .choices label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: var(--input);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    cursor: pointer;
+    font-size: .95rem;
+  }
+
+  .choices label:has(input:checked) {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(77, 255, 224, .07);
+  }
+
+  .choices input { accent-color: var(--accent); }
+
+  .range-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 8px;
+  }
+
+  .range-row input[type="range"] {
+    flex: 1;
+    accent-color: var(--accent);
+  }
+
+  .range-value {
+    min-width: 2.2ch;
+    text-align: center;
+    color: var(--accent);
+    font-weight: 750;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 22px;
+  }
+
+  button {
+    border: 1px solid transparent;
+    border-radius: 9px;
+    padding: 11px 16px;
+    font: inherit;
+    font-weight: 650;
+    cursor: pointer;
+    transition: transform .06s ease, filter .15s ease;
+  }
+
+  button:active { transform: translateY(1px); }
+  button:hover { filter: brightness(1.08); }
+
+  .primary {
+    background: var(--accent);
+    color: #04110f;
+  }
+
+  .secondary {
+    background: transparent;
+    color: var(--text);
+    border-color: var(--line);
+  }
+
+  .danger {
+    background: transparent;
+    color: var(--danger);
+    border-color: rgba(255, 77, 89, .35);
+  }
+
+  .output-wrap { margin-top: 18px; }
+
+  .output {
+    min-height: 140px;
+    max-height: 420px;
+    overflow: auto;
+    margin: 8px 0 0;
+    padding: 14px;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    color: var(--accent-soft);
+    background: var(--input);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: .86rem;
+    line-height: 1.55;
+  }
+
+  #status {
+    min-height: 1.5em;
+    margin-top: 10px;
+    color: var(--accent);
+    font-size: .92rem;
+  }
+
+  .hidden { display: none !important; }
+
+  footer {
+    margin-top: 36px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: .86rem;
+  }
+
+  a { color: var(--accent); }
+
+  @media (max-width: 560px) {
+    main { padding-top: 26px; }
+    .card { padding: 16px; }
+    .choices label { width: 100%; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <div class="badge">Playtest · Demo 0.9.8</div>
+    <h1>SWARM</h1>
+    <p class="note">Feedback de playtest · 3 minutos · sem coleta automática de dados</p>
+  </header>
+
+  <div class="card">
+    <p>Obrigado por testar! Responda depois de jogar pelo menos uma run.</p>
+    <p class="note">Esta página não envia nada sozinha. No final, copie o texto e envie no Discord, WhatsApp ou e-mail combinado com o dev. Se preferir, baixe o arquivo <code>.txt</code>.</p>
+  </div>
+
+  <form id="feedback" novalidate>
+    <section class="card">
+      <h2>1. Sobre você</h2>
+      <div class="field">
+        <label for="name">Nome ou apelido <span class="note">(opcional)</span></label>
+        <input id="name" name="name" type="text" autocomplete="nickname" placeholder="Como você quer ser chamado">
+      </div>
+      <div class="field">
+        <label for="build">Build testada</label>
+        <input id="build" name="build" type="text" value="0.9.8" autocomplete="off">
+      </div>
+      <div class="field">
+        <label for="machine">Windows e placa de vídeo <span class="note">(opcional)</span></label>
+        <input id="machine" name="machine" type="text" autocomplete="off" placeholder="Ex.: Windows 11, RTX 3060">
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>2. Primeira impressão</h2>
+
+      <fieldset>
+        <legend>Você conseguiu abrir e jogar?</legend>
+        <div class="choices">
+          <label><input type="radio" name="opened" value="Sim" required> Sim</label>
+          <label><input type="radio" name="opened" value="Não"> Não</label>
+          <label><input type="radio" name="opened" value="Com ajuda"> Com ajuda</label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Quantas runs você jogou?</legend>
+        <div class="choices">
+          <label><input type="radio" name="runs" value="1" required> 1</label>
+          <label><input type="radio" name="runs" value="2"> 2</label>
+          <label><input type="radio" name="runs" value="3+"> 3+</label>
+          <label><input type="radio" name="runs" value="Não joguei"> Não joguei</label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Até onde você chegou?</legend>
+        <div class="choices">
+          <label><input type="radio" name="progress" value="Antes de 3 min" required> Antes de 3 min</label>
+          <label><input type="radio" name="progress" value="3–5 min"> 3–5 min</label>
+          <label><input type="radio" name="progress" value="Boss (5:00)"> Boss (5:00)</label>
+          <label><input type="radio" name="progress" value="Vitória (10:00)"> Vitória (10:00)</label>
+          <label><input type="radio" name="progress" value="Não joguei"> Não joguei</label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Em quanto tempo você entendeu que o tiro é automático?</legend>
+        <div class="choices">
+          <label><input type="radio" name="autofire" value="Menos de 10 s" required> Menos de 10 s</label>
+          <label><input type="radio" name="autofire" value="10–30 s"> 10–30 s</label>
+          <label><input type="radio" name="autofire" value="Mais de 30 s"> Mais de 30 s</label>
+          <label><input type="radio" name="autofire" value="Não entendi"> Não entendi</label>
+        </div>
+      </fieldset>
+    </section>
+
+    <section class="card">
+      <h2>3. Ritmo e clareza</h2>
+
+      <div class="field">
+        <label for="difficulty">Dificuldade <span class="note">(1 = fácil, 5 = injusto)</span></label>
+        <div class="range-row">
+          <input id="difficulty" name="difficulty" type="range" min="1" max="5" step="1" value="3">
+          <span class="range-value" data-for="difficulty">3</span>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="clarity">Clareza do level up <span class="note">(1 = confuso, 5 = óbvio)</span></label>
+        <div class="range-row">
+          <input id="clarity" name="clarity" type="range" min="1" max="5" step="1" value="3">
+          <span class="range-value" data-for="clarity">3</span>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="again">Jogaria de novo agora? <span class="note">(1 = não, 5 = sim)</span></label>
+        <div class="range-row">
+          <input id="again" name="again" type="range" min="1" max="5" step="1" value="3">
+          <span class="range-value" data-for="again">3</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>4. O que você sentiu</h2>
+
+      <div class="field">
+        <label for="confused">O que mais te confundiu ou incomodou?</label>
+        <textarea id="confused" name="confused" placeholder="Ex.: não entendi o painel de upgrade, não vi o dano, o boss parecia longe..."></textarea>
+      </div>
+
+      <div class="field">
+        <label for="change">O que você mudaria primeiro?</label>
+        <textarea id="change" name="change" placeholder="Uma coisa só, a mais importante para você."></textarea>
+      </div>
+
+      <div class="field">
+        <label for="liked">O que você mais gostou?</label>
+        <textarea id="liked" name="liked" placeholder="Pode ser uma mecânica, um efeito, um momento."></textarea>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>5. Bugs</h2>
+
+      <fieldset>
+        <legend>Encontrou algum bug, travamento ou tela preta?</legend>
+        <div class="choices">
+          <label><input type="radio" name="bug" value="Não" required> Não</label>
+          <label><input type="radio" name="bug" value="Sim"> Sim</label>
+        </div>
+      </fieldset>
+
+      <div id="bugDetails" class="field hidden">
+        <label for="bugText">Descreva o bug e o momento</label>
+        <textarea id="bugText" name="bugText" placeholder="O que aconteceu? Em que minuto? O que você esperava?"></textarea>
+        <p class="note">Se conseguir, envie também o <code>Player.log</code> e o <code>swarm-runs.csv</code> de:<br>
+        <code>%USERPROFILE%\AppData\LocalLow\Scoty\SWARM\</code></p>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>6. Para terminar</h2>
+
+      <fieldset>
+        <legend>Podemos citar seu feedback (sem seu nome) em um devlog?</legend>
+        <div class="choices">
+          <label><input type="radio" name="quote" value="Sim" required> Sim</label>
+          <label><input type="radio" name="quote" value="Não"> Não</label>
+        </div>
+      </fieldset>
+
+      <div class="field">
+        <label for="extra">Comentário livre <span class="note">(opcional)</span></label>
+        <textarea id="extra" name="extra" placeholder="Qualquer coisa que não caberia nas perguntas acima."></textarea>
+      </div>
+    </section>
+
+    <div class="actions">
+      <button type="button" class="primary" id="copyBtn">Copiar respostas</button>
+      <button type="button" class="secondary" id="downloadBtn">Baixar .txt</button>
+      <button type="button" class="secondary" id="mailBtn">Abrir no e-mail</button>
+      <button type="button" class="danger" id="clearBtn">Limpar</button>
+    </div>
+
+    <p id="status" role="status" aria-live="polite"></p>
+
+    <div id="outputWrap" class="output-wrap hidden">
+      <h2>Respostas prontas</h2>
+      <p class="note">Copie o texto abaixo e envie para o dev. Nada foi enviado automaticamente.</p>
+      <pre id="output" class="output"></pre>
+    </div>
+  </form>
+
+  <footer>
+    <p>SWARM · demo 0.9.8 · <a href="https://matmvb.itch.io/swarm" target="_blank" rel="noopener">jogar no itch.io</a></p>
+    <p>Esta página é local: não usa cookies, analytics ou servidor. Seus dados só saem daqui quando você copia ou baixa o texto.</p>
+  </footer>
+</main>
+
+<script>
+  const form = document.getElementById('feedback');
+  const output = document.getElementById('output');
+  const outputWrap = document.getElementById('outputWrap');
+  const status = document.getElementById('status');
+  const bugDetails = document.getElementById('bugDetails');
+
+  const val = (id) => document.getElementById(id).value.trim();
+  const checked = (name) => {
+    const el = form.querySelector(`input[name="${name}"]:checked`);
+    return el ? el.value : '—';
+  };
+  const range = (id) => document.getElementById(id).value;
+
+  function updateRanges() {
+    document.querySelectorAll('input[type="range"]').forEach((input) => {
+      const label = document.querySelector(`.range-value[data-for="${input.id}"]`);
+      if (label) label.textContent = input.value;
+    });
+  }
+
+  function buildSummary() {
+    const now = new Date().toLocaleString('pt-BR');
+    const lines = [
+      'SWARM — FEEDBACK DE PLAYTEST',
+      'Data: ' + now,
+      'Build: ' + (val('build') || '—'),
+      'Nome: ' + (val('name') || 'anônimo'),
+      'Máquina: ' + (val('machine') || 'não informada'),
+      '',
+      'Abriu e jogou: ' + checked('opened'),
+      'Runs: ' + checked('runs'),
+      'Chegou até: ' + checked('progress'),
+      'Entendeu o tiro automático: ' + checked('autofire'),
+      '',
+      'Dificuldade: ' + range('difficulty') + '/5 (1 fácil, 5 injusto)',
+      'Clareza do level up: ' + range('clarity') + '/5 (1 confuso, 5 óbvio)',
+      'Jogaria de novo: ' + range('again') + '/5 (1 não, 5 sim)',
+      '',
+      'O que confundiu: ' + (val('confused') || '—'),
+      'O que mudaria: ' + (val('change') || '—'),
+      'O que mais gostou: ' + (val('liked') || '—'),
+      '',
+      'Bug: ' + checked('bug'),
+      'Descrição do bug: ' + (checked('bug') === 'Sim' ? (val('bugText') || '—') : '—'),
+      '',
+      'Pode citar: ' + checked('quote'),
+      'Comentário livre: ' + (val('extra') || '—')
+    ];
+    return lines.join('\n');
+  }
+
+  function showOutput() {
+    if (!form.reportValidity()) {
+      status.textContent = 'Preencha as perguntas obrigatórias antes de gerar as respostas.';
+      return null;
+    }
+    updateRanges();
+    const text = buildSummary();
+    output.textContent = text;
+    outputWrap.classList.remove('hidden');
+    outputWrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    return text;
+  }
+
+  async function copyText(text) {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch (err) {
+      const area = document.createElement('textarea');
+      area.value = text;
+      area.setAttribute('readonly', '');
+      area.style.position = 'fixed';
+      area.style.opacity = '0';
+      document.body.appendChild(area);
+      area.select();
+      const ok = document.execCommand('copy');
+      document.body.removeChild(area);
+      return ok;
+    }
+  }
+
+  function downloadText(text) {
+    const stamp = new Date().toISOString().slice(0, 16).replace(/[:T]/g, '-');
+    const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'swarm-feedback-' + stamp + '.txt';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  form.querySelectorAll('input[type="range"]').forEach((input) => {
+    input.addEventListener('input', updateRanges);
+  });
+
+  form.querySelectorAll('input[name="bug"]').forEach((input) => {
+    input.addEventListener('change', () => {
+      bugDetails.classList.toggle('hidden', checked('bug') !== 'Sim');
+    });
+  });
+
+  document.getElementById('copyBtn').addEventListener('click', async () => {
+    const text = showOutput();
+    if (!text) return;
+    const ok = await copyText(text);
+    status.textContent = ok ? 'Respostas copiadas. Cole no Discord/WhatsApp/e-mail.' : 'Não consegui copiar. Selecione o texto e copie manualmente.';
+  });
+
+  document.getElementById('downloadBtn').addEventListener('click', () => {
+    const text = showOutput();
+    if (!text) return;
+    downloadText(text);
+    status.textContent = 'Arquivo .txt baixado. Anexe na conversa com o dev.';
+  });
+
+  document.getElementById('mailBtn').addEventListener('click', () => {
+    const text = showOutput();
+    if (!text) return;
+    const subject = encodeURIComponent('Feedback SWARM — playtest');
+    const body = encodeURIComponent(text);
+    window.location.href = 'mailto:?subject=' + subject + '&body=' + body;
+    status.textContent = 'Abrindo o aplicativo de e-mail...';
+  });
+
+  document.getElementById('clearBtn').addEventListener('click', () => {
+    form.reset();
+    updateRanges();
+    output.textContent = '';
+    outputWrap.classList.add('hidden');
+    bugDetails.classList.add('hidden');
+    status.textContent = 'Formulário limpo.';
+  });
+
+  updateRanges();
+</script>
+</body>
+</html>
