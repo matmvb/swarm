@@ -126,7 +126,9 @@ butler push Builds/SWARM-windows.zip usuario/swarm:windows --userversion 0.9.8
 O formulário completo, com perguntas, seções, lógica condicional e planilha de triagem, está em `docs/22-FEEDBACK-FORM.md`. Há duas opções:
 
 - **Google Forms** (recomendado): coleta automática em planilha.
-- **Página HTML** `docs/feedback/index.html`: visual do jogo, sem servidor; o testador copia ou baixa o texto e envia.
+- **Página HTML** `docs/feedback/index.html`: visual do jogo; com Formspree configurado, envia direto para o painel. Sem endpoint, o testador copia ou baixa o texto.
+
+O passo a passo do envio automático está em `docs/23-FEEDBACK-BACKEND.md`.
 
 Use Google Forms, Typeform ou Tally. Deixe **anônimo**; peça e-mail só se a pessoa quiser receber atualizações.
 

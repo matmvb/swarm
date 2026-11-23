@@ -233,6 +233,14 @@
 
   .hidden { display: none !important; }
 
+  .honeypot {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
   footer {
     margin-top: 36px;
     padding-top: 18px;
@@ -260,10 +268,12 @@
 
   <div class="card">
     <p>Obrigado por testar! Responda depois de jogar pelo menos uma run.</p>
-    <p class="note">Esta página não envia nada sozinha. No final, copie o texto e envie no Discord, WhatsApp ou e-mail combinado com o dev. Se preferir, baixe o arquivo <code>.txt</code>.</p>
+    <p class="note">Esta página só envia quando você clica em <strong>Enviar feedback</strong>. Se o envio automático estiver desativado, use <strong>Copiar respostas</strong> ou <strong>Baixar .txt</strong> e mande para o dev.</p>
   </div>
 
   <form id="feedback" novalidate>
+    <input type="text" id="_gotcha" name="_gotcha" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
+
     <section class="card">
       <h2>1. Sobre você</h2>
       <div class="field">
@@ -394,6 +404,13 @@
       <h2>6. Para terminar</h2>
 
       <fieldset>
+        <legend>Consentimento</legend>
+        <div class="choices">
+          <label><input type="checkbox" id="consent" name="consent" required> Concordo em enviar estas respostas para melhorar o jogo.</label>
+        </div>
+      </fieldset>
+
+      <fieldset>
         <legend>Podemos citar seu feedback (sem seu nome) em um devlog?</legend>
         <div class="choices">
           <label><input type="radio" name="quote" value="Sim" required> Sim</label>
@@ -408,12 +425,14 @@
     </section>
 
     <div class="actions">
-      <button type="button" class="primary" id="copyBtn">Copiar respostas</button>
+      <button type="button" class="primary" id="sendBtn">Enviar feedback</button>
+      <button type="button" class="secondary" id="copyBtn">Copiar respostas</button>
       <button type="button" class="secondary" id="downloadBtn">Baixar .txt</button>
       <button type="button" class="secondary" id="mailBtn">Abrir no e-mail</button>
       <button type="button" class="danger" id="clearBtn">Limpar</button>
     </div>
 
+    <p class="note" id="sendNote"></p>
     <p id="status" role="status" aria-live="polite"></p>
 
     <div id="outputWrap" class="output-wrap hidden">
@@ -425,16 +444,31 @@
 
   <footer>
     <p>SWARM · demo 0.9.8 · <a href="https://matmvb.itch.io/swarm" target="_blank" rel="noopener">jogar no itch.io</a></p>
-    <p>Esta página é local: não usa cookies, analytics ou servidor. Seus dados só saem daqui quando você copia ou baixa o texto.</p>
+    <p>Esta página não usa cookies nem analytics. As respostas só são enviadas quando você clica em <strong>Enviar feedback</strong>; no modo local, elas ficam no navegador até você copiar ou baixar o texto.</p>
   </footer>
 </main>
 
 <script>
+  // ─────────────────────────────────────────────────────────────
+  // CONFIGURAÇÃO DO ENVIO
+  // Cole aqui o endpoint do Formspree:
+  // const FEEDBACK_ENDPOINT = 'https://formspree.io/f/SEU_ID';
+  // Se ficar vazio, a página funciona no modo local (copiar/baixar).
+  // ─────────────────────────────────────────────────────────────
+  const FEEDBACK_ENDPOINT = '';
+  const hasEndpoint = FEEDBACK_ENDPOINT.length > 0 && !FEEDBACK_ENDPOINT.includes('SEU_ID');
+
   const form = document.getElementById('feedback');
   const output = document.getElementById('output');
   const outputWrap = document.getElementById('outputWrap');
   const status = document.getElementById('status');
+  const sendBtn = document.getElementById('sendBtn');
+  const sendNote = document.getElementById('sendNote');
   const bugDetails = document.getElementById('bugDetails');
+
+  sendNote.textContent = hasEndpoint
+    ? 'Envio direto ativado. Ao enviar, as respostas vão para o painel do desenvolvedor.'
+    : 'Modo local: use Copiar respostas ou Baixar .txt e envie para o dev.';
 
   const val = (id) => document.getElementById(id).value.trim();
   const checked = (name) => {
@@ -475,10 +509,92 @@
       'Bug: ' + checked('bug'),
       'Descrição do bug: ' + (checked('bug') === 'Sim' ? (val('bugText') || '—') : '—'),
       '',
+      'Consentimento: ' + (document.getElementById('consent').checked ? 'Sim' : 'Não'),
       'Pode citar: ' + checked('quote'),
       'Comentário livre: ' + (val('extra') || '—')
     ];
     return lines.join('\n');
+  }
+
+  function buildPayload() {
+    return {
+      _subject: 'SWARM — Feedback de playtest',
+      _gotcha: val('_gotcha'),
+      source: 'swarm-feedback-page',
+      data: new Date().toISOString(),
+      build: val('build'),
+      name: val('name'),
+      machine: val('machine'),
+      opened: checked('opened'),
+      runs: checked('runs'),
+      progress: checked('progress'),
+      autofire: checked('autofire'),
+      difficulty: range('difficulty'),
+      clarity: range('clarity'),
+      again: range('again'),
+      confused: val('confused'),
+      change: val('change'),
+      liked: val('liked'),
+      bug: checked('bug'),
+      bugText: checked('bug') === 'Sim' ? val('bugText') : '',
+      consent: document.getElementById('consent').checked,
+      quote: checked('quote'),
+      extra: val('extra')
+    };
+  }
+
+  async function sendFeedback() {
+    if (!form.reportValidity()) {
+      status.textContent = 'Preencha as perguntas obrigatórias antes de enviar.';
+      return;
+    }
+
+    updateRanges();
+    const payload = buildPayload();
+
+    if (!hasEndpoint) {
+      const text = buildSummary();
+      output.textContent = text;
+      outputWrap.classList.remove('hidden');
+      status.textContent = 'Endpoint não configurado. Copie o texto e envie manualmente para o dev.';
+      outputWrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      return;
+    }
+
+    sendBtn.disabled = true;
+    sendBtn.textContent = 'Enviando...';
+    status.textContent = 'Enviando feedback...';
+
+    try {
+      const response = await fetch(FEEDBACK_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        credentials: 'omit',
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) {
+        throw new Error('HTTP ' + response.status);
+      }
+
+      status.textContent = 'Feedback enviado. Obrigado!';
+      outputWrap.classList.add('hidden');
+      output.textContent = '';
+      form.reset();
+      updateRanges();
+      bugDetails.classList.add('hidden');
+    } catch (error) {
+      output.textContent = buildSummary();
+      outputWrap.classList.remove('hidden');
+      status.textContent = 'Não consegui enviar automaticamente. Copie o texto abaixo e envie para o dev.';
+      outputWrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } finally {
+      sendBtn.disabled = false;
+      sendBtn.textContent = 'Enviar feedback';
+    }
   }
 
   function showOutput() {
@@ -534,6 +650,8 @@
       bugDetails.classList.toggle('hidden', checked('bug') !== 'Sim');
     });
   });
+
+  document.getElementById('sendBtn').addEventListener('click', sendFeedback);
 
   document.getElementById('copyBtn').addEventListener('click', async () => {
     const text = showOutput();

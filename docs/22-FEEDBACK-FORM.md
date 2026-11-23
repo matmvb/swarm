@@ -102,10 +102,11 @@ Depois da seção 5b, continue para a Seção 6.
 
 | # | Pergunta | Tipo | Obrigatória | Opções |
 |---|---|---|---|---|
-| 16 | Podemos citar seu feedback (sem seu nome) em um devlog? | Múltipla escolha | Sim | Sim / Não |
-| 17 | Comentário livre | Parágrafo | Não | — |
+| 16 | Consentimento | Caixas de seleção | Sim | `Concordo em enviar estas respostas para melhorar o jogo.` |
+| 17 | Podemos citar seu feedback (sem seu nome) em um devlog? | Múltipla escolha | Sim | Sim / Não |
+| 18 | Comentário livre | Parágrafo | Não | — |
 
-> Versão curta (2 min): mantenha as perguntas 4–10, 14 e 16. O resto é opcional.
+> Versão curta (2 min): mantenha as perguntas 4–10, 14, 16 e 17. O resto é opcional.
 
 ### 3. Mensagem de confirmação
 
@@ -137,12 +138,34 @@ Arquivo:
 docs/feedback/index.html
 ```
 
-Ela tem o mesmo conteúdo do formulário, no visual do jogo, e **não envia nada
-para servidor nenhum**. O testador:
+Ela tem o mesmo conteúdo do formulário, no visual do jogo. Funciona em dois modos:
 
-1. preenche;
-2. clica em **Copiar respostas** ou **Baixar .txt**;
-3. cola/envia no Discord, WhatsApp ou e-mail.
+| Modo | Como funciona |
+|---|---|
+| **Local** (padrão) | O testador preenche, clica em **Copiar respostas** ou **Baixar .txt** e envia para o dev. |
+| **Envio automático** | Com um endpoint configurado, o botão **Enviar feedback** grava a resposta no painel do serviço. |
+
+O envio automático está pronto para **Formspree** (ou qualquer endpoint JSON).
+O passo a passo está em `docs/23-FEEDBACK-BACKEND.md`.
+
+### Como ativar o envio
+
+1. Crie um formulário no Formspree e copie o endpoint.
+2. Abra `docs/feedback/index.html`.
+3. Procure:
+
+```js
+const FEEDBACK_ENDPOINT = '';
+```
+
+4. Cole o endpoint:
+
+```js
+const FEEDBACK_ENDPOINT = 'https://formspree.io/f/SEU_ID';
+```
+
+5. Salve, publique e teste em aba anônima.
+6. Confirme a resposta no painel do Formspree.
 
 ### Como hospedar
 
@@ -167,9 +190,10 @@ https://matmvb.github.io/swarm/feedback/
 
 ### Limitações
 
-- Não há planilha automática; o testador precisa enviar o texto.
+- Sem endpoint, não há planilha automática; o testador precisa enviar o texto.
 - O botão **Copiar** pode pedir permissão do navegador; o fallback seleciona o texto.
 - Em `file://`, o botão de e-mail pode abrir o app padrão; o copy continua funcionando.
+- Com endpoint, o envio depende do serviço (Formspree tem limite no plano free).
 
 ---
 
@@ -185,7 +209,7 @@ Mensagem curta:
 
 Se estiver usando a página HTML:
 
-> ... responde essa página e clica em **Copiar respostas**; depois cola aqui no chat.
+> ... responde essa página e clica em **Enviar feedback**. Se o envio automático não estiver ativo, clica em **Copiar respostas** e cola aqui no chat.
 
 ---
 
@@ -207,6 +231,7 @@ Depois de 3 dias, exporte as respostas para uma planilha com estas colunas:
 | jogaria_de_novo | 5 |
 | bug | Não |
 | citar | Sim |
+| consentimento | Sim |
 | confundiu | “não entendi o upgrade de orbe” |
 | mudaria | “mais contraste no dano” |
 | gostou | “caos da horda” |
