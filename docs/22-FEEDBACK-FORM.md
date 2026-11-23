@@ -186,7 +186,7 @@ A página inicial em `docs/index.html` fica em:
 https://matmvb.github.io/swarm/
 ```
 
-Ela tem os botões **Jogar no itch.io** e **Enviar feedback**.
+Ela tem o botão **Enviar feedback** e as instruções de teste. O link do jogo fica no convite (itch.io restrito).
 
 **Netlify Drop (sem git):**
 
