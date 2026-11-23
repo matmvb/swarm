@@ -111,6 +111,8 @@ Sem narração. Cortes a cada 1,5–2 s. Legenda grande.
 
 ## Checklist antes de publicar
 
+> Para distribuir a build para testers, siga `docs/20-PLAYTEST-EXTERNO.md`.
+
 - [ ] 5 screenshots em 1920×1080
 - [ ] 3 GIFs de 6–10 s
 - [ ] Trailer de 30 s

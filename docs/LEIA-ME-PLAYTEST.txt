@@ -1,0 +1,38 @@
+SWARM — DEMO 0.9.8 — LEIA-ME
+================================
+
+COMO JOGAR
+1. Extraia o ZIP inteiro para uma pasta. Não abra o SWARM.exe direto de dentro do ZIP.
+2. Execute SWARM.exe.
+3. Se o Windows mostrar o aviso do SmartScreen:
+   clique em "Mais informações" e depois em "Executar assim mesmo".
+4. O jogo abre em tela cheia. Para sair, use Alt+F4.
+
+CONTROLES
+WASD / setas ....... mover
+ENTER .............. jogar (menu principal)
+1 / 2 / 3 .......... escolher piloto ou upgrade
+4 / 5 / 6 .......... comprar melhorias permanentes (loja de Núcleos)
+O .................. opções
+ESC ................ pausar / continuar
+R .................. reiniciar
+F1 ................. overlay de debug (opcional)
+F12 ................ salvar screenshot
+
+COMO FUNCIONA
+- O tiro é automático. Você decide para onde ir e qual upgrade escolher.
+- Cada run dura até 10:00. O boss aparece às 5:00.
+- Se o jogo estiver mudo: aperte O e depois + para aumentar o volume.
+
+FEEDBACK
+- Responda o formulário que veio junto com o convite.
+- Se o jogo der erro, envie estes arquivos:
+  %USERPROFILE%\AppData\LocalLow\Scoty\SWARM\Player.log
+  %USERPROFILE%\AppData\LocalLow\Scoty\SWARM\swarm-runs.csv
+- Se conseguir, envie também um print (F12). As imagens ficam em:
+  %USERPROFILE%\AppData\LocalLow\Scoty\SWARM\shots
+
+Conte o que aconteceu, em que momento e o que você esperava que acontecesse.
+Não precisa ser técnico: "não entendi o painel de upgrade" já ajuda muito.
+
+OBRIGADO POR TESTAR!
