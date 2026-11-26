@@ -1,0 +1,71 @@
+# SWARM — Proprietary License
+
+**Copyright © 2026 matmvb. All rights reserved.**
+**Copyright © 2026 matmvb. Todos os direitos reservados.**
+
+This license applies to the SWARM project, including its source code, game
+builds, sprites, pixel art, animations, UI, logo, name, music, sound effects,
+design documents, and other original materials in this repository, except for
+third-party components listed in `THIRD-PARTY-NOTICES.md`.
+
+## 1. Limited permission
+
+You may:
+
+- Play the SWARM demo for personal, non-commercial entertainment.
+- Record, stream, or publish videos of gameplay, including on platforms with
+  their standard monetization, provided you credit SWARM and do not present the
+  game as your own.
+- Share a link to the official SWARM page or repository.
+
+## 2. Restrictions
+
+You may not, without prior written permission from the copyright holder:
+
+- Redistribute, mirror, sell, rent, sublicense, or bundle the game build or its
+  assets.
+- Modify, adapt, translate, or create derivative games from the code, art,
+  audio, or design.
+- Reverse engineer, decompile, or extract assets from a build, except where
+  applicable law expressly permits it.
+- Use the SWARM name, logo, sprites, UI, music, or other assets in another
+  product, service, mod, or commercial work.
+- Remove or alter copyright, license, or attribution notices.
+- Use the project or its assets to train or feed generative models for
+  commercial reuse.
+
+## 3. Source code visibility
+
+The repository may be publicly visible for review, portfolio, security, and
+documentation purposes. Visibility does not grant permission to copy, reuse, or
+redistribute the code. No contribution is accepted under an implied license
+unless explicitly agreed by the copyright holder.
+
+## 4. Third-party components
+
+Third-party components remain under their own licenses. See
+`THIRD-PARTY-NOTICES.md` and `Assets/Swarm/Art/Fonts/OFL.txt`.
+
+## 5. No warranty
+
+THE SOFTWARE AND ASSETS ARE PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT. IN NO
+EVENT SHALL THE COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER
+LIABILITY ARISING FROM THE USE OF THE SOFTWARE OR ASSETS.
+
+## 6. Termination
+
+Any violation of this license terminates the permission granted in Section 1.
+On termination, you must stop using and delete any unauthorized copies of the
+game and assets.
+
+## 7. Contact
+
+For licensing, commercial use, press, or permissions, contact the author through
+the official SWARM channels:
+
+- https://github.com/matmvb/swarm
+- https://matmvb.itch.io/swarm
+
+This document is the usage license for the SWARM demo. It is not legal advice.

@@ -220,6 +220,21 @@ A build sai em `Builds/Windows/SWARM.exe`.
 
 ---
 
+## Licença e créditos
+
+O SWARM é um projeto proprietário. O código, os sprites, a interface, o nome e
+os demais assets originais estão protegidos por direitos autorais.
+
+- **Licença de uso:** [LICENSE](LICENSE)
+- **Página pública:** [Licença e créditos](https://matmvb.github.io/swarm/licenca.html)
+- **Terceiros:** [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md)
+- **Fonte Press Start 2P:** [OFL.txt](Assets/Swarm/Art/Fonts/OFL.txt)
+
+A demo pode ser jogada e gravada para conteúdo com crédito. Redistribuição,
+venda, modificação e extração de assets não são permitidas sem autorização.
+
+---
+
 ## Feedback
 
 O playtest é anônimo e leva cerca de 3 minutos:
