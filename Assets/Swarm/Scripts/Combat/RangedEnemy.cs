@@ -88,6 +88,8 @@ public class RangedEnemy : MonoBehaviour
         if (instance == null) return;
 
         var projectile = instance.GetComponent<EnemyProjectile>();
-        if (projectile != null) projectile.Init(direction, projectileSpeed, damage, 4f);
+        if (projectile != null)
+            projectile.Init(direction, projectileSpeed, damage, 4f,
+                CombatPalette.EnemyProjectile, CombatPalette.EnemyProjectileAccent);
     }
 }

@@ -2,6 +2,7 @@ using UnityEngine;
 
 /// <summary>
 /// FX de combate poolados: explosão de morte, faísca de impacto e partículas.
+/// A explosão recebe a cor da classe e é disparada depois da death sheet.
 /// </summary>
 public class DeathBurst : MonoBehaviour
 {
@@ -12,6 +13,9 @@ public class DeathBurst : MonoBehaviour
     [SerializeField] GameObject coreTemplate;
     [SerializeField] BurstParticle template;
     [SerializeField] int count = 6;
+    [SerializeField] float explosionLifetime = 0.40f;
+
+    public float ExplosionDuration => Mathf.Max(0.05f, explosionLifetime);
 
     void Awake()
     {
@@ -23,28 +27,25 @@ public class DeathBurst : MonoBehaviour
         if (Instance == this) Instance = null;
     }
 
+    /// <summary>Compatibilidade: explosão + partículas no mesmo ponto.</summary>
     public void Spawn(Vector3 position, Color color, int amount = 0, float scale = 1f)
     {
-        SpawnExplosion(position, scale);
+        SpawnDeath(position, color, scale, amount);
+    }
 
-        if (template == null) return;
-
-        int total = amount > 0 ? amount : count;
-
-        for (int i = 0; i < total; i++)
-        {
-            GameObject instance = ObjectPool.Spawn(template.gameObject, position, Quaternion.identity);
-            if (instance == null) continue;
-
-            var particle = instance.GetComponent<BurstParticle>();
-            if (particle == null) continue;
-
-            Vector2 direction = Random.insideUnitCircle.normalized;
-            particle.Init(direction * Random.Range(2f, 5f), Random.Range(0.25f, 0.45f), color, -1f, 7);
-        }
+    /// <summary>Explosão final + partículas coloridas pela classe do inimigo.</summary>
+    public void SpawnDeath(Vector3 position, Color color, float scale, int amount = 0)
+    {
+        SpawnExplosion(position, color, scale);
+        SpawnParticles(position, color, amount);
     }
 
     public void SpawnHit(Vector3 position, Color color)
+    {
+        SpawnHit(position, color, 0.28f);
+    }
+
+    public void SpawnHit(Vector3 position, Color color, float scale)
     {
         if (hitTemplate == null) return;
 
@@ -52,7 +53,7 @@ public class DeathBurst : MonoBehaviour
         if (instance == null) return;
 
         var fx = instance.GetComponent<FxOneShot>();
-        if (fx != null) fx.Init(0.38f, color, 9);
+        if (fx != null) fx.Init(scale, color, 9);
     }
 
     public void SpawnCore(Vector3 position)
@@ -66,7 +67,27 @@ public class DeathBurst : MonoBehaviour
         if (fx != null) fx.Init(1.2f, Color.white, 8);
     }
 
-    void SpawnExplosion(Vector3 position, float scale)
+    void SpawnParticles(Vector3 position, Color color, int amount)
+    {
+        if (template == null) return;
+
+        int total = amount > 0 ? amount : count;
+
+        for (int i = 0; i < total; i++)
+        {
+            GameObject instance = ObjectPool.Spawn(template.gameObject, position, Quaternion.identity);
+            if (instance == null) continue;
+
+            var particle = instance.GetComponent<BurstParticle>();
+            if (particle == null) continue;
+
+            Vector2 direction = Random.insideUnitCircle.normalized;
+            Color particleColor = CombatPalette.Highlight(color);
+            particle.Init(direction * Random.Range(2f, 5f), Random.Range(0.25f, 0.45f), particleColor, -1f, 7);
+        }
+    }
+
+    void SpawnExplosion(Vector3 position, Color color, float scale)
     {
         if (explosionTemplate == null) return;
 
@@ -74,6 +95,6 @@ public class DeathBurst : MonoBehaviour
         if (instance == null) return;
 
         var fx = instance.GetComponent<FxOneShot>();
-        if (fx != null) fx.Init(scale, Color.white, 6);
+        if (fx != null) fx.Init(scale, color, 6);
     }
 }

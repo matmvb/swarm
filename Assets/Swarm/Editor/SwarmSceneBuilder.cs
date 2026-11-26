@@ -103,8 +103,8 @@ public static class SwarmSceneBuilder
 
         GameObject projectileTemplate = CreateProjectileTemplate();
         GameObject orbTemplate = CreateOrbTemplate();
-        GameObject enemyProjectileTemplate = CreateEnemyProjectileTemplate("EnemyProjectileTemplate", "Projectiles/proj_enemy", new Vector3(6f, -20f, 0f), 0.30f, 5);
-        GameObject bossProjectileTemplate = CreateEnemyProjectileTemplate("BossProjectileTemplate", "Projectiles/proj_boss", new Vector3(10f, -20f, 0f), 0.42f, 6);
+        GameObject enemyProjectileTemplate = CreateEnemyProjectileTemplate("EnemyProjectileTemplate", "Projectiles/proj_enemy", new Vector3(6f, -20f, 0f), 0.30f, 5, false);
+        GameObject bossProjectileTemplate = CreateEnemyProjectileTemplate("BossProjectileTemplate", "Projectiles/proj_boss", new Vector3(10f, -20f, 0f), 0.42f, 6, true);
         GameObject burstTemplate = CreateBurstTemplate();
         GameObject warningTemplate = CreateSpawnWarningTemplate();
         GameObject muzzleTemplate = CreateFxTemplate("MuzzleTemplate", "FX/fx_muzzle", 0.18f, 0.42f);
@@ -165,6 +165,7 @@ public static class SwarmSceneBuilder
         SetRef(deathBurst, "explosionTemplate", explosionTemplate);
         SetRef(deathBurst, "hitTemplate", hitTemplate);
         SetRef(deathBurst, "coreTemplate", coreTemplate);
+        SetFloat(deathBurst, "explosionLifetime", 0.40f);
 
         var runLogger = manager.AddComponent<RunLogger>();
         SetRef(runLogger, "xp", xpSystem);
@@ -294,6 +295,7 @@ public static class SwarmSceneBuilder
         var orbital = go.AddComponent<OrbitalWeapon>();
         Sprite[] orbitalFrames = LoadSprites("Projectiles/orbital");
         SetRef(orbital, "orbSprite", orbitalFrames.Length > 0 ? orbitalFrames[0] : _circle);
+        SetRef(orbital, "coreSprite", _white);
         SetList(orbital, "orbFrames", ToObjectList(orbitalFrames));
         go.AddComponent<PlayerRegen>();
 
@@ -326,6 +328,8 @@ public static class SwarmSceneBuilder
 
         var animator = go.AddComponent<SpriteAnimator>();
         if (frames.Length > 0) animator.Configure(frames, 10f, true);
+
+        CreateProjectileCore(go, 0.10f, 6);
 
         var body = go.AddComponent<Rigidbody2D>();
         body.gravityScale = 0f;
@@ -364,7 +368,7 @@ public static class SwarmSceneBuilder
         return go;
     }
 
-    static GameObject CreateEnemyProjectileTemplate(string name, string spritePath, Vector3 position, float scale, int sortingOrder)
+    static GameObject CreateEnemyProjectileTemplate(string name, string spritePath, Vector3 position, float scale, int sortingOrder, bool addCore)
     {
         var go = new GameObject(name);
         go.transform.position = position;
@@ -381,6 +385,8 @@ public static class SwarmSceneBuilder
         var animator = go.AddComponent<SpriteAnimator>();
         if (frames.Length > 0) animator.Configure(frames, 10f, true);
 
+        if (addCore) CreateProjectileCore(go, 0.10f, sortingOrder + 1);
+
         var body = go.AddComponent<Rigidbody2D>();
         body.gravityScale = 0f;
         body.freezeRotation = true;
@@ -394,6 +400,19 @@ public static class SwarmSceneBuilder
         go.AddComponent<EnemyProjectile>();
         go.SetActive(false);
         return go;
+    }
+
+    static void CreateProjectileCore(GameObject parent, float localScale, int sortingOrder)
+    {
+        var coreObject = new GameObject("Core");
+        coreObject.transform.SetParent(parent.transform, false);
+        coreObject.transform.localScale = Vector3.one * localScale;
+
+        var core = coreObject.AddComponent<SpriteRenderer>();
+        core.sprite = _white;
+        core.color = Color.white;
+        core.sortingOrder = sortingOrder;
+        ApplySpriteMaterial(core);
     }
 
     static GameObject CreateFxTemplate(string name, string spritePath, float lifetime, float scale)
@@ -505,7 +524,8 @@ public static class SwarmSceneBuilder
         var animator = go.AddComponent<SpriteAnimator>();
         if (frames.Length > 0) animator.Configure(frames, 10f, true);
 
-        go.AddComponent<SpawnWarning>();
+        var warning = go.AddComponent<SpawnWarning>();
+        SetColor(warning, "color", CombatPalette.Warning);
         go.SetActive(false);
         return go;
     }
@@ -671,7 +691,7 @@ public static class SwarmSceneBuilder
         mainQuit.color = UIPalette.Muted;
 
         Text mainVersion = MakeText(mainMenuPanel.transform, "MainVersion", new Vector2(0.5f, 0.5f), new Vector2(0f, -226f), new Vector2(1400f, 30f), 18, TextAnchor.MiddleCenter);
-        mainVersion.text = "DEMO 0.9.9   ·   FEITO COM UNITY";
+        mainVersion.text = "DEMO 0.9.11   ·   SHIP REDESIGN";
         mainVersion.color = UIPalette.Muted;
         mainVersion.font = UIFontBody();
 

@@ -110,8 +110,6 @@ public class BossController : MonoBehaviour
         {
             LastFightWon = true;
             LastFightDuration = Time.time - _spawnTime;
-
-            if (HitStop.Instance != null) HitStop.Instance.Play(0.09f, 0.05f);
         }
 
         HideTelegraph();
@@ -222,7 +220,8 @@ public class BossController : MonoBehaviour
 
                 var projectile = instance.GetComponent<EnemyProjectile>();
                 if (projectile != null)
-                    projectile.Init(direction, burstSpeed, burstDamage, burstLifetime);
+                    projectile.Init(direction, burstSpeed, burstDamage, burstLifetime,
+                        CombatPalette.BossProjectile, CombatPalette.BossProjectileAccent);
             }
         }
 

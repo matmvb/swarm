@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/press/og-1200x630.png" alt="SWARM — bullet heaven 2D, demo 0.9.9 para Windows" width="100%">
+  <img src="docs/press/og-1200x630.png" alt="SWARM — bullet heaven 2D, demo 0.9.11 para Windows" width="100%">
 </p>
 
 <h1 align="center">SWARM</h1>
@@ -20,7 +20,7 @@
 <p align="center">
   <img alt="Unity" src="https://img.shields.io/badge/Unity-6000.6.1f1-000?logo=unity&logoColor=white">
   <img alt="Windows" src="https://img.shields.io/badge/Windows-10%2F11-0078D6?logo=windows">
-  <img alt="Status" src="https://img.shields.io/badge/status-playtest%200.9.9-4DFFE0">
+  <img alt="Status" src="https://img.shields.io/badge/status-playtest%200.9.11-4DFFE0">
   <img alt="Feito com C#" src="https://img.shields.io/badge/C%23-239120?logo=csharp&logoColor=white">
 </p>
 
@@ -40,7 +40,7 @@ Sobreviva até 10:00 para vencer.
 
 ---
 
-## O que tem na demo 0.9.9
+## O que tem na demo 0.9.11
 
 | Conteúdo | Detalhe |
 |---|---|
@@ -51,7 +51,7 @@ Sobreviva até 10:00 para vencer.
 | **2 armas** | tiro automático e orbes orbitais |
 | **Meta-progressão** | gaste Núcleos em bônus permanentes |
 | **Áudio procedural** | trilha e SFX sintetizados em tempo real |
-| **Visual neon** | formas geométricas, bloom, vinheta e grid |
+| **Visual neon** | pixel art, bloom contido, vinheta e grid em parallax |
 
 Sem loot boxes, anúncios ou pay-to-win.
 
@@ -177,6 +177,22 @@ A build sai em `Builds/Windows/SWARM.exe`.
 
 ## Changelog recente
 
+### 0.9.11 — Ship Redesign
+
+- Redesign das três naves: Baluarte com pods/armadura laranja, Vetor com asas e motor verdes, Lança com emissor/cockpit/motor amarelos.
+- Sprites 32×32 com margem de 1 px, 6 cores, sem anti-aliasing e sem alpha parcial.
+- Portraits 64×64 atualizados a partir dos novos idles.
+- Thruster sheets redesenhados com cor de piloto (laranja/verde/amarelo).
+- Hit e death sheets recoloridos para a nova paleta.
+
+### 0.9.10 — Combat Visual Polish
+
+- Fase 0: quatro PNGs de projéteis/XP reexportados com filtros válidos; `ArtImportPipeline` agora valida assinatura, chunks, CRC, zlib, scanlines, dimensões e transparência.
+- Fase 1: projéteis com cor de time; núcleo branco no jogador, magenta nos inimigos e vermelho/âmbar no boss.
+- Explosões de morte coloridas pela classe, com escala por categoria e sequência morte → explosão.
+- Camera shake removido de Drone/Corredor; médios com shake leve; boss com shake forte.
+- XP dourado separado do crítico laranja; muzzle flash ciano; orbital com núcleo branco.
+
 ### 0.9.9
 
 - Integração das naves, inimigos e boss em pixel art.
@@ -226,5 +242,5 @@ Se encontrar um bug, envie também:
 - Feedback: [formulário de playtest](https://matmvb.github.io/swarm/feedback/)
 
 <p align="center">
-  <sub>SWARM · demo 0.9.9 · feito com Unity 6.6 · 2026</sub>
+  <sub>SWARM · demo 0.9.11 · feito com Unity 6.6 · 2026</sub>
 </p>

@@ -6,7 +6,7 @@ using UnityEngine;
 /// </summary>
 public class SpawnWarning : MonoBehaviour
 {
-    [SerializeField] Color color = new Color(1f, 0.25f, 0.30f, 0.7f);
+    [SerializeField] Color color = new Color(1f, 0.72f, 0.30f, 0.72f);
 
     SpriteRenderer _sprite;
     SpriteAnimator _animator;

@@ -102,6 +102,7 @@ public class Enemy : MonoBehaviour
 
             if (_sprite != null)
             {
+                _sprite.enabled = true;
                 _baseColor = data.color;
                 _sprite.color = _baseColor;
                 ConfigureIdle();
@@ -198,7 +199,7 @@ public class Enemy : MonoBehaviour
 
         _health -= amount;
         _flash = 1f;
-        _flashColor = critical ? new Color(1f, 0.85f, 0.2f) : Color.white;
+        _flashColor = critical ? CombatPalette.PlayerCritical : Color.white;
 
         if (data != null && data.hitFrames != null && data.hitFrames.Length > 0 && _animator != null)
         {
@@ -257,6 +258,7 @@ public class Enemy : MonoBehaviour
     void Die()
     {
         _dead = true;
+        All.Remove(this);
         _temporary = false;
         _hitUntil = 0f;
 
@@ -268,66 +270,65 @@ public class Enemy : MonoBehaviour
             XpSystem.Instance.SpawnOrb(data.xp, transform.position);
 
         bool isBoss = GetComponent<BossController>() != null;
-        float explosionScale = isBoss ? 3.4f : Mathf.Clamp(transform.localScale.x * 1.8f, 0.8f, 2.2f);
-
-        if (DeathBurst.Instance != null)
-        {
-            DeathBurst.Instance.Spawn(transform.position, _baseColor, 0, explosionScale);
-            if (isBoss) DeathBurst.Instance.SpawnCore(transform.position);
-        }
-
-        if (CameraFollow.Instance != null)
-            CameraFollow.Instance.Shake(isBoss ? 0.35f : 0.03f, isBoss ? 0.55f : 0.08f);
+        CombatPalette.EnemyWeight weight = CombatPalette.WeightOf(data);
+        Color deathColor = CombatPalette.EnemyColor(data);
 
         if (_flashSprite != null) _flashSprite.enabled = false;
         if (_rb != null) _rb.linearVelocity = Vector2.zero;
         if (_collider != null) _collider.enabled = false;
 
-        if (data != null && data.deathFrames != null && data.deathFrames.Length > 0)
-        {
-            float duration = Mathf.Max(0.18f, data.deathFrames.Length / 12f);
-            StartCoroutine(DeathRoutine(duration));
-        }
-        else
-        {
-            _flash = 0f;
-            StartCoroutine(FallbackDeathRoutine());
-        }
+        float animationDuration = data != null && data.deathFrames != null && data.deathFrames.Length > 0
+            ? Mathf.Max(0.18f, data.deathFrames.Length / 12f)
+            : 0.12f;
+
+        StartCoroutine(DeathRoutine(animationDuration, deathColor, weight, isBoss));
     }
 
-    IEnumerator DeathRoutine(float duration)
+    IEnumerator DeathRoutine(float animationDuration, Color deathColor, CombatPalette.EnemyWeight weight, bool isBoss)
     {
-        if (_animator != null) _animator.Configure(data.deathFrames, 12f, false);
-        yield return new WaitForSeconds(duration);
+        // 1. A hit spark já foi criada pelo projétil no impacto.
+        // 2. A death sheet autoral toca primeiro, sem explosão por cima.
+        if (data != null && data.deathFrames != null && data.deathFrames.Length > 0 && _animator != null)
+            _animator.Configure(data.deathFrames, 12f, false);
+
+        yield return new WaitForSeconds(animationDuration);
+
+        if (_sprite != null) _sprite.enabled = false;
+
+        // 3. A explosão entra depois, com a cor da classe e escala por categoria.
+        float fxDuration = 0.05f;
+
+        if (DeathBurst.Instance != null)
+        {
+            float scale = CombatPalette.ExplosionScale(weight);
+            DeathBurst.Instance.SpawnDeath(transform.position, deathColor, scale);
+            if (isBoss) DeathBurst.Instance.SpawnCore(transform.position);
+            fxDuration = DeathBurst.Instance.ExplosionDuration;
+        }
+
+        ApplyDeathShake(weight);
+
+        if (isBoss && HitStop.Instance != null)
+            HitStop.Instance.Play(0.09f, 0.05f);
+
+        yield return new WaitForSeconds(fxDuration);
         ObjectPool.Despawn(gameObject);
     }
 
-    IEnumerator FallbackDeathRoutine()
+    static void ApplyDeathShake(CombatPalette.EnemyWeight weight)
     {
-        const float duration = 0.12f;
+        if (CameraFollow.Instance == null) return;
 
-        float time = 0f;
-        Vector3 startScale = transform.localScale;
-        Color startColor = _sprite != null ? _sprite.color : _baseColor;
-
-        while (time < duration)
+        switch (weight)
         {
-            time += Time.deltaTime;
-            float k = Mathf.Clamp01(time / duration);
-
-            transform.localScale = startScale * (1f + k * 0.25f);
-
-            if (_sprite != null)
-            {
-                Color color = startColor;
-                color.a = 1f - k;
-                _sprite.color = color;
-            }
-
-            yield return null;
+            case CombatPalette.EnemyWeight.Special:
+                CameraFollow.Instance.Shake(0.35f, 0.55f);
+                break;
+            case CombatPalette.EnemyWeight.Medium:
+                CameraFollow.Instance.Shake(0.04f, 0.10f);
+                break;
+            // Small (Drone/Corredor): sem shake.
         }
-
-        ObjectPool.Despawn(gameObject);
     }
 
     /// <summary>Inimigo vivo mais próximo dentro do alcance (ou null).</summary>

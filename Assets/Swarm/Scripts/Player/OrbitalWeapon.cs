@@ -20,6 +20,7 @@ public class OrbitalWeapon : MonoBehaviour
     [Header("Visual")]
     [SerializeField] float orbScale = 0.45f;
     [SerializeField] Sprite orbSprite;
+    [SerializeField] Sprite coreSprite;
     [SerializeField] Sprite[] orbFrames;
 
     readonly List<Transform> _orbs = new List<Transform>();
@@ -77,8 +78,21 @@ public class OrbitalWeapon : MonoBehaviour
         var sprite = go.AddComponent<SpriteRenderer>();
         sprite.sprite = orbSprite != null ? orbSprite : (_playerSprite != null ? _playerSprite.sprite : null);
         if (_playerSprite != null) sprite.sharedMaterial = _playerSprite.sharedMaterial;
-        sprite.color = Color.white;
+        sprite.color = CombatPalette.Player;
         sprite.sortingOrder = 8;
+
+        if (coreSprite != null)
+        {
+            var core = new GameObject("Core");
+            core.transform.SetParent(go.transform, false);
+            core.transform.localScale = Vector3.one * 0.12f;
+
+            var coreRenderer = core.AddComponent<SpriteRenderer>();
+            coreRenderer.sprite = coreSprite;
+            coreRenderer.sharedMaterial = sprite.sharedMaterial;
+            coreRenderer.color = CombatPalette.PlayerCore;
+            coreRenderer.sortingOrder = 9;
+        }
 
         if (orbFrames != null && orbFrames.Length > 0)
         {

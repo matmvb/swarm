@@ -24,7 +24,7 @@ public class XpOrb : MonoBehaviour
 
         // A arte já tem cor própria; o tint dourado separa XP de projéteis brancos.
         float weight = Mathf.Clamp01(_value / 10f);
-        _sprite.color = new Color(1f, 0.84f, 0.30f);
+        _sprite.color = CombatPalette.Xp;
         transform.localScale = Vector3.one * Mathf.Lerp(0.22f, 0.30f, weight);
     }
 

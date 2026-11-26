@@ -11,6 +11,7 @@ public class Projectile : MonoBehaviour
 
     Rigidbody2D _rb;
     SpriteRenderer _sprite;
+    SpriteRenderer _core;
     TrailRenderer _trail;
     float _damage;
     int _pierce;
@@ -18,16 +19,16 @@ public class Projectile : MonoBehaviour
     float _life;
     bool _critical;
 
-    static readonly Color NormalColor = Color.white;
-    static readonly Color CriticalColor = new Color(1f, 0.78f, 0.28f);
-
     void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
         _rb.gravityScale = 0f;
         _rb.freezeRotation = true;
-        _sprite = GetComponentInChildren<SpriteRenderer>();
+        _sprite = GetComponent<SpriteRenderer>();
         _trail = GetComponent<TrailRenderer>();
+
+        Transform core = transform.Find("Core");
+        if (core != null) _core = core.GetComponent<SpriteRenderer>();
     }
 
     public void Init(Vector2 direction, float damage, int pierce, float speed, float lifetime, bool critical)
@@ -41,7 +42,13 @@ public class Projectile : MonoBehaviour
         _hits.Clear();
         if (_trail != null) _trail.Clear();
 
-        if (_sprite != null) _sprite.color = critical ? CriticalColor : NormalColor;
+        if (_sprite != null) _sprite.color = critical ? CombatPalette.PlayerCritical : CombatPalette.Player;
+
+        if (_core != null)
+        {
+            _core.color = CombatPalette.PlayerCore;
+            _core.enabled = true;
+        }
 
         Vector2 normalized = direction.sqrMagnitude > 0.0001f ? direction.normalized : Vector2.up;
         _rb.linearVelocity = normalized * _speed;
@@ -62,7 +69,10 @@ public class Projectile : MonoBehaviour
         enemy.TakeDamage(_damage, _critical);
 
         if (DeathBurst.Instance != null)
-            DeathBurst.Instance.SpawnHit(transform.position, _critical ? CriticalColor : Color.white);
+        {
+            Color impact = _critical ? CombatPalette.PlayerCritical : CombatPalette.Impact;
+            DeathBurst.Instance.SpawnHit(transform.position, impact, _critical ? 0.32f : 0.26f);
+        }
 
         if (_pierce > 0) _pierce--;
         else ObjectPool.Despawn(gameObject);

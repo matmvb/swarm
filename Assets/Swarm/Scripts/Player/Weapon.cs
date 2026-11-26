@@ -73,7 +73,7 @@ public class Weapon : MonoBehaviour
         if (MuzzleFlash.Instance != null)
         {
             float angle = Mathf.Atan2(baseDirection.y, baseDirection.x) * Mathf.Rad2Deg;
-            MuzzleFlash.Instance.Spawn(origin, Color.white, Quaternion.Euler(0f, 0f, angle));
+            MuzzleFlash.Instance.Spawn(origin, CombatPalette.PlayerMuzzle, Quaternion.Euler(0f, 0f, angle));
         }
     }
 
