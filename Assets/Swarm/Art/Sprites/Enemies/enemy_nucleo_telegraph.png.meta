@@ -1,0 +1,652 @@
+fileFormatVersion: 2
+guid: c88a837503f58564fa697032f410997e
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -3105445922834509880
+    second: enemy_nucleo_telegraph_0
+  - first:
+      213: 1445251288101516090
+    second: enemy_nucleo_telegraph_1
+  - first:
+      213: -4532509400614405
+    second: enemy_nucleo_telegraph_2
+  - first:
+      213: -5040005433900072675
+    second: enemy_nucleo_telegraph_3
+  - first:
+      213: 3347938777933443644
+    second: enemy_nucleo_telegraph_4
+  - first:
+      213: 4023223918557076923
+    second: enemy_nucleo_telegraph_5
+  - first:
+      213: 6168375065362604858
+    second: enemy_nucleo_telegraph_6
+  - first:
+      213: 124609381211696673
+    second: enemy_nucleo_telegraph_7
+  - first:
+      213: 8140938409178878987
+    second: enemy_nucleo_telegraph_8
+  - first:
+      213: 4126370616347913008
+    second: enemy_nucleo_telegraph_9
+  - first:
+      213: -3455294774300298477
+    second: enemy_nucleo_telegraph_10
+  - first:
+      213: 8822466067314631704
+    second: enemy_nucleo_telegraph_11
+  - first:
+      213: 1798702003969617671
+    second: enemy_nucleo_telegraph_12
+  - first:
+      213: -1101434447612687032
+    second: enemy_nucleo_telegraph_13
+  - first:
+      213: -2554662906961831880
+    second: enemy_nucleo_telegraph_14
+  - first:
+      213: 32770283694075520
+    second: enemy_nucleo_telegraph_15
+  - first:
+      213: -6538818769729476042
+    second: enemy_nucleo_telegraph_16
+  - first:
+      213: 8531432748794161599
+    second: enemy_nucleo_telegraph_17
+  - first:
+      213: -138348275347150505
+    second: enemy_nucleo_telegraph_18
+  - first:
+      213: 8207172489476883605
+    second: enemy_nucleo_telegraph_19
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: enemy_nucleo_telegraph_0
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 54
+        width: 46
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8cf8344f26d37e4d0800000000000000
+      internalID: -3105445922834509880
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_telegraph_1
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 31
+        width: 34
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a337776a3609e0410800000000000000
+      internalID: 1445251288101516090
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_telegraph_2
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 42
+        width: 42
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf93c3be4b5efeff0800000000000000
+      internalID: -4532509400614405
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_telegraph_3
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 17
+        width: 41
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d11095ec2cd4e0ab0800000000000000
+      internalID: -5040005433900072675
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_telegraph_4
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 54
+        width: 73
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c327a749494467e20800000000000000
+      internalID: 3347938777933443644
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_telegraph_5
+      rect:
+        serializedVersion: 2
+        x: 126
+        y: 30
+        width: 36
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bbd137586dc55d730800000000000000
+      internalID: 4023223918557076923
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_telegraph_6
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 6
+        width: 42
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a33a054c0787a9550800000000000000
+      internalID: 6168375065362604858
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_telegraph_7
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 17
+        width: 41
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 12eedce6293bab100800000000000000
+      internalID: 124609381211696673
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_telegraph_8
+      rect:
+        serializedVersion: 2
+        x: 209
+        y: 54
+        width: 72
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b04d071c95c6af070800000000000000
+      internalID: 8140938409178878987
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_telegraph_9
+      rect:
+        serializedVersion: 2
+        x: 221
+        y: 29
+        width: 38
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 03be60f8630d34930800000000000000
+      internalID: 4126370616347913008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_telegraph_10
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 7
+        width: 42
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 313319fa5b35c00d0800000000000000
+      internalID: -3455294774300298477
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_telegraph_11
+      rect:
+        serializedVersion: 2
+        x: 289
+        y: 17
+        width: 41
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 814e9311522bf6a70800000000000000
+      internalID: 8822466067314631704
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_telegraph_12
+      rect:
+        serializedVersion: 2
+        x: 305
+        y: 54
+        width: 69
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70f646351f546f810800000000000000
+      internalID: 1798702003969617671
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_telegraph_13
+      rect:
+        serializedVersion: 2
+        x: 316
+        y: 28
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 84dcaae943be6b0f0800000000000000
+      internalID: -1101434447612687032
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_telegraph_14
+      rect:
+        serializedVersion: 2
+        x: 342
+        y: 10
+        width: 42
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8385cad0f930c8cd0800000000000000
+      internalID: -2554662906961831880
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_telegraph_15
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 8
+        width: 41
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 08e26ce366c647000800000000000000
+      internalID: 32770283694075520
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_telegraph_16
+      rect:
+        serializedVersion: 2
+        x: 43
+        y: 0
+        width: 45
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 63a2e9b19f27145a0800000000000000
+      internalID: -6538818769729476042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_telegraph_17
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 0
+        width: 73
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb9a20132ecb56670800000000000000
+      internalID: 8531432748794161599
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_telegraph_18
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 0
+        width: 72
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 75925a00afc741ef0800000000000000
+      internalID: -138348275347150505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_telegraph_19
+      rect:
+        serializedVersion: 2
+        x: 298
+        y: 0
+        width: 69
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 594c0ad45ebb5e170800000000000000
+      internalID: 8207172489476883605
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      enemy_nucleo_telegraph_0: -3105445922834509880
+      enemy_nucleo_telegraph_1: 1445251288101516090
+      enemy_nucleo_telegraph_10: -3455294774300298477
+      enemy_nucleo_telegraph_11: 8822466067314631704
+      enemy_nucleo_telegraph_12: 1798702003969617671
+      enemy_nucleo_telegraph_13: -1101434447612687032
+      enemy_nucleo_telegraph_14: -2554662906961831880
+      enemy_nucleo_telegraph_15: 32770283694075520
+      enemy_nucleo_telegraph_16: -6538818769729476042
+      enemy_nucleo_telegraph_17: 8531432748794161599
+      enemy_nucleo_telegraph_18: -138348275347150505
+      enemy_nucleo_telegraph_19: 8207172489476883605
+      enemy_nucleo_telegraph_2: -4532509400614405
+      enemy_nucleo_telegraph_3: -5040005433900072675
+      enemy_nucleo_telegraph_4: 3347938777933443644
+      enemy_nucleo_telegraph_5: 4023223918557076923
+      enemy_nucleo_telegraph_6: 6168375065362604858
+      enemy_nucleo_telegraph_7: 124609381211696673
+      enemy_nucleo_telegraph_8: 8140938409178878987
+      enemy_nucleo_telegraph_9: 4126370616347913008
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

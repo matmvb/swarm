@@ -1,0 +1,1302 @@
+fileFormatVersion: 2
+guid: ece0f8796aaf4fa4fa35b73422b0c61e
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -8413417362629722534
+    second: enemy_nucleo_death_0
+  - first:
+      213: 5759298259677310174
+    second: enemy_nucleo_death_1
+  - first:
+      213: -3052596590412193983
+    second: enemy_nucleo_death_2
+  - first:
+      213: -86159907886462317
+    second: enemy_nucleo_death_3
+  - first:
+      213: 539508768184118351
+    second: enemy_nucleo_death_4
+  - first:
+      213: 8262327662570903538
+    second: enemy_nucleo_death_5
+  - first:
+      213: -6258933275733419090
+    second: enemy_nucleo_death_6
+  - first:
+      213: -6758269436415473717
+    second: enemy_nucleo_death_7
+  - first:
+      213: -7550023075167223929
+    second: enemy_nucleo_death_8
+  - first:
+      213: -3830655325111904017
+    second: enemy_nucleo_death_9
+  - first:
+      213: 2266083364995353642
+    second: enemy_nucleo_death_10
+  - first:
+      213: 3861111369352727914
+    second: enemy_nucleo_death_11
+  - first:
+      213: -1180955785653481447
+    second: enemy_nucleo_death_12
+  - first:
+      213: -9048199955449869090
+    second: enemy_nucleo_death_13
+  - first:
+      213: -5056407169267772822
+    second: enemy_nucleo_death_14
+  - first:
+      213: -226297102101780033
+    second: enemy_nucleo_death_15
+  - first:
+      213: -6517164111385674070
+    second: enemy_nucleo_death_16
+  - first:
+      213: 5913257927917916594
+    second: enemy_nucleo_death_17
+  - first:
+      213: 1744165422754093525
+    second: enemy_nucleo_death_18
+  - first:
+      213: 5120037290512180068
+    second: enemy_nucleo_death_19
+  - first:
+      213: 2394240529486003258
+    second: enemy_nucleo_death_20
+  - first:
+      213: 6326448387642493629
+    second: enemy_nucleo_death_21
+  - first:
+      213: -7487222461963182256
+    second: enemy_nucleo_death_22
+  - first:
+      213: 279070012410462703
+    second: enemy_nucleo_death_23
+  - first:
+      213: 3130964249570594644
+    second: enemy_nucleo_death_24
+  - first:
+      213: -8231967769384186625
+    second: enemy_nucleo_death_25
+  - first:
+      213: 1832022819779356104
+    second: enemy_nucleo_death_26
+  - first:
+      213: 770717006821829081
+    second: enemy_nucleo_death_27
+  - first:
+      213: 743849531141263356
+    second: enemy_nucleo_death_28
+  - first:
+      213: -903793334040523655
+    second: enemy_nucleo_death_29
+  - first:
+      213: 7867663223727661845
+    second: enemy_nucleo_death_30
+  - first:
+      213: -2913799033074814167
+    second: enemy_nucleo_death_31
+  - first:
+      213: 8949271702208525480
+    second: enemy_nucleo_death_32
+  - first:
+      213: 8066252756934605199
+    second: enemy_nucleo_death_33
+  - first:
+      213: 7139865180889710116
+    second: enemy_nucleo_death_34
+  - first:
+      213: -6068608757600563248
+    second: enemy_nucleo_death_35
+  - first:
+      213: -5776804649242484819
+    second: enemy_nucleo_death_36
+  - first:
+      213: -7027402742267662411
+    second: enemy_nucleo_death_37
+  - first:
+      213: -611858638926147701
+    second: enemy_nucleo_death_38
+  - first:
+      213: -7222118697343112884
+    second: enemy_nucleo_death_39
+  - first:
+      213: 6517795783913277753
+    second: enemy_nucleo_death_40
+  - first:
+      213: -6685544861176083425
+    second: enemy_nucleo_death_41
+  - first:
+      213: 8044861352496490853
+    second: enemy_nucleo_death_42
+  - first:
+      213: 8494830766262149587
+    second: enemy_nucleo_death_43
+  - first:
+      213: -5488134018212928652
+    second: enemy_nucleo_death_44
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: enemy_nucleo_death_0
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 10
+        width: 38
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a5ef9512c798d3b80800000000000000
+      internalID: -8413417362629722534
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_death_1
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 54
+        width: 44
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: edc679bc0432def40800000000000000
+      internalID: 5759298259677310174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_death_2
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 32
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 14f99e9039ff2a5d0800000000000000
+      internalID: -3052596590412193983
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_death_3
+      rect:
+        serializedVersion: 2
+        x: 43
+        y: 3
+        width: 43
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 39a0c803506edcef0800000000000000
+      internalID: -86159907886462317
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_death_4
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 42
+        width: 39
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f4ca2d0cd58bc7700800000000000000
+      internalID: 539508768184118351
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_death_5
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 13
+        width: 35
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f71c61cb3fa9a270800000000000000
+      internalID: 8262327662570903538
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_death_6
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 53
+        width: 42
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eab9903d85dc329a0800000000000000
+      internalID: -6258933275733419090
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_death_7
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 34
+        width: 28
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bc7831221cdc532a0800000000000000
+      internalID: -6758269436415473717
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_death_8
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 8
+        width: 38
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78fb7aec30ee83790800000000000000
+      internalID: -7550023075167223929
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_death_9
+      rect:
+        serializedVersion: 2
+        x: 149
+        y: 35
+        width: 41
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fe81fb90747c6dac0800000000000000
+      internalID: -3830655325111904017
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_death_10
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 19
+        width: 30
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a2c48f170deb27f10800000000000000
+      internalID: 2266083364995353642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_death_11
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 53
+        width: 34
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a6dcd78555c659530800000000000000
+      internalID: 3861111369352727914
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_death_12
+      rect:
+        serializedVersion: 2
+        x: 227
+        y: 35
+        width: 26
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9109eac48f66c9fe0800000000000000
+      internalID: -1180955785653481447
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_death_13
+      rect:
+        serializedVersion: 2
+        x: 236
+        y: 13
+        width: 33
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: edc84b674165e6280800000000000000
+      internalID: -9048199955449869090
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_death_14
+      rect:
+        serializedVersion: 2
+        x: 245
+        y: 43
+        width: 34
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a625e04387804d9b0800000000000000
+      internalID: -5056407169267772822
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_death_15
+      rect:
+        serializedVersion: 2
+        x: 303
+        y: 5
+        width: 33
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb9e58f0cf70cdcf0800000000000000
+      internalID: -226297102101780033
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_death_16
+      rect:
+        serializedVersion: 2
+        x: 310
+        y: 51
+        width: 30
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aaebee525c16e85a0800000000000000
+      internalID: -6517164111385674070
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_death_17
+      rect:
+        serializedVersion: 2
+        x: 325
+        y: 37
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b15fc271cc101250800000000000000
+      internalID: 5913257927917916594
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_death_18
+      rect:
+        serializedVersion: 2
+        x: 333
+        y: 16
+        width: 28
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5d9d6c40635843810800000000000000
+      internalID: 1744165422754093525
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_death_19
+      rect:
+        serializedVersion: 2
+        x: 338
+        y: 37
+        width: 51
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4636bb1e9c60e0740800000000000000
+      internalID: 5120037290512180068
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_death_20
+      rect:
+        serializedVersion: 2
+        x: 373
+        y: 56
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a3c3bda831d0a3120800000000000000
+      internalID: 2394240529486003258
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_death_21
+      rect:
+        serializedVersion: 2
+        x: 399
+        y: 10
+        width: 30
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dba06432a4f0cc750800000000000000
+      internalID: 6326448387642493629
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_death_22
+      rect:
+        serializedVersion: 2
+        x: 406
+        y: 50
+        width: 30
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 05fdb5007da081890800000000000000
+      internalID: -7487222461963182256
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_death_23
+      rect:
+        serializedVersion: 2
+        x: 423
+        y: 39
+        width: 18
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fe1803d92b47fd300800000000000000
+      internalID: 279070012410462703
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_death_24
+      rect:
+        serializedVersion: 2
+        x: 429
+        y: 23
+        width: 26
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 45f4a1c756b637b20800000000000000
+      internalID: 3130964249570594644
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_death_25
+      rect:
+        serializedVersion: 2
+        x: 435
+        y: 44
+        width: 22
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ffc0467bdec22cd80800000000000000
+      internalID: -8231967769384186625
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_death_26
+      rect:
+        serializedVersion: 2
+        x: 444
+        y: 22
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c5ab515c07ac6910800000000000000
+      internalID: 1832022819779356104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_death_27
+      rect:
+        serializedVersion: 2
+        x: 490
+        y: 50
+        width: 41
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9d9a7f5c80322ba00800000000000000
+      internalID: 770717006821829081
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_death_28
+      rect:
+        serializedVersion: 2
+        x: 502
+        y: 32
+        width: 24
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cff040e153fa25a00800000000000000
+      internalID: 743849531141263356
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_death_29
+      rect:
+        serializedVersion: 2
+        x: 520
+        y: 3
+        width: 63
+        height: 90
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 97c062e40c41573f0800000000000000
+      internalID: -903793334040523655
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_death_30
+      rect:
+        serializedVersion: 2
+        x: 521
+        y: 41
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 51321be640e8f2d60800000000000000
+      internalID: 7867663223727661845
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_death_31
+      rect:
+        serializedVersion: 2
+        x: 525
+        y: 29
+        width: 19
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 923f2b6a73b1097d0800000000000000
+      internalID: -2913799033074814167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_death_32
+      rect:
+        serializedVersion: 2
+        x: 540
+        y: 14
+        width: 7
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a43898a233323c70800000000000000
+      internalID: 8949271702208525480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_death_33
+      rect:
+        serializedVersion: 2
+        x: 588
+        y: 5
+        width: 108
+        height: 89
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f893a95452611ff60800000000000000
+      internalID: 8066252756934605199
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_death_34
+      rect:
+        serializedVersion: 2
+        x: 602
+        y: 8
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 42e7c1bad85e51360800000000000000
+      internalID: 7139865180889710116
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_death_35
+      rect:
+        serializedVersion: 2
+        x: 603
+        y: 36
+        width: 19
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0dfc462ec78f7cba0800000000000000
+      internalID: -6068608757600563248
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_death_36
+      rect:
+        serializedVersion: 2
+        x: 612
+        y: 50
+        width: 14
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: daf931147caa4dfa0800000000000000
+      internalID: -5776804649242484819
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_death_37
+      rect:
+        serializedVersion: 2
+        x: 619
+        y: 43
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5bfa78d4076a97e90800000000000000
+      internalID: -7027402742267662411
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_death_38
+      rect:
+        serializedVersion: 2
+        x: 622
+        y: 34
+        width: 14
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b8f8d064fcd3287f0800000000000000
+      internalID: -611858638926147701
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_death_39
+      rect:
+        serializedVersion: 2
+        x: 626
+        y: 43
+        width: 25
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c4928272f41e5cb90800000000000000
+      internalID: -7222118697343112884
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_death_40
+      rect:
+        serializedVersion: 2
+        x: 706
+        y: 30
+        width: 24
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 93980b29bbcd37a50800000000000000
+      internalID: 6517795783913277753
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_death_41
+      rect:
+        serializedVersion: 2
+        x: 706
+        y: 4
+        width: 31
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f1c49abce5c2833a0800000000000000
+      internalID: -6685544861176083425
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_death_42
+      rect:
+        serializedVersion: 2
+        x: 712
+        y: 41
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 56962dec6c615af60800000000000000
+      internalID: 8044861352496490853
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_death_43
+      rect:
+        serializedVersion: 2
+        x: 725
+        y: 31
+        width: 26
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d16d1a0393b3e570800000000000000
+      internalID: 8494830766262149587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_nucleo_death_44
+      rect:
+        serializedVersion: 2
+        x: 737
+        y: 20
+        width: 14
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4736ea4103b36d3b0800000000000000
+      internalID: -5488134018212928652
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      enemy_nucleo_death_0: -8413417362629722534
+      enemy_nucleo_death_1: 5759298259677310174
+      enemy_nucleo_death_10: 2266083364995353642
+      enemy_nucleo_death_11: 3861111369352727914
+      enemy_nucleo_death_12: -1180955785653481447
+      enemy_nucleo_death_13: -9048199955449869090
+      enemy_nucleo_death_14: -5056407169267772822
+      enemy_nucleo_death_15: -226297102101780033
+      enemy_nucleo_death_16: -6517164111385674070
+      enemy_nucleo_death_17: 5913257927917916594
+      enemy_nucleo_death_18: 1744165422754093525
+      enemy_nucleo_death_19: 5120037290512180068
+      enemy_nucleo_death_2: -3052596590412193983
+      enemy_nucleo_death_20: 2394240529486003258
+      enemy_nucleo_death_21: 6326448387642493629
+      enemy_nucleo_death_22: -7487222461963182256
+      enemy_nucleo_death_23: 279070012410462703
+      enemy_nucleo_death_24: 3130964249570594644
+      enemy_nucleo_death_25: -8231967769384186625
+      enemy_nucleo_death_26: 1832022819779356104
+      enemy_nucleo_death_27: 770717006821829081
+      enemy_nucleo_death_28: 743849531141263356
+      enemy_nucleo_death_29: -903793334040523655
+      enemy_nucleo_death_3: -86159907886462317
+      enemy_nucleo_death_30: 7867663223727661845
+      enemy_nucleo_death_31: -2913799033074814167
+      enemy_nucleo_death_32: 8949271702208525480
+      enemy_nucleo_death_33: 8066252756934605199
+      enemy_nucleo_death_34: 7139865180889710116
+      enemy_nucleo_death_35: -6068608757600563248
+      enemy_nucleo_death_36: -5776804649242484819
+      enemy_nucleo_death_37: -7027402742267662411
+      enemy_nucleo_death_38: -611858638926147701
+      enemy_nucleo_death_39: -7222118697343112884
+      enemy_nucleo_death_4: 539508768184118351
+      enemy_nucleo_death_40: 6517795783913277753
+      enemy_nucleo_death_41: -6685544861176083425
+      enemy_nucleo_death_42: 8044861352496490853
+      enemy_nucleo_death_43: 8494830766262149587
+      enemy_nucleo_death_44: -5488134018212928652
+      enemy_nucleo_death_5: 8262327662570903538
+      enemy_nucleo_death_6: -6258933275733419090
+      enemy_nucleo_death_7: -6758269436415473717
+      enemy_nucleo_death_8: -7550023075167223929
+      enemy_nucleo_death_9: -3830655325111904017
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
