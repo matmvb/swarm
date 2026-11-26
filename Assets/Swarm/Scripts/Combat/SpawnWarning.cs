@@ -9,6 +9,7 @@ public class SpawnWarning : MonoBehaviour
     [SerializeField] Color color = new Color(1f, 0.25f, 0.30f, 0.7f);
 
     SpriteRenderer _sprite;
+    SpriteAnimator _animator;
     Enemy _template;
     Vector3 _position;
     float _timer;
@@ -17,6 +18,7 @@ public class SpawnWarning : MonoBehaviour
     void Awake()
     {
         _sprite = GetComponentInChildren<SpriteRenderer>();
+        _animator = GetComponentInChildren<SpriteAnimator>();
     }
 
     public void Begin(Enemy template, Vector3 position, float delay)
@@ -29,7 +31,8 @@ public class SpawnWarning : MonoBehaviour
         transform.position = position;
         transform.localScale = Vector3.one * 0.4f;
 
-        if (_sprite != null) _sprite.color = color;
+        if (_animator != null) _animator.PlayDefault();
+        if (_sprite != null) _sprite.color = new Color(color.r, color.g, color.b, 0.2f);
     }
 
     void Update()
@@ -37,12 +40,12 @@ public class SpawnWarning : MonoBehaviour
         _timer -= Time.deltaTime;
 
         float progress = 1f - Mathf.Clamp01(_timer / _duration);
-        transform.localScale = Vector3.one * Mathf.Lerp(0.4f, 1.0f, progress);
+        transform.localScale = Vector3.one * Mathf.Lerp(0.4f, 1.05f, progress);
 
         if (_sprite != null)
         {
             Color value = color;
-            value.a = Mathf.Lerp(0.20f, 0.80f, progress);
+            value.a = Mathf.Lerp(0.25f, 0.9f, progress);
             _sprite.color = value;
         }
 

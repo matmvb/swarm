@@ -24,6 +24,7 @@ public class EnemyProjectile : MonoBehaviour
 
         Vector2 normalized = direction.sqrMagnitude > 0.0001f ? direction.normalized : Vector2.up;
         _rb.linearVelocity = normalized * speed;
+        transform.rotation = Quaternion.Euler(0f, 0f, Mathf.Atan2(normalized.y, normalized.x) * Mathf.Rad2Deg);
     }
 
     void Update()
@@ -40,6 +41,7 @@ public class EnemyProjectile : MonoBehaviour
         if (player.HealthComponent != null) player.HealthComponent.TakeDamage(_damage);
         if (CameraFollow.Instance != null) CameraFollow.Instance.Shake(0.12f, 0.12f);
         if (Sfx.Instance != null) Sfx.Instance.PlayHit();
+        if (DeathBurst.Instance != null) DeathBurst.Instance.SpawnHit(transform.position, UIPalette.Danger);
 
         ObjectPool.Despawn(gameObject);
     }

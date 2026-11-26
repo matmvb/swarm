@@ -13,11 +13,14 @@ public class RangedEnemy : MonoBehaviour
     [SerializeField] float fireInterval = 2.2f;
     [SerializeField] float projectileSpeed = 5.5f;
     [SerializeField] float damage = 6f;
+    [SerializeField] Sprite[] chargeFrames;
+    [SerializeField] float chargeLead = 0.45f;
 
     Enemy _enemy;
     Rigidbody2D _rb;
     Transform _player;
     float _cooldown;
+    bool _charging;
 
     void Awake()
     {
@@ -30,11 +33,16 @@ public class RangedEnemy : MonoBehaviour
         _enemy.externalControl = true;
         _player = PlayerController.PlayerTransform;
         _cooldown = Random.Range(0.8f, 1.8f);
+        _charging = false;
     }
 
     void OnDisable()
     {
-        if (_enemy != null) _enemy.externalControl = false;
+        if (_enemy != null)
+        {
+            _enemy.externalControl = false;
+            _enemy.PlayIdle();
+        }
     }
 
     void Update()
@@ -62,9 +70,19 @@ public class RangedEnemy : MonoBehaviour
         else _rb.linearVelocity = new Vector2(-direction.y, direction.x) * (speed * 0.5f);
 
         _cooldown -= Time.deltaTime;
+
+        // Antecipação: o Olho troca para a sheet de carga antes de atirar.
+        if (!_charging && _cooldown <= chargeLead && distance <= range && _cooldown > 0f)
+        {
+            _charging = true;
+            _enemy.PlayTemporary(chargeFrames, 10f, Mathf.Max(0.1f, _cooldown));
+        }
+
         if (_cooldown > 0f || distance > range || projectilePrefab == null) return;
 
         _cooldown = fireInterval;
+        _charging = false;
+        _enemy.PlayIdle();
 
         GameObject instance = ObjectPool.Spawn(projectilePrefab.gameObject, transform.position, Quaternion.identity);
         if (instance == null) return;

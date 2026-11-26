@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeData
   title: "N\xFAcleo Inst\xE1vel"
   description: "+25% de dano e +5% de cr\xEDtico"
+  icon: {fileID: 21300000, guid: 8ab0b82d1607a1f49a2a87ce6e3a49d1, type: 3}
   stat: 0
   amount: 25
   percent: 1

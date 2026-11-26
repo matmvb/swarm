@@ -14,8 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeData
   title: Orbe Denso
   description: +25% de dano dos orbes
+  icon: {fileID: 21300000, guid: fbd8875ed368768479210bcf1b7ca20c, type: 3}
   stat: 12
   amount: 25
   percent: 1
   maxStacks: 3
   prerequisite: {fileID: 11400000, guid: 9d33ca1a37b7b4847a3f927121788c99, type: 2}
+  extraEffects: []

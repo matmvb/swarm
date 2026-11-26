@@ -14,7 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeData
   title: "Perfura\xE7\xE3o"
   description: "+1 perfura\xE7\xE3o"
+  icon: {fileID: 21300000, guid: 1bd4f9d75231ad64283b6eb531d7447e, type: 3}
   stat: 5
   amount: 1
   percent: 0
   maxStacks: 3
+  prerequisite: {fileID: 0}
+  extraEffects: []

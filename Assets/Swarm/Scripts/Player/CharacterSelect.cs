@@ -19,6 +19,7 @@ public class CharacterSelect : MonoBehaviour
     [SerializeField] GameObject panel;
     [SerializeField] Text title;
     [SerializeField] Text options;
+    [SerializeField] CharacterCardUI[] cards;
     [SerializeField] List<CharacterData> characters = new List<CharacterData>();
     [SerializeField] PlayerStats stats;
     [SerializeField] Health health;
@@ -32,6 +33,7 @@ public class CharacterSelect : MonoBehaviour
 
         // Se o menu principal já chamou Begin() (restart rápido), não esconde o painel.
         if (!_choosing && panel != null) panel.SetActive(false);
+        RefreshCards();
     }
 
     /// <summary>Chamado pelo menu principal ao apertar Jogar.</summary>
@@ -44,9 +46,17 @@ public class CharacterSelect : MonoBehaviour
 
         if (panel != null) panel.SetActive(true);
         if (title != null) title.text = "ESCOLHA SEU PILOTO";
+        RefreshCards();
         if (options != null) options.text = BuildOptions();
 
         Time.timeScale = 0f;
+    }
+
+    /// <summary>Atalho de QA/trailer: escolhe o primeiro piloto sem input.</summary>
+    public void AutoChooseFirst()
+    {
+        if (!_choosing || characters == null || characters.Count == 0) return;
+        Choose(0);
     }
 
     void Update()
@@ -87,20 +97,10 @@ public class CharacterSelect : MonoBehaviour
     {
         var builder = new StringBuilder();
 
-        builder.AppendLine("<b>PILOTOS</b>");
+        builder.Append("<b>MELHORIAS PERMANENTES</b>   ");
+        builder.Append("<color=#FFD54A>NÚCLEOS ").Append(SaveSystem.Cores).Append("</color>");
         builder.AppendLine();
-
-        for (int i = 0; i < characters.Count; i++)
-        {
-            CharacterData character = characters[i];
-            if (character == null) continue;
-
-            builder.Append('[').Append(i + 1).Append("]  ").Append(character.displayName).Append('\n');
-            builder.Append("      ").Append(character.description).Append('\n');
-        }
-
         builder.AppendLine();
-        builder.Append("<b>NÚCLEOS: ").Append(SaveSystem.Cores).AppendLine("</b>");
 
         for (int i = 0; i < MetaProgression.Upgrades.Length; i++)
         {
@@ -122,9 +122,24 @@ public class CharacterSelect : MonoBehaviour
         return builder.ToString().TrimEnd();
     }
 
+    void RefreshCards()
+    {
+        if (cards == null) return;
+
+        for (int i = 0; i < cards.Length; i++)
+        {
+            if (cards[i] == null) continue;
+
+            bool hasCharacter = characters != null && i < characters.Count && characters[i] != null;
+            if (hasCharacter) cards[i].Bind(characters[i], i);
+            else cards[i].Clear();
+        }
+    }
+
     /// <summary>Reconstrói o texto (após comprar meta ou resetar o save).</summary>
     public void RefreshPanel()
     {
+        RefreshCards();
         if (!_choosing || options == null) return;
         options.text = BuildOptions();
     }
@@ -152,19 +167,30 @@ public class CharacterSelect : MonoBehaviour
             stats.damage *= character.damageMultiplier;
             stats.fireRate *= character.fireRateMultiplier;
 
-            var sprite = stats.GetComponentInChildren<SpriteRenderer>();
-            if (sprite != null)
+            var playerVisual = stats.GetComponent<PlayerVisual>();
+            if (playerVisual != null)
             {
-                if (character.shipSprite != null)
+                playerVisual.SetShip(character);
+            }
+            else
+            {
+                var sprite = stats.GetComponentInChildren<SpriteRenderer>();
+                if (sprite != null)
                 {
-                    sprite.sprite = character.shipSprite;
-                    sprite.color = Color.white;
-                }
-                else
-                {
-                    sprite.color = character.color;
+                    if (character.shipSprite != null)
+                    {
+                        sprite.sprite = character.shipSprite;
+                        sprite.color = Color.white;
+                    }
+                    else
+                    {
+                        sprite.color = character.color;
+                    }
                 }
             }
+
+            var thruster = stats.GetComponent<ThrusterTrail>();
+            if (thruster != null) thruster.SetFrames(character.thrusterFrames);
         }
 
         if (health != null) health.ScaleMaxHealth(character.maxHealthMultiplier);

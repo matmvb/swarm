@@ -14,7 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeData
   title: Mira Fria
   description: "+5% de cr\xEDtico"
+  icon: {fileID: 21300000, guid: 6a2a28aa6cd0a63499ed2df615885c62, type: 3}
   stat: 8
   amount: 5
   percent: 1
   maxStacks: 4
+  prerequisite: {fileID: 0}
+  extraEffects: []

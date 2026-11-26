@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeData
   title: "Execu\xE7\xE3o"
   description: "+0,5 multiplicador de cr\xEDtico e +5% de cr\xEDtico"
+  icon: {fileID: 21300000, guid: 287b9c7417fd68d478f87081b14a0cd5, type: 3}
   stat: 15
   amount: 0.5
   percent: 0

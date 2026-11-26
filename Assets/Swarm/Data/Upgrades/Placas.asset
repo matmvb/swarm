@@ -14,7 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeData
   title: Placas
   description: +10% de armadura
+  icon: {fileID: 21300000, guid: 904286a0b4206f843a2f9d1fa8b67f99, type: 3}
   stat: 13
   amount: 10
   percent: 1
   maxStacks: 3
+  prerequisite: {fileID: 0}
+  extraEffects: []

@@ -16,6 +16,13 @@ public class CharacterData : ScriptableObject
     [Tooltip("Sprite da nave usada por este piloto. Se vazio, mantém o sprite procedural.")]
     public Sprite shipSprite;
 
+    [Header("Arte")]
+    public Sprite portrait;
+    public Sprite[] idleFrames;
+    public Sprite[] hitFrames;
+    public Sprite[] deathFrames;
+    public Sprite[] thrusterFrames;
+
     [Header("Multiplicadores (1 = neutro)")]
     public float maxHealthMultiplier = 1f;
     public float moveSpeedMultiplier = 1f;

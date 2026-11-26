@@ -10,6 +10,8 @@ public class CameraFollow : MonoBehaviour
 
     [SerializeField] Transform target;
     [SerializeField] float smoothTime = 0.12f;
+    [Tooltip("Passos por unidade para alinhar a câmera à grade de pixel. 0 desliga.")]
+    [SerializeField] float pixelSnap = 40f;
 
     Vector3 _basePosition;
     Vector3 _velocity;
@@ -77,6 +79,14 @@ public class CameraFollow : MonoBehaviour
         }
 
         transform.position = position;
+
+        if (pixelSnap > 0f)
+        {
+            Vector3 snapped = transform.position;
+            snapped.x = Mathf.Round(snapped.x * pixelSnap) / pixelSnap;
+            snapped.y = Mathf.Round(snapped.y * pixelSnap) / pixelSnap;
+            transform.position = snapped;
+        }
 
         if (_camera != null)
         {

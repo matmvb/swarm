@@ -70,7 +70,11 @@ public class Weapon : MonoBehaviour
         }
 
         if (Sfx.Instance != null) Sfx.Instance.PlayShoot();
-        if (MuzzleFlash.Instance != null) MuzzleFlash.Instance.Spawn(origin, new Color(0.6f, 1f, 1f));
+        if (MuzzleFlash.Instance != null)
+        {
+            float angle = Mathf.Atan2(baseDirection.y, baseDirection.x) * Mathf.Rad2Deg;
+            MuzzleFlash.Instance.Spawn(origin, Color.white, Quaternion.Euler(0f, 0f, angle));
+        }
     }
 
     static Vector2 Rotate(Vector2 vector, float degrees)

@@ -14,7 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeData
   title: "Nanorrob\xF4s"
   description: +0,5 vida por segundo
+  icon: {fileID: 21300000, guid: 79700fef6e170bd489681a4ea3895151, type: 3}
   stat: 14
   amount: 0.5
   percent: 0
   maxStacks: 3
+  prerequisite: {fileID: 0}
+  extraEffects: []

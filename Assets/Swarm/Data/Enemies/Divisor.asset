@@ -22,4 +22,17 @@ MonoBehaviour:
   maxAliveOfType: 0
   sprite: {fileID: 2691107104858434246, guid: 398eef6362d770e4ea5c39c1785d5c82, type: 3}
   color: {r: 1, g: 1, b: 1, a: 1}
-  scale: 1
+  scale: 0.6
+  idleFrames:
+  - {fileID: 2691107104858434246, guid: 398eef6362d770e4ea5c39c1785d5c82, type: 3}
+  - {fileID: 1066200931917718294, guid: 398eef6362d770e4ea5c39c1785d5c82, type: 3}
+  moveFrames: []
+  hitFrames:
+  - {fileID: 21300000, guid: 765828efc73de6747b1e8612b1833326, type: 3}
+  deathFrames:
+  - {fileID: 4226499674439688943, guid: ad697f1c67800474a89ff78d8419ef69, type: 3}
+  - {fileID: -3249272625941331304, guid: ad697f1c67800474a89ff78d8419ef69, type: 3}
+  - {fileID: 6311153611317247539, guid: ad697f1c67800474a89ff78d8419ef69, type: 3}
+  - {fileID: 7098031160972654661, guid: ad697f1c67800474a89ff78d8419ef69, type: 3}
+  animFps: 6
+  faceMovement: 0

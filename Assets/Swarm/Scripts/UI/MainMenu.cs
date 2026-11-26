@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 /// <summary>
@@ -24,16 +25,43 @@ public class MainMenu : MonoBehaviour
 
     void Start()
     {
-        if (GameManager.AutoStartRun)
+        bool auto = HasArgument("-autostart");
+        bool showSelect = HasArgument("-showselect");
+
+        if (GameManager.AutoStartRun || auto || showSelect)
         {
             GameManager.AutoStartRun = false;
             Play();
+            if (auto && characterSelect != null)
+                characterSelect.AutoChooseFirst();
+            if (auto && HasArgument("-showlevelup")) StartCoroutine(ShowLevelUpPreview());
             return;
         }
 
         IsOpen = true;
         if (panel != null) panel.SetActive(true);
         Time.timeScale = 0f;
+    }
+
+    static bool HasArgument(string argument)
+    {
+        string[] args = System.Environment.GetCommandLineArgs();
+
+        for (int i = 0; i < args.Length; i++)
+            if (string.Equals(args[i], argument, System.StringComparison.OrdinalIgnoreCase)) return true;
+
+        return false;
+    }
+
+    IEnumerator ShowLevelUpPreview()
+    {
+        yield return null;
+
+        HudController hud = Object.FindAnyObjectByType<HudController>();
+        UpgradeSystem upgrades = Object.FindAnyObjectByType<UpgradeSystem>();
+
+        if (hud != null && upgrades != null)
+            hud.ShowLevelUp(upgrades.Roll(3));
     }
 
     void Update()

@@ -42,6 +42,9 @@ public class UpgradeData : ScriptableObject
     [TextArea(1, 3)]
     public string description = "+10% de algo";
 
+    [Tooltip("Ícone exibido no card de level up.")]
+    public Sprite icon;
+
     public StatType stat = StatType.Damage;
 
     [Tooltip("Se percent = true, 20 significa +20%. Se false, 20 é valor absoluto.")]

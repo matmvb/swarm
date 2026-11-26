@@ -16,6 +16,23 @@ MonoBehaviour:
   description: "-20% vida  \xB7  +25% velocidade  \xB7  +10% cad\xEAncia"
   color: {r: 0.4, g: 1, b: 0.45, a: 1}
   shipSprite: {fileID: 1622436424363318697, guid: 6d231209fa903f742b2c0c28d98c2f67, type: 3}
+  portrait: {fileID: 21300000, guid: d719fc31045280c4db80a37f91e94cf1, type: 3}
+  idleFrames:
+  - {fileID: 1622436424363318697, guid: 6d231209fa903f742b2c0c28d98c2f67, type: 3}
+  - {fileID: -7003517999106304982, guid: 6d231209fa903f742b2c0c28d98c2f67, type: 3}
+  hitFrames:
+  - {fileID: 21300000, guid: 211a98d1663a66749badad430abf5063, type: 3}
+  deathFrames:
+  - {fileID: 5204169315930997397, guid: 2c581e007e17c3b4fb023fef5f7bdd17, type: 3}
+  - {fileID: 3910151598013292871, guid: 2c581e007e17c3b4fb023fef5f7bdd17, type: 3}
+  - {fileID: 5421493625354729057, guid: 2c581e007e17c3b4fb023fef5f7bdd17, type: 3}
+  - {fileID: -4956258469229039175, guid: 2c581e007e17c3b4fb023fef5f7bdd17, type: 3}
+  - {fileID: 6721674339234339615, guid: 2c581e007e17c3b4fb023fef5f7bdd17, type: 3}
+  - {fileID: 6783956886350741318, guid: 2c581e007e17c3b4fb023fef5f7bdd17, type: 3}
+  thrusterFrames:
+  - {fileID: -4592720148015334945, guid: f17d49e78472f054ea76bf6361f6d47b, type: 3}
+  - {fileID: 5350875083705356038, guid: f17d49e78472f054ea76bf6361f6d47b, type: 3}
+  - {fileID: -3771351692032530322, guid: f17d49e78472f054ea76bf6361f6d47b, type: 3}
   maxHealthMultiplier: 0.8
   moveSpeedMultiplier: 1.25
   damageMultiplier: 1

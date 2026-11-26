@@ -23,7 +23,9 @@ public static class SwarmSceneBuilder
     static Sprite _white;
     static Material _spriteMaterial;
     static Sprite _ship, _hex, _diamond, _square, _octagon, _circle, _ring, _grid;
+    static Sprite _logo;
     static Font _font;
+    static Font _bodyFont;
 
     [MenuItem("SWARM/Montar Protótipo Completo", priority = 0)]
     public static void BuildAll()
@@ -77,6 +79,7 @@ public static class SwarmSceneBuilder
         _ring = SwarmArt.Ring;
         _grid = SwarmArt.Grid();
         _font = null;
+        _logo = LoadSprite("UI/ui_logo_swarm");
 
         List<string> enemyPaths = EnsureEnemyData();
         List<string> upgradePaths = EnsureUpgradeData();
@@ -87,6 +90,8 @@ public static class SwarmSceneBuilder
         List<UpgradeData> upgrades = LoadAssets<UpgradeData>(upgradePaths);
         List<CharacterData> characters = LoadAssets<CharacterData>(characterPaths);
         AssignEnemySprites(enemies);
+        AssignCharacterArt(characters);
+        AssignUpgradeIcons(upgrades);
         LinkPrerequisites();
         AssetDatabase.SaveAssets();
 
@@ -98,17 +103,22 @@ public static class SwarmSceneBuilder
 
         GameObject projectileTemplate = CreateProjectileTemplate();
         GameObject orbTemplate = CreateOrbTemplate();
-        GameObject bossProjectileTemplate = CreateBossProjectileTemplate();
+        GameObject enemyProjectileTemplate = CreateEnemyProjectileTemplate("EnemyProjectileTemplate", "Projectiles/proj_enemy", new Vector3(6f, -20f, 0f), 0.30f, 5);
+        GameObject bossProjectileTemplate = CreateEnemyProjectileTemplate("BossProjectileTemplate", "Projectiles/proj_boss", new Vector3(10f, -20f, 0f), 0.42f, 6);
         GameObject burstTemplate = CreateBurstTemplate();
         GameObject warningTemplate = CreateSpawnWarningTemplate();
+        GameObject muzzleTemplate = CreateFxTemplate("MuzzleTemplate", "FX/fx_muzzle", 0.18f, 0.42f);
+        GameObject hitTemplate = CreateFxTemplate("HitTemplate", "FX/fx_hit", 0.16f, 0.38f);
+        GameObject explosionTemplate = CreateFxTemplate("ExplosionTemplate", "FX/fx_explosion", 0.40f, 1f);
+        GameObject coreTemplate = CreateFxTemplate("CorePickupTemplate", "Projectiles/core_pickup", 0.90f, 1.2f);
 
         var thruster = player.AddComponent<ThrusterTrail>();
         SetRef(thruster, "visual", player.transform.Find("Visual"));
-        SetRef(thruster, "template", burstTemplate.GetComponent<BurstParticle>());
+        SetList(thruster, "frames", ToObjectList(LoadSprites("FX/fx_thruster")));
 
         var muzzleFlashObject = new GameObject("MuzzleFlash");
         var muzzleFlash = muzzleFlashObject.AddComponent<MuzzleFlash>();
-        SetRef(muzzleFlash, "template", burstTemplate.GetComponent<BurstParticle>());
+        SetRef(muzzleFlash, "template", muzzleTemplate);
         List<Enemy> enemyTemplates = CreateEnemyTemplates(enemies);
 
         if (enemyTemplates.Count >= 6)
@@ -117,7 +127,8 @@ public static class SwarmSceneBuilder
             SetRef(splitter, "fragmentTemplate", enemyTemplates[0]);
 
             var shooter = enemyTemplates[4].gameObject.AddComponent<RangedEnemy>();
-            SetRef(shooter, "projectilePrefab", bossProjectileTemplate.GetComponent<EnemyProjectile>());
+            SetRef(shooter, "projectilePrefab", enemyProjectileTemplate.GetComponent<EnemyProjectile>());
+            SetList(shooter, "chargeFrames", ToObjectList(LoadSprites("Enemies/enemy_olho_charge")));
         }
 
         Enemy bossTemplate = null;
@@ -131,6 +142,8 @@ public static class SwarmSceneBuilder
         {
             var boss = bossTemplate.gameObject.AddComponent<BossController>();
             SetRef(boss, "projectilePrefab", bossProjectileTemplate.GetComponent<EnemyProjectile>());
+            SetList(boss, "telegraphFrames", ToObjectList(LoadSprites("Enemies/enemy_nucleo_telegraph")));
+            SetList(boss, "attackFrames", ToObjectList(LoadSprites("Enemies/enemy_nucleo_attack")));
         }
 
         SetRef(player.GetComponent<Weapon>(), "projectilePrefab", projectileTemplate.GetComponent<Projectile>());
@@ -149,6 +162,9 @@ public static class SwarmSceneBuilder
         var burstObject = new GameObject("DeathBurst");
         var deathBurst = burstObject.AddComponent<DeathBurst>();
         SetRef(deathBurst, "template", burstTemplate.GetComponent<BurstParticle>());
+        SetRef(deathBurst, "explosionTemplate", explosionTemplate);
+        SetRef(deathBurst, "hitTemplate", hitTemplate);
+        SetRef(deathBurst, "coreTemplate", coreTemplate);
 
         var runLogger = manager.AddComponent<RunLogger>();
         SetRef(runLogger, "xp", xpSystem);
@@ -189,7 +205,7 @@ public static class SwarmSceneBuilder
         camera.orthographic = true;
         camera.orthographicSize = 6f;
         camera.clearFlags = CameraClearFlags.SolidColor;
-        camera.backgroundColor = new Color(0.04f, 0.055f, 0.10f, 1f);
+        camera.backgroundColor = new Color(0.0196f, 0.0274f, 0.0588f, 1f);
         camera.nearClipPlane = 0.1f;
         camera.farClipPlane = 100f;
 
@@ -207,20 +223,34 @@ public static class SwarmSceneBuilder
 
     static void CreateBackgroundGrid(Transform follow)
     {
-        var go = new GameObject("BackgroundGrid");
+        CreateGridLayer("BackgroundGridFar", follow, new Vector2(80f, 48f),
+            new Color(0.08f, 0.15f, 0.32f, 0.07f), new Color(0.36f, 0.08f, 0.14f, 0.10f),
+            -101, 8f, 0.45f);
+        CreateGridLayer("BackgroundGrid", follow, new Vector2(40f, 24f),
+            new Color(0.18f, 0.30f, 0.55f, 0.11f), new Color(0.55f, 0.10f, 0.18f, 0.16f),
+            -100, 4f, 1f);
+    }
+
+    static void CreateGridLayer(string name, Transform follow, Vector2 size, Color color, Color bossColor,
+        int sortingOrder, float cell, float parallax)
+    {
+        var go = new GameObject(name);
         go.transform.position = new Vector3(0f, 0f, 1f);
 
         var sprite = go.AddComponent<SpriteRenderer>();
         sprite.sprite = _grid;
-        sprite.color = new Color(0.18f, 0.30f, 0.55f, 0.35f);
+        sprite.color = color;
         sprite.drawMode = SpriteDrawMode.Tiled;
-        sprite.size = new Vector2(40f, 24f);
+        sprite.size = size;
         sprite.tileMode = SpriteTileMode.Continuous;
-        sprite.sortingOrder = -100;
+        sprite.sortingOrder = sortingOrder;
         ApplySpriteMaterial(sprite);
 
         var grid = go.AddComponent<BackgroundGrid>();
         SetRef(grid, "follow", follow);
+        SetFloat(grid, "cell", cell);
+        SetFloat(grid, "parallax", parallax);
+        SetColor(grid, "bossColor", bossColor);
     }
 
     static GameObject CreatePlayer(out PlayerStats stats, out Health health, out XpSystem xp, out UpgradeSystem upgrades)    {
@@ -237,6 +267,8 @@ public static class SwarmSceneBuilder
         sprite.color = new Color(0.30f, 1f, 0.88f);
         sprite.sortingOrder = 10;
         ApplySpriteMaterial(sprite);
+
+        var shipAnimator = sprite.gameObject.AddComponent<SpriteAnimator>();
 
         var body = go.AddComponent<Rigidbody2D>();
         body.gravityScale = 0f;
@@ -260,11 +292,15 @@ public static class SwarmSceneBuilder
         upgrades = go.AddComponent<UpgradeSystem>();
         SetRef(upgrades, "playerHealth", health);
         var orbital = go.AddComponent<OrbitalWeapon>();
-        SetRef(orbital, "orbSprite", _circle);
+        Sprite[] orbitalFrames = LoadSprites("Projectiles/orbital");
+        SetRef(orbital, "orbSprite", orbitalFrames.Length > 0 ? orbitalFrames[0] : _circle);
+        SetList(orbital, "orbFrames", ToObjectList(orbitalFrames));
         go.AddComponent<PlayerRegen>();
 
         var playerVisual = go.AddComponent<PlayerVisual>();
         SetRef(playerVisual, "visual", visual.transform);
+        SetRef(playerVisual, "sprite", sprite);
+        SetRef(playerVisual, "animator", shipAnimator);
 
         SetRef(controller, "stats", stats);
         SetRef(controller, "health", health);
@@ -280,11 +316,16 @@ public static class SwarmSceneBuilder
         go.transform.position = new Vector3(0f, -20f, 0f);
         go.transform.localScale = Vector3.one * 0.22f;
 
+        Sprite[] frames = LoadSprites("Projectiles/proj_player");
+
         var sprite = go.AddComponent<SpriteRenderer>();
-        sprite.sprite = _diamond;
-        sprite.color = new Color(0.6f, 1f, 1f);
+        sprite.sprite = frames.Length > 0 ? frames[0] : _diamond;
+        sprite.color = Color.white;
         sprite.sortingOrder = 5;
         ApplySpriteMaterial(sprite);
+
+        var animator = go.AddComponent<SpriteAnimator>();
+        if (frames.Length > 0) animator.Configure(frames, 10f, true);
 
         var body = go.AddComponent<Rigidbody2D>();
         body.gravityScale = 0f;
@@ -296,17 +337,6 @@ public static class SwarmSceneBuilder
         collider.isTrigger = true;
         collider.radius = 0.5f;
 
-        var trail = go.AddComponent<TrailRenderer>();
-        trail.time = 0.08f;
-        trail.startWidth = 0.14f;
-        trail.endWidth = 0f;
-        trail.sharedMaterial = _spriteMaterial;
-        trail.startColor = new Color(0.6f, 1f, 1f, 0.85f);
-        trail.endColor = new Color(0.6f, 1f, 1f, 0f);
-        trail.sortingOrder = 4;
-        trail.minVertexDistance = 0.03f;
-        trail.textureMode = LineTextureMode.Stretch;
-
         go.AddComponent<Projectile>();
         go.SetActive(false);
         return go;
@@ -316,30 +346,40 @@ public static class SwarmSceneBuilder
     {
         var go = new GameObject("XpOrbTemplate");
         go.transform.position = new Vector3(0f, -25f, 0f);
-        go.transform.localScale = Vector3.one * 0.3f;
+        go.transform.localScale = Vector3.one * 0.34f;
+
+        Sprite[] frames = LoadSprites("Projectiles/xp_orb");
 
         var sprite = go.AddComponent<SpriteRenderer>();
-        sprite.sprite = _circle;
-        sprite.color = new Color(0.4f, 1f, 0.5f);
+        sprite.sprite = frames.Length > 0 ? frames[0] : _circle;
+        sprite.color = Color.white;
         sprite.sortingOrder = 4;
         ApplySpriteMaterial(sprite);
+
+        var animator = go.AddComponent<SpriteAnimator>();
+        if (frames.Length > 0) animator.Configure(frames, 8f, true);
 
         go.AddComponent<XpOrb>();
         go.SetActive(false);
         return go;
     }
 
-    static GameObject CreateBossProjectileTemplate()
+    static GameObject CreateEnemyProjectileTemplate(string name, string spritePath, Vector3 position, float scale, int sortingOrder)
     {
-        var go = new GameObject("BossProjectileTemplate");
-        go.transform.position = new Vector3(6f, -20f, 0f);
-        go.transform.localScale = Vector3.one * 0.35f;
+        var go = new GameObject(name);
+        go.transform.position = position;
+        go.transform.localScale = Vector3.one * scale;
+
+        Sprite[] frames = LoadSprites(spritePath);
 
         var sprite = go.AddComponent<SpriteRenderer>();
-        sprite.sprite = _circle;
-        sprite.color = new Color(1f, 0.35f, 0.55f);
-        sprite.sortingOrder = 6;
+        sprite.sprite = frames.Length > 0 ? frames[0] : _circle;
+        sprite.color = Color.white;
+        sprite.sortingOrder = sortingOrder;
         ApplySpriteMaterial(sprite);
+
+        var animator = go.AddComponent<SpriteAnimator>();
+        if (frames.Length > 0) animator.Configure(frames, 10f, true);
 
         var body = go.AddComponent<Rigidbody2D>();
         body.gravityScale = 0f;
@@ -352,6 +392,29 @@ public static class SwarmSceneBuilder
         collider.radius = 0.5f;
 
         go.AddComponent<EnemyProjectile>();
+        go.SetActive(false);
+        return go;
+    }
+
+    static GameObject CreateFxTemplate(string name, string spritePath, float lifetime, float scale)
+    {
+        var go = new GameObject(name);
+        go.transform.position = new Vector3(0f, -45f, 0f);
+        go.transform.localScale = Vector3.one * scale;
+
+        Sprite[] frames = LoadSprites(spritePath);
+
+        var sprite = go.AddComponent<SpriteRenderer>();
+        sprite.sprite = frames.Length > 0 ? frames[0] : _white;
+        sprite.color = Color.white;
+        sprite.sortingOrder = 7;
+        ApplySpriteMaterial(sprite);
+
+        var fx = go.AddComponent<FxOneShot>();
+        SetRef(fx, "target", sprite);
+        SetList(fx, "frames", ToObjectList(frames));
+        SetFloat(fx, "lifetime", lifetime);
+
         go.SetActive(false);
         return go;
     }
@@ -369,11 +432,17 @@ public static class SwarmSceneBuilder
             go.transform.SetParent(parent, false);
             go.transform.position = new Vector3(0f, -30f - i * 3f, 0f);
 
-            var sprite = go.AddComponent<SpriteRenderer>();
+            var visual = new GameObject("Visual");
+            visual.transform.SetParent(go.transform, false);
+
+            var sprite = visual.AddComponent<SpriteRenderer>();
             sprite.sprite = enemyData.sprite != null ? enemyData.sprite : _white;
             sprite.color = enemyData.color;
             sprite.sortingOrder = 3;
             ApplySpriteMaterial(sprite);
+
+            var animator = visual.AddComponent<SpriteAnimator>();
+            animator.Configure(enemyData.idleFrames, enemyData.animFps, true);
 
             var body = go.AddComponent<Rigidbody2D>();
             body.gravityScale = 0f;
@@ -423,13 +492,18 @@ public static class SwarmSceneBuilder
     {
         var go = new GameObject("SpawnWarningTemplate");
         go.transform.position = new Vector3(6f, -42f, 0f);
-        go.transform.localScale = Vector3.one * 0.7f;
+        go.transform.localScale = Vector3.one * 0.55f;
+
+        Sprite[] frames = LoadSprites("FX/fx_spawn");
 
         var sprite = go.AddComponent<SpriteRenderer>();
-        sprite.sprite = _ring;
-        sprite.color = new Color(1f, 0.25f, 0.30f, 0.7f);
+        sprite.sprite = frames.Length > 0 ? frames[0] : _ring;
+        sprite.color = UIPalette.Danger;
         sprite.sortingOrder = 2;
         ApplySpriteMaterial(sprite);
+
+        var animator = go.AddComponent<SpriteAnimator>();
+        if (frames.Length > 0) animator.Configure(frames, 10f, true);
 
         go.AddComponent<SpawnWarning>();
         go.SetActive(false);
@@ -437,12 +511,15 @@ public static class SwarmSceneBuilder
     }
 
     static GameObject CreateBurstTemplate()
-    {        var go = new GameObject("BurstParticleTemplate");
+    {
+        var go = new GameObject("BurstParticleTemplate");
         go.transform.position = new Vector3(0f, -35f, 0f);
         go.transform.localScale = Vector3.one * 0.2f;
 
+        Sprite[] frames = LoadSprites("FX/fx_hit");
+
         var sprite = go.AddComponent<SpriteRenderer>();
-        sprite.sprite = _circle;
+        sprite.sprite = frames.Length > 0 ? frames[0] : _circle;
         sprite.color = Color.white;
         sprite.sortingOrder = 7;
         ApplySpriteMaterial(sprite);
@@ -459,35 +536,38 @@ public static class SwarmSceneBuilder
         string path = ROOT + "/Settings/NeonProfile.asset";
         var profile = AssetDatabase.LoadAssetAtPath<VolumeProfile>(path);
 
-        bool valid = profile != null &&
-                     profile.components != null &&
-                     profile.components.Count == 2 &&
-                     profile.components[0] is Bloom &&
-                     profile.components[1] is Vignette;
-
-        if (!valid)
+        if (profile == null)
         {
-            if (profile != null) AssetDatabase.DeleteAsset(path);
-
             profile = ScriptableObject.CreateInstance<VolumeProfile>();
             AssetDatabase.CreateAsset(profile, path);
+        }
 
-            var bloom = profile.Add<Bloom>(true);
-            bloom.intensity.Override(0.75f);
-            bloom.threshold.Override(0.55f);
-            bloom.scatter.Override(0.65f);
+        if (!profile.TryGet(out Bloom bloom))
+        {
+            bloom = profile.Add<Bloom>(true);
             bloom.hideFlags = HideFlags.HideInHierarchy;
             AssetDatabase.AddObjectToAsset(bloom, profile);
+        }
 
-            var vignette = profile.Add<Vignette>(true);
-            vignette.intensity.Override(0.25f);
-            vignette.smoothness.Override(0.4f);
+        if (!profile.TryGet(out Vignette vignette))
+        {
+            vignette = profile.Add<Vignette>(true);
             vignette.hideFlags = HideFlags.HideInHierarchy;
             AssetDatabase.AddObjectToAsset(vignette, profile);
-
-            EditorUtility.SetDirty(profile);
-            AssetDatabase.SaveAssets();
         }
+
+        // Pixel art já tem realces fortes: Bloom contido, só no topo da luminância.
+        bloom.active = true;
+        bloom.intensity.Override(0.48f);
+        bloom.threshold.Override(0.82f);
+        bloom.scatter.Override(0.52f);
+
+        vignette.active = true;
+        vignette.intensity.Override(0.22f);
+        vignette.smoothness.Override(0.42f);
+
+        EditorUtility.SetDirty(profile);
+        AssetDatabase.SaveAssets();
 
         var go = new GameObject("Global Volume");
         var volume = go.AddComponent<Volume>();
@@ -527,9 +607,10 @@ public static class SwarmSceneBuilder
         Text hpText = MakeText(canvasObject.transform, "HpText", new Vector2(0f, 1f), new Vector2(150f, -95f), new Vector2(280f, 40f), 22, TextAnchor.MiddleLeft);
         hpText.color = UIPalette.Text;
 
-        Text hint = MakeText(canvasObject.transform, "Hint", new Vector2(0.5f, 1f), new Vector2(0f, -82f), new Vector2(1000f, 30f), 18, TextAnchor.MiddleCenter);
+        Text hint = MakeText(canvasObject.transform, "Hint", new Vector2(0.5f, 1f), new Vector2(0f, -82f), new Vector2(1000f, 30f), 16, TextAnchor.MiddleCenter);
         hint.text = "WASD move  ·  tiro automático  ·  1/2/3 escolhe upgrade  ·  ESC pausa";
         hint.color = new Color(UIPalette.Muted.r, UIPalette.Muted.g, UIPalette.Muted.b, 0.55f);
+        hint.font = UIFontBody();
 
         Image hpFill = MakeBar(canvasObject.transform, "HpBar", new Vector2(0f, 1f), new Vector2(20f, -125f), new Vector2(260f, 18f), UIPalette.Danger);
         Image xpFill = MakeBar(canvasObject.transform, "XpBar", new Vector2(0.5f, 0f), new Vector2(0f, 18f), new Vector2(1200f, 10f), UIPalette.Exp);
@@ -538,28 +619,43 @@ public static class SwarmSceneBuilder
         bossToast.color = UIPalette.Warning;
         bossToast.gameObject.SetActive(false);
 
-        GameObject levelUpPanel = MakePanel(canvasObject.transform, "LevelUpPanel", new Color(UIPalette.Panel.r, UIPalette.Panel.g, UIPalette.Panel.b, 0.88f));
-        Text levelUpTitle = MakeText(levelUpPanel.transform, "LevelUpTitle", new Vector2(0.5f, 0.5f), new Vector2(0f, 220f), new Vector2(1400f, 80f), 46, TextAnchor.MiddleCenter);
+        GameObject levelUpPanel = MakePanel(canvasObject.transform, "LevelUpPanel", new Color(UIPalette.Panel.r, UIPalette.Panel.g, UIPalette.Panel.b, 1f));
+        Text levelUpTitle = MakeText(levelUpPanel.transform, "LevelUpTitle", new Vector2(0.5f, 0.5f), new Vector2(0f, 320f), new Vector2(1400f, 80f), 30, TextAnchor.MiddleCenter);
         levelUpTitle.color = accent;
         levelUpTitle.fontStyle = FontStyle.Bold;
-        Text levelUpOptions = MakeText(levelUpPanel.transform, "LevelUpOptions", new Vector2(0.5f, 0.5f), new Vector2(0f, -40f), new Vector2(1100f, 380f), 30, TextAnchor.MiddleCenter);
+
+        var levelUpCards = new List<UnityEngine.Object>();
+        levelUpCards.Add(MakeUpgradeCard(levelUpPanel.transform, "UpgradeCard1", -380f));
+        levelUpCards.Add(MakeUpgradeCard(levelUpPanel.transform, "UpgradeCard2", 0f));
+        levelUpCards.Add(MakeUpgradeCard(levelUpPanel.transform, "UpgradeCard3", 380f));
+
+        Text levelUpOptions = MakeText(levelUpPanel.transform, "LevelUpOptions", new Vector2(0.5f, 0.5f), new Vector2(0f, -330f), new Vector2(1100f, 60f), 20, TextAnchor.MiddleCenter);
         levelUpOptions.verticalOverflow = VerticalWrapMode.Overflow;
-        levelUpOptions.color = UIPalette.Text;
+        levelUpOptions.color = UIPalette.Muted;
+        levelUpOptions.font = UIFontBody();
 
         GameObject gameOverPanel = MakePanel(canvasObject.transform, "GameOverPanel", UIPalette.Panel);
-        Text gameOverText = MakeText(gameOverPanel.transform, "GameOverText", new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(1100f, 640f), 34, TextAnchor.MiddleCenter);
+        Text gameOverText = MakeText(gameOverPanel.transform, "GameOverText", new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(1100f, 640f), 30, TextAnchor.MiddleCenter);
         gameOverText.verticalOverflow = VerticalWrapMode.Overflow;
         gameOverText.fontStyle = FontStyle.Bold;
         gameOverText.color = UIPalette.Text;
+        gameOverText.font = UIFontBody();
 
         GameObject mainMenuPanel = MakePanel(canvasObject.transform, "MainMenuPanel", UIPalette.PanelSolid);
+        if (_logo != null)
+        {
+            Image logo = MakeImage(mainMenuPanel.transform, "Logo", new Vector2(0.5f, 0.5f),
+                new Vector2(0f, 225f), new Vector2(600f, 212f), Color.white, _logo);
+            logo.preserveAspect = true;
+        }
+
         Text mainTitle = MakeText(mainMenuPanel.transform, "MainTitle", new Vector2(0.5f, 0.5f), new Vector2(0f, 190f), new Vector2(1400f, 120f), 72, TextAnchor.MiddleCenter);
-        mainTitle.text = "S W A R M";
+        mainTitle.text = "";
         mainTitle.color = UIPalette.Accent;
         mainTitle.fontStyle = FontStyle.Bold;
 
         Text mainTagline = MakeText(mainMenuPanel.transform, "MainTagline", new Vector2(0.5f, 0.5f), new Vector2(0f, 108f), new Vector2(1400f, 40f), 22, TextAnchor.MiddleCenter);
-        mainTagline.text = "SPACE INVADERS NA DOSE DE SURVIVORS";
+        mainTagline.text = "";
         mainTagline.color = UIPalette.Muted;
 
         Text mainPlay = MakeText(mainMenuPanel.transform, "MainPlay", new Vector2(0.5f, 0.5f), new Vector2(0f, 18f), new Vector2(1400f, 60f), 34, TextAnchor.MiddleCenter);
@@ -577,6 +673,7 @@ public static class SwarmSceneBuilder
         Text mainVersion = MakeText(mainMenuPanel.transform, "MainVersion", new Vector2(0.5f, 0.5f), new Vector2(0f, -226f), new Vector2(1400f, 30f), 18, TextAnchor.MiddleCenter);
         mainVersion.text = "DEMO 0.9.9   ·   FEITO COM UNITY";
         mainVersion.color = UIPalette.Muted;
+        mainVersion.font = UIFontBody();
 
         GameObject pausePanel = MakePanel(canvasObject.transform, "PausePanel", new Color(UIPalette.Panel.r, UIPalette.Panel.g, UIPalette.Panel.b, 0.88f));
         Text pauseTitle = MakeText(pausePanel.transform, "PauseTitle", new Vector2(0.5f, 0.5f), new Vector2(0f, 200f), new Vector2(1400f, 80f), 60, TextAnchor.MiddleCenter);
@@ -605,17 +702,33 @@ public static class SwarmSceneBuilder
         pauseQuit.color = UIPalette.Muted;
 
         GameObject characterPanel = MakePanel(canvasObject.transform, "CharacterSelectPanel", UIPalette.Panel);
-        Text characterTitle = MakeText(characterPanel.transform, "CharacterTitle", new Vector2(0.5f, 0.5f), new Vector2(0f, 300f), new Vector2(1400f, 80f), 46, TextAnchor.MiddleCenter);
+        Text characterTitle = MakeText(characterPanel.transform, "CharacterTitle", new Vector2(0.5f, 0.5f), new Vector2(0f, 360f), new Vector2(1400f, 80f), 46, TextAnchor.MiddleCenter);
         characterTitle.color = accent;
         characterTitle.fontStyle = FontStyle.Bold;
-        Text characterOptions = MakeText(characterPanel.transform, "CharacterOptions", new Vector2(0.5f, 0.5f), new Vector2(0f, -50f), new Vector2(1100f, 560f), 26, TextAnchor.MiddleCenter);
+
+        Sprite coreIcon = LoadSprite("UI/ui_core");
+        if (coreIcon != null)
+        {
+            Image icon = MakeImage(characterPanel.transform, "CoreIcon", new Vector2(0.5f, 0.5f),
+                new Vector2(-500f, 365f), new Vector2(36f, 36f), Color.white, coreIcon);
+            icon.preserveAspect = true;
+        }
+
+        var characterCards = new List<UnityEngine.Object>();
+        characterCards.Add(MakeCharacterCard(characterPanel.transform, "PilotCard1", -340f));
+        characterCards.Add(MakeCharacterCard(characterPanel.transform, "PilotCard2", 0f));
+        characterCards.Add(MakeCharacterCard(characterPanel.transform, "PilotCard3", 340f));
+
+        Text characterOptions = MakeText(characterPanel.transform, "CharacterOptions", new Vector2(0.5f, 0.5f), new Vector2(0f, -215f), new Vector2(1200f, 300f), 18, TextAnchor.MiddleCenter);
         characterOptions.verticalOverflow = VerticalWrapMode.Overflow;
         characterOptions.color = UIPalette.Text;
+        characterOptions.font = UIFontBody();
 
         var characterSelect = canvasObject.AddComponent<CharacterSelect>();
         SetRef(characterSelect, "panel", characterPanel);
         SetRef(characterSelect, "title", characterTitle);
         SetRef(characterSelect, "options", characterOptions);
+        SetList(characterSelect, "cards", characterCards);
         SetList(characterSelect, "characters", ToObjectList(characters));
         SetRef(characterSelect, "stats", stats);
         SetRef(characterSelect, "health", health);
@@ -624,9 +737,10 @@ public static class SwarmSceneBuilder
         Text optionsTitle = MakeText(optionsPanel.transform, "OptionsTitle", new Vector2(0.5f, 0.5f), new Vector2(0f, 260f), new Vector2(1400f, 80f), 46, TextAnchor.MiddleCenter);
         optionsTitle.color = accent;
         optionsTitle.fontStyle = FontStyle.Bold;
-        Text optionsText = MakeText(optionsPanel.transform, "OptionsText", new Vector2(0.5f, 0.5f), new Vector2(0f, -20f), new Vector2(1100f, 380f), 30, TextAnchor.MiddleCenter);
+        Text optionsText = MakeText(optionsPanel.transform, "OptionsText", new Vector2(0.5f, 0.5f), new Vector2(0f, -20f), new Vector2(1100f, 380f), 24, TextAnchor.MiddleCenter);
         optionsText.verticalOverflow = VerticalWrapMode.Overflow;
         optionsText.color = UIPalette.Text;
+        optionsText.font = UIFontBody();
 
         var optionsMenu = canvasObject.AddComponent<OptionsMenu>();
         SetRef(optionsMenu, "panel", optionsPanel);
@@ -654,7 +768,8 @@ public static class SwarmSceneBuilder
         SetRef(hud, "damageFlash", damageFlash);
         SetRef(hud, "levelUpPanel", levelUpPanel);
         SetRef(hud, "levelUpTitle", levelUpTitle);
-        SetRef(hud, "levelUpOptions", levelUpOptions);
+         SetRef(hud, "levelUpOptions", levelUpOptions);
+        SetList(hud, "levelUpCards", levelUpCards);
         SetRef(hud, "gameOverPanel", gameOverPanel);
         SetRef(hud, "gameOverText", gameOverText);
         SetRef(hud, "bossBar", bossBar);
@@ -667,6 +782,155 @@ public static class SwarmSceneBuilder
         SetRef(hud, "stats", stats);
 
         return hud;
+    }
+
+    static UpgradeCardUI MakeUpgradeCard(Transform parent, string name, float x)
+    {
+        var go = new GameObject(name, typeof(RectTransform), typeof(Image));
+        go.transform.SetParent(parent, false);
+
+        var rect = go.GetComponent<RectTransform>();
+        rect.anchorMin = new Vector2(0.5f, 0.5f);
+        rect.anchorMax = new Vector2(0.5f, 0.5f);
+        rect.pivot = new Vector2(0.5f, 0.5f);
+        rect.anchoredPosition = new Vector2(x, -20f);
+        rect.sizeDelta = new Vector2(350f, 440f);
+
+        var border = go.GetComponent<Image>();
+        border.sprite = _white;
+        border.color = UIPalette.Accent;
+        border.raycastTarget = false;
+
+        var panelObject = new GameObject("Panel", typeof(RectTransform), typeof(Image));
+        panelObject.transform.SetParent(go.transform, false);
+
+        var panelRect = panelObject.GetComponent<RectTransform>();
+        panelRect.anchorMin = Vector2.zero;
+        panelRect.anchorMax = Vector2.one;
+        panelRect.offsetMin = new Vector2(3f, 3f);
+        panelRect.offsetMax = new Vector2(-3f, -3f);
+
+        var panel = panelObject.GetComponent<Image>();
+        panel.sprite = _white;
+        panel.color = new Color(0.025f, 0.038f, 0.075f, 0.98f);
+        panel.raycastTarget = false;
+
+        Image accentBar = MakeImage(panelObject.transform, "Category", new Vector2(0.5f, 1f),
+            new Vector2(0f, -5f), new Vector2(320f, 4f), UIPalette.Accent);
+        Image icon = MakeImage(panelObject.transform, "Icon", new Vector2(0.5f, 0.5f),
+            new Vector2(0f, 108f), new Vector2(96f, 96f), Color.white);
+        icon.preserveAspect = true;
+
+        Text title = MakeText(panelObject.transform, "Title", new Vector2(0.5f, 0.5f),
+            new Vector2(0f, 28f), new Vector2(320f, 58f), 18, TextAnchor.MiddleCenter);
+        title.fontStyle = FontStyle.Bold;
+        title.color = UIPalette.Text;
+        title.verticalOverflow = VerticalWrapMode.Overflow;
+
+        Text description = MakeText(panelObject.transform, "Description", new Vector2(0.5f, 0.5f),
+            new Vector2(0f, -55f), new Vector2(310f, 110f), 17, TextAnchor.MiddleCenter);
+        description.color = UIPalette.Muted;
+        description.verticalOverflow = VerticalWrapMode.Overflow;
+        description.font = UIFontBody();
+
+        Text key = MakeText(panelObject.transform, "Key", new Vector2(0.5f, 0.5f),
+            new Vector2(0f, -175f), new Vector2(320f, 42f), 20, TextAnchor.MiddleCenter);
+        key.fontStyle = FontStyle.Bold;
+        key.color = UIPalette.AccentSoft;
+
+        var card = go.AddComponent<UpgradeCardUI>();
+        SetRef(card, "border", border);
+        SetRef(card, "panel", panel);
+        SetRef(card, "accent", accentBar);
+        SetRef(card, "icon", icon);
+        SetRef(card, "title", title);
+        SetRef(card, "description", description);
+        SetRef(card, "keyLabel", key);
+
+        return card;
+    }
+
+    static CharacterCardUI MakeCharacterCard(Transform parent, string name, float x)
+    {
+        var go = new GameObject(name, typeof(RectTransform), typeof(Image));
+        go.transform.SetParent(parent, false);
+
+        var rect = go.GetComponent<RectTransform>();
+        rect.anchorMin = new Vector2(0.5f, 0.5f);
+        rect.anchorMax = new Vector2(0.5f, 0.5f);
+        rect.pivot = new Vector2(0.5f, 0.5f);
+        rect.anchoredPosition = new Vector2(x, 90f);
+        rect.sizeDelta = new Vector2(300f, 340f);
+
+        var border = go.GetComponent<Image>();
+        border.sprite = _white;
+        border.color = UIPalette.Accent;
+        border.raycastTarget = false;
+
+        var panelObject = new GameObject("Panel", typeof(RectTransform), typeof(Image));
+        panelObject.transform.SetParent(go.transform, false);
+
+        var panelRect = panelObject.GetComponent<RectTransform>();
+        panelRect.anchorMin = Vector2.zero;
+        panelRect.anchorMax = Vector2.one;
+        panelRect.offsetMin = new Vector2(3f, 3f);
+        panelRect.offsetMax = new Vector2(-3f, -3f);
+
+        var panel = panelObject.GetComponent<Image>();
+        panel.sprite = _white;
+        panel.color = new Color(0.025f, 0.038f, 0.075f, 0.98f);
+        panel.raycastTarget = false;
+
+        Image portrait = MakeImage(panelObject.transform, "Portrait", new Vector2(0.5f, 0.5f),
+            new Vector2(0f, 85f), new Vector2(96f, 96f), Color.white);
+        portrait.preserveAspect = true;
+
+        Text nameLabel = MakeText(panelObject.transform, "Name", new Vector2(0.5f, 0.5f),
+            new Vector2(0f, 5f), new Vector2(270f, 42f), 20, TextAnchor.MiddleCenter);
+        nameLabel.fontStyle = FontStyle.Bold;
+        nameLabel.color = UIPalette.Text;
+
+        Text description = MakeText(panelObject.transform, "Description", new Vector2(0.5f, 0.5f),
+            new Vector2(0f, -93f), new Vector2(260f, 100f), 16, TextAnchor.MiddleCenter);
+        description.color = UIPalette.Muted;
+        description.verticalOverflow = VerticalWrapMode.Overflow;
+        description.font = UIFontBody();
+
+        Text key = MakeText(panelObject.transform, "Key", new Vector2(0.5f, 0.5f),
+            new Vector2(0f, -148f), new Vector2(260f, 34f), 20, TextAnchor.MiddleCenter);
+        key.fontStyle = FontStyle.Bold;
+        key.color = UIPalette.AccentSoft;
+
+        var card = go.AddComponent<CharacterCardUI>();
+        SetRef(card, "border", border);
+        SetRef(card, "panel", panel);
+        SetRef(card, "portrait", portrait);
+        SetRef(card, "nameLabel", nameLabel);
+        SetRef(card, "description", description);
+        SetRef(card, "keyLabel", key);
+
+        return card;
+    }
+
+    static Image MakeImage(Transform parent, string name, Vector2 anchor, Vector2 position, Vector2 size,
+        Color color, Sprite sprite = null)
+    {
+        var go = new GameObject(name, typeof(RectTransform), typeof(Image));
+        go.transform.SetParent(parent, false);
+
+        var rect = go.GetComponent<RectTransform>();
+        rect.anchorMin = anchor;
+        rect.anchorMax = anchor;
+        rect.pivot = new Vector2(0.5f, 0.5f);
+        rect.anchoredPosition = position;
+        rect.sizeDelta = size;
+
+        var image = go.GetComponent<Image>();
+        image.sprite = sprite != null ? sprite : _white;
+        image.color = color;
+        image.raycastTarget = false;
+
+        return image;
     }
 
     static Text MakeText(Transform parent, string name, Vector2 anchor, Vector2 position, Vector2 size, int fontSize, TextAnchor alignment)
@@ -705,7 +969,7 @@ public static class SwarmSceneBuilder
 
         var image = go.GetComponent<Image>();
         image.sprite = _white;
-        image.color = new Color(1f, 0.10f, 0.15f, 0f);
+        image.color = new Color(UIPalette.Danger.r, UIPalette.Danger.g, UIPalette.Danger.b, 0f);
         image.raycastTarget = false;
 
         return image;
@@ -775,7 +1039,7 @@ public static class SwarmSceneBuilder
 
         fill = fillObject.GetComponent<Image>();
         fill.sprite = _white;
-        fill.color = new Color(1f, 0.20f, 0.28f);
+        fill.color = UIPalette.Danger;
         fill.type = Image.Type.Filled;
         fill.fillMethod = Image.FillMethod.Horizontal;
         fill.fillAmount = 1f;
@@ -783,7 +1047,15 @@ public static class SwarmSceneBuilder
 
         label = MakeText(parent, "BossLabel", new Vector2(0.5f, 1f), new Vector2(0f, -106f), new Vector2(760f, 24f), 20, TextAnchor.MiddleCenter);
         label.text = "NÚCLEO";
-        label.color = new Color(1f, 0.45f, 0.5f);
+        label.color = UIPalette.Danger;
+
+        Sprite bossIcon = LoadSprite("UI/ui_boss");
+        if (bossIcon != null)
+        {
+            Image icon = MakeImage(container.transform, "Icon", new Vector2(0f, 0.5f),
+                new Vector2(14f, 0f), new Vector2(30f, 30f), Color.white, bossIcon);
+            icon.preserveAspect = true;
+        }
 
         container.SetActive(false);
         label.gameObject.SetActive(false);
@@ -814,6 +1086,9 @@ public static class SwarmSceneBuilder
     {
         if (_font != null) return _font;
 
+        _font = AssetDatabase.LoadAssetAtPath<Font>(ROOT + "/Art/Fonts/PressStart2P-Regular.ttf");
+        if (_font != null) return _font;
+
         try { _font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf"); } catch { }
         if (_font == null)
         {
@@ -821,6 +1096,19 @@ public static class SwarmSceneBuilder
         }
 
         return _font;
+    }
+
+    static Font UIFontBody()
+    {
+        if (_bodyFont != null) return _bodyFont;
+
+        try { _bodyFont = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf"); } catch { }
+        if (_bodyFont == null)
+        {
+            try { _bodyFont = Resources.GetBuiltinResource<Font>("Arial.ttf"); } catch { }
+        }
+
+        return _bodyFont;
     }
 
     // ─────────────────────────────────────────────────────────────
@@ -913,6 +1201,7 @@ public static class SwarmSceneBuilder
                 "hpFill", "xpFill", "levelUpPanel", "levelUpTitle", "levelUpOptions",
                 "gameOverPanel", "gameOverText", "bossBar", "bossFill", "bossLabel", "bossToast", "damageFlash",
                 "xp", "playerHealth", "upgrades", "stats");
+            problems += CheckArray(hud, "levelUpCards", 3);
         }
 
         CharacterSelect characterSelect = Object.FindAnyObjectByType<CharacterSelect>();
@@ -925,6 +1214,7 @@ public static class SwarmSceneBuilder
         {
             problems += CheckRefs(characterSelect, "panel", "title", "options", "stats", "health");
             problems += CheckArray(characterSelect, "characters", 3);
+            problems += CheckArray(characterSelect, "cards", 3);
         }
 
         DeathBurst deathBurst = Object.FindAnyObjectByType<DeathBurst>();
@@ -935,7 +1225,7 @@ public static class SwarmSceneBuilder
         }
         else
         {
-            problems += CheckRefs(deathBurst, "template");
+            problems += CheckRefs(deathBurst, "template", "explosionTemplate", "hitTemplate", "coreTemplate");
         }
 
         BurstParticle[] burstParticles = Object.FindObjectsByType<BurstParticle>(FindObjectsInactive.Include);
@@ -1001,7 +1291,7 @@ public static class SwarmSceneBuilder
         }
         else
         {
-            problems += CheckRefs(playerVisual, "visual");
+            problems += CheckRefs(playerVisual, "visual", "sprite", "animator");
         }
 
         MuzzleFlash muzzleFlash = Object.FindAnyObjectByType<MuzzleFlash>();
@@ -1023,7 +1313,8 @@ public static class SwarmSceneBuilder
         }
         else
         {
-            problems += CheckRefs(thruster, "visual", "template");
+            problems += CheckRefs(thruster, "visual");
+            problems += CheckArray(thruster, "frames", 3);
         }
 
         OptionsMenu optionsMenu = Object.FindAnyObjectByType<OptionsMenu>();
@@ -1079,6 +1370,7 @@ public static class SwarmSceneBuilder
         else
         {
             problems += CheckRefs(rangedEnemy, "projectilePrefab");
+            problems += CheckArray(rangedEnemy, "chargeFrames", 3);
         }
 
         Enemy[] enemies = Object.FindObjectsByType<Enemy>(FindObjectsInactive.Include);
@@ -1134,12 +1426,14 @@ public static class SwarmSceneBuilder
         else
         {
             problems += CheckRefs(boss, "projectilePrefab");
+            problems += CheckArray(boss, "telegraphFrames", 4);
+            problems += CheckArray(boss, "attackFrames", 4);
         }
 
         EnemyProjectile[] enemyProjectiles = Object.FindObjectsByType<EnemyProjectile>(FindObjectsInactive.Include);
-        if (enemyProjectiles.Length != 1)
+        if (enemyProjectiles.Length != 2)
         {
-            Debug.LogError("[SWARM] Esperado 1 template de projétil inimigo, achei " + enemyProjectiles.Length);
+            Debug.LogError("[SWARM] Esperados 2 templates de projétil inimigo, achei " + enemyProjectiles.Length);
             problems++;
         }
 
@@ -1415,14 +1709,89 @@ public static class SwarmSceneBuilder
         }
     }
 
-    static void AssignEnemySprites(List<EnemyData> enemies)    {
-        Sprite[] sprites = { _hex, _diamond, _square, _ring, _circle, _octagon };
-
-        for (int i = 0; i < enemies.Count && i < sprites.Length; i++)
+    static void AssignEnemySprites(List<EnemyData> enemies)
+    {
+        for (int i = 0; i < enemies.Count; i++)
         {
-            if (enemies[i] == null || enemies[i].sprite != null) continue;
-            enemies[i].sprite = sprites[i];
-            EditorUtility.SetDirty(enemies[i]);
+            EnemyData data = enemies[i];
+            if (data == null) continue;
+
+            string prefix;
+            float scale;
+
+            switch (data.displayName)
+            {
+                case "Drone": prefix = "esporo"; scale = 0.42f; break;
+                case "Corredor": prefix = "dardo"; scale = 0.48f; break;
+                case "Tanque": prefix = "casco"; scale = 0.95f; break;
+                case "Divisor": prefix = "celula"; scale = 0.60f; break;
+                case "Atirador": prefix = "olho"; scale = 0.58f; break;
+                case "Núcleo": prefix = "nucleo"; scale = 2.20f; break;
+                default: continue;
+            }
+
+            data.idleFrames = LoadSprites("Enemies/enemy_" + prefix + "_idle");
+            data.moveFrames = LoadSprites("Enemies/enemy_" + prefix + "_move");
+            data.hitFrames = LoadSprites("Enemies/enemy_" + prefix + "_hit");
+            data.deathFrames = LoadSprites("Enemies/enemy_" + prefix + "_death");
+            data.animFps = 6f;
+            data.faceMovement = data.displayName == "Corredor";
+            data.color = Color.white;
+            data.scale = scale;
+
+            if (data.idleFrames.Length > 0) data.sprite = data.idleFrames[0];
+            else if (data.sprite == null) data.sprite = _white;
+
+            EditorUtility.SetDirty(data);
+        }
+    }
+
+    static void AssignCharacterArt(List<CharacterData> characters)
+    {
+        for (int i = 0; i < characters.Count; i++)
+        {
+            CharacterData data = characters[i];
+            if (data == null) continue;
+
+            string prefix;
+            string portrait;
+
+            switch (data.displayName)
+            {
+                case "TANQUE": prefix = "baluarte"; portrait = "baluarte"; break;
+                case "VELOZ": prefix = "vetor"; portrait = "vetor"; break;
+                case "ATIRADOR": prefix = "lanca"; portrait = "lanca"; break;
+                default: continue;
+            }
+
+            data.idleFrames = LoadSprites("Ships/ship_" + prefix + "_idle");
+            data.hitFrames = LoadSprites("Ships/ship_" + prefix + "_hit");
+            data.deathFrames = LoadSprites("Ships/ship_" + prefix + "_death");
+            data.thrusterFrames = LoadSprites("Ships/ship_" + prefix + "_thruster");
+            data.portrait = LoadSprite("UI/ui_pilot_" + portrait);
+
+            if (data.idleFrames.Length > 0) data.shipSprite = data.idleFrames[0];
+            EditorUtility.SetDirty(data);
+        }
+    }
+
+    static void AssignUpgradeIcons(List<UpgradeData> upgrades)
+    {
+        for (int i = 0; i < upgrades.Count; i++)
+        {
+            UpgradeData upgrade = upgrades[i];
+            if (upgrade == null) continue;
+
+            string assetPath = AssetDatabase.GetAssetPath(upgrade);
+            if (string.IsNullOrEmpty(assetPath)) continue;
+
+            string file = Path.GetFileNameWithoutExtension(assetPath);
+            Sprite icon = LoadSprite("UI/ui_upgrade_" + file);
+
+            if (icon == null) continue;
+
+            upgrade.icon = icon;
+            EditorUtility.SetDirty(upgrade);
         }
     }
 
@@ -1511,6 +1880,36 @@ public static class SwarmSceneBuilder
         serialized.ApplyModifiedPropertiesWithoutUndo();
     }
 
+    static void SetFloat(UnityEngine.Object target, string fieldName, float value)
+    {
+        var serialized = new SerializedObject(target);
+        SerializedProperty property = serialized.FindProperty(fieldName);
+
+        if (property == null)
+        {
+            Debug.LogWarning("[SWARM] Campo float não encontrado: " + fieldName + " em " + target);
+            return;
+        }
+
+        property.floatValue = value;
+        serialized.ApplyModifiedPropertiesWithoutUndo();
+    }
+
+    static void SetColor(UnityEngine.Object target, string fieldName, Color value)
+    {
+        var serialized = new SerializedObject(target);
+        SerializedProperty property = serialized.FindProperty(fieldName);
+
+        if (property == null)
+        {
+            Debug.LogWarning("[SWARM] Campo Color não encontrado: " + fieldName + " em " + target);
+            return;
+        }
+
+        property.colorValue = value;
+        serialized.ApplyModifiedPropertiesWithoutUndo();
+    }
+
     static void SetList(UnityEngine.Object target, string fieldName, List<UnityEngine.Object> values)
     {
         var serialized = new SerializedObject(target);
@@ -1534,6 +1933,40 @@ public static class SwarmSceneBuilder
         var list = new List<UnityEngine.Object>(source.Count);
         for (int i = 0; i < source.Count; i++) list.Add(source[i]);
         return list;
+    }
+
+    static List<UnityEngine.Object> ToObjectList(Sprite[] source)
+    {
+        if (source == null) return new List<UnityEngine.Object>();
+        var list = new List<UnityEngine.Object>(source.Length);
+        for (int i = 0; i < source.Length; i++) list.Add(source[i]);
+        return list;
+    }
+
+    static Sprite LoadSprite(string relativePath)
+    {
+        string path = ROOT + "/Art/Sprites/" + relativePath + ".png";
+        Sprite sprite = AssetDatabase.LoadAssetAtPath<Sprite>(path);
+        if (sprite != null) return sprite;
+
+        Object[] assets = AssetDatabase.LoadAllAssetsAtPath(path);
+        for (int i = 0; i < assets.Length; i++)
+            if (assets[i] is Sprite first) return first;
+
+        return null;
+    }
+
+    static Sprite[] LoadSprites(string relativePath)
+    {
+        string path = ROOT + "/Art/Sprites/" + relativePath + ".png";
+        Object[] assets = AssetDatabase.LoadAllAssetsAtPath(path);
+        var sprites = new List<Sprite>();
+
+        for (int i = 0; i < assets.Length; i++)
+            if (assets[i] is Sprite sprite) sprites.Add(sprite);
+
+        sprites.Sort((a, b) => string.CompareOrdinal(a.name, b.name));
+        return sprites.ToArray();
     }
 
     static void EnsureFolders()

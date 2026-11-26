@@ -18,8 +18,8 @@ public class Projectile : MonoBehaviour
     float _life;
     bool _critical;
 
-    static readonly Color NormalColor = new Color(0.6f, 1f, 1f);
-    static readonly Color CriticalColor = new Color(1f, 0.9f, 0.3f);
+    static readonly Color NormalColor = Color.white;
+    static readonly Color CriticalColor = new Color(1f, 0.78f, 0.28f);
 
     void Awake()
     {
@@ -60,6 +60,9 @@ public class Projectile : MonoBehaviour
         if (enemy == null || !_hits.Add(enemy)) return;
 
         enemy.TakeDamage(_damage, _critical);
+
+        if (DeathBurst.Instance != null)
+            DeathBurst.Instance.SpawnHit(transform.position, _critical ? CriticalColor : Color.white);
 
         if (_pierce > 0) _pierce--;
         else ObjectPool.Despawn(gameObject);

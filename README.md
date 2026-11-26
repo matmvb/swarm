@@ -184,6 +184,9 @@ A build sai em `Builds/Windows/SWARM.exe`.
 - Flash de dano por overlay para sprites coloridos.
 - Restart por nome da cena, retorno ao menu no game over e ESC nas opções.
 - Página e documentação atualizadas para 0.9.9.
+- Passe de arte: projéteis/FX/orbes em pixel art, animações de idle/hit/morte, telegraph do Núcleo, charge do Olho, dardo direcional.
+- Level up em 3 cards com ícones; seleção de piloto em cards; fonte pixel e wordmark no menu.
+- Escala da horda, paleta semântica, Bloom contido e fundo em duas camadas com arena do boss.
 
 ### 0.9.8
 

@@ -1,43 +1,88 @@
 using UnityEngine;
 
 /// <summary>
-/// Rastro do propulsor: partículas atrás da nave enquanto ela se move.
+/// Propulsor em pixel art preso à nave. Substitui as partículas brancas
+/// procedurais antigas: menos objetos por frame e acabamento coerente.
 /// </summary>
 public class ThrusterTrail : MonoBehaviour
 {
     [SerializeField] Transform visual;
-    [SerializeField] BurstParticle template;
-    [SerializeField] float interval = 0.045f;
-    [SerializeField] Color color = new Color(0.35f, 0.85f, 1f, 0.8f);
+    [SerializeField] SpriteRenderer thruster;
+    [SerializeField] Sprite[] frames;
+    [SerializeField] float scale = 0.55f;
 
-    float _timer;
+    SpriteAnimator _animator;
+    bool _moving;
+
+    void Start()
+    {
+        EnsureThruster();
+    }
+
+    public void SetFrames(Sprite[] newFrames)
+    {
+        frames = newFrames;
+        EnsureThruster();
+        _moving = false;
+
+        if (_animator == null || frames == null || frames.Length == 0) return;
+        _animator.Configure(frames, 12f, true);
+    }
+
+    void EnsureThruster()
+    {
+        if (visual == null) return;
+
+        if (thruster == null)
+        {
+            var existing = visual.Find("Thruster");
+            if (existing != null) thruster = existing.GetComponent<SpriteRenderer>();
+
+            if (thruster == null)
+            {
+                var go = new GameObject("Thruster");
+                go.transform.SetParent(visual, false);
+                go.transform.localPosition = new Vector3(0f, -0.62f, 0f);
+                go.transform.localScale = Vector3.one * scale;
+                thruster = go.AddComponent<SpriteRenderer>();
+                thruster.sortingOrder = 9;
+
+                var playerSprite = visual.GetComponentInChildren<SpriteRenderer>();
+                if (playerSprite != null) thruster.sharedMaterial = playerSprite.sharedMaterial;
+            }
+        }
+
+        if (thruster == null) return;
+
+        if (_animator == null)
+        {
+            _animator = thruster.GetComponent<SpriteAnimator>();
+            if (_animator == null) _animator = thruster.gameObject.AddComponent<SpriteAnimator>();
+        }
+
+        if (frames != null && frames.Length > 0 && _animator != null)
+            _animator.Configure(frames, 12f, true);
+
+        thruster.enabled = false;
+    }
 
     void Update()
     {
-        if (GameManager.Instance == null || !GameManager.Instance.IsRunning) return;
-        if (template == null) return;
+        if (thruster == null) return;
 
-        Vector2 move = InputReader.Move;
-        if (move.sqrMagnitude < 0.01f)
+        if (GameManager.Instance == null || !GameManager.Instance.IsRunning)
         {
-            _timer = 0f;
+            thruster.enabled = false;
             return;
         }
 
-        _timer -= Time.deltaTime;
-        if (_timer > 0f) return;
-        _timer = interval;
+        Vector2 move = InputReader.Move;
+        bool moving = move.sqrMagnitude > 0.01f;
 
-        Vector2 backward = visual != null ? -(Vector2)visual.up : Vector2.down;
-        Vector3 position = transform.position + (Vector3)(backward * 0.28f);
-
-        GameObject instance = ObjectPool.Spawn(template.gameObject, position, Quaternion.identity);
-        if (instance == null) return;
-
-        var particle = instance.GetComponent<BurstParticle>();
-        if (particle == null) return;
-
-        Vector2 velocity = backward * Random.Range(0.8f, 1.6f) + Random.insideUnitCircle * 0.4f;
-        particle.Init(velocity, Random.Range(0.2f, 0.35f), color, 0.12f, 8);
+        if (moving != _moving)
+        {
+            _moving = moving;
+            thruster.enabled = moving && frames != null && frames.Length > 0;
+        }
     }
 }

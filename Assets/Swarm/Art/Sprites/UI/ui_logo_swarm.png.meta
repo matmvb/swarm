@@ -1,0 +1,704 @@
+fileFormatVersion: 2
+guid: 0d3c19fb69914ee4d8b28a2a2b07925b
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -451322908965307715
+    second: ui_logo_swarm_0
+  - first:
+      213: -839274438997914954
+    second: ui_logo_swarm_1
+  - first:
+      213: -5368689016504833306
+    second: ui_logo_swarm_2
+  - first:
+      213: -8186641488558109283
+    second: ui_logo_swarm_3
+  - first:
+      213: -7848683924140821166
+    second: ui_logo_swarm_4
+  - first:
+      213: -2255175128864732949
+    second: ui_logo_swarm_5
+  - first:
+      213: 5835258238212115762
+    second: ui_logo_swarm_6
+  - first:
+      213: 539504019897142109
+    second: ui_logo_swarm_7
+  - first:
+      213: -4455964719300569456
+    second: ui_logo_swarm_8
+  - first:
+      213: -403582983772675324
+    second: ui_logo_swarm_9
+  - first:
+      213: 5565055799419326144
+    second: ui_logo_swarm_10
+  - first:
+      213: 2607544487543991855
+    second: ui_logo_swarm_11
+  - first:
+      213: 6936624571569576862
+    second: ui_logo_swarm_12
+  - first:
+      213: -8521047351669413662
+    second: ui_logo_swarm_13
+  - first:
+      213: 678618257952143957
+    second: ui_logo_swarm_14
+  - first:
+      213: -548014492141200203
+    second: ui_logo_swarm_15
+  - first:
+      213: 2448961241687540510
+    second: ui_logo_swarm_16
+  - first:
+      213: 12507403203930086
+    second: ui_logo_swarm_17
+  - first:
+      213: -2975683982312290306
+    second: ui_logo_swarm_18
+  - first:
+      213: -4974049588893023638
+    second: ui_logo_swarm_19
+  - first:
+      213: -6437240166229221578
+    second: ui_logo_swarm_20
+  - first:
+      213: -1802809251044015212
+    second: ui_logo_swarm_21
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 0
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: ui_logo_swarm_0
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 35
+        width: 287
+        height: 86
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dba702c94349cb9f0800000000000000
+      internalID: -451322908965307715
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_logo_swarm_1
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 50
+        width: 53
+        height: 71
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6bac67a285c4a54f0800000000000000
+      internalID: -839274438997914954
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_logo_swarm_2
+      rect:
+        serializedVersion: 2
+        x: 114
+        y: 50
+        width: 53
+        height: 71
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6ea20b5b8c59e75b0800000000000000
+      internalID: -5368689016504833306
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_logo_swarm_3
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 50
+        width: 53
+        height: 71
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d9dc40bd0f4336e80800000000000000
+      internalID: -8186641488558109283
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_logo_swarm_4
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 50
+        width: 53
+        height: 71
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 255744b1e8fd31390800000000000000
+      internalID: -7848683924140821166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_logo_swarm_5
+      rect:
+        serializedVersion: 2
+        x: 353
+        y: 40
+        width: 7
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: be8c8b13b2204b0e0800000000000000
+      internalID: -2255175128864732949
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_logo_swarm_6
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 1
+        width: 17
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 23d0e4d73700bf050800000000000000
+      internalID: 5835258238212115762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_logo_swarm_7
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 1
+        width: 17
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d5b4dd43c04bc7700800000000000000
+      internalID: 539504019897142109
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_logo_swarm_8
+      rect:
+        serializedVersion: 2
+        x: 47
+        y: 1
+        width: 17
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0969a6e42bb3922c0800000000000000
+      internalID: -4455964719300569456
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_logo_swarm_9
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 1
+        width: 17
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 40366de1a6f266af0800000000000000
+      internalID: -403582983772675324
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_logo_swarm_10
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 1
+        width: 17
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0cecd9fb3cc0b3d40800000000000000
+      internalID: 5565055799419326144
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_logo_swarm_11
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 1
+        width: 17
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f2e661465ebdf2420800000000000000
+      internalID: 2607544487543991855
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_logo_swarm_12
+      rect:
+        serializedVersion: 2
+        x: 119
+        y: 1
+        width: 17
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9b96a8cb47d34060800000000000000
+      internalID: 6936624571569576862
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_logo_swarm_13
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 1
+        width: 11
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e8267184982fb980800000000000000
+      internalID: -8521047351669413662
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_logo_swarm_14
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 1
+        width: 17
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 55af45bc5bfea6900800000000000000
+      internalID: 678618257952143957
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_logo_swarm_15
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 1
+        width: 17
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5bc582019bf0568f0800000000000000
+      internalID: -548014492141200203
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_logo_swarm_16
+      rect:
+        serializedVersion: 2
+        x: 215
+        y: 1
+        width: 17
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e134c7f26457cf120800000000000000
+      internalID: 2448961241687540510
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_logo_swarm_17
+      rect:
+        serializedVersion: 2
+        x: 233
+        y: 1
+        width: 17
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6e7680dba6f6c2000800000000000000
+      internalID: 12507403203930086
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_logo_swarm_18
+      rect:
+        serializedVersion: 2
+        x: 251
+        y: 1
+        width: 17
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ef7c4761f2f34b6d0800000000000000
+      internalID: -2975683982312290306
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_logo_swarm_19
+      rect:
+        serializedVersion: 2
+        x: 269
+        y: 1
+        width: 17
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a628ad6a040a8fab0800000000000000
+      internalID: -4974049588893023638
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_logo_swarm_20
+      rect:
+        serializedVersion: 2
+        x: 287
+        y: 1
+        width: 17
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 63fd70ebc245aa6a0800000000000000
+      internalID: -6437240166229221578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_logo_swarm_21
+      rect:
+        serializedVersion: 2
+        x: 305
+        y: 1
+        width: 17
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 493cbb1b9822bf6e0800000000000000
+      internalID: -1802809251044015212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      ui_logo_swarm_0: -451322908965307715
+      ui_logo_swarm_1: -839274438997914954
+      ui_logo_swarm_10: 5565055799419326144
+      ui_logo_swarm_11: 2607544487543991855
+      ui_logo_swarm_12: 6936624571569576862
+      ui_logo_swarm_13: -8521047351669413662
+      ui_logo_swarm_14: 678618257952143957
+      ui_logo_swarm_15: -548014492141200203
+      ui_logo_swarm_16: 2448961241687540510
+      ui_logo_swarm_17: 12507403203930086
+      ui_logo_swarm_18: -2975683982312290306
+      ui_logo_swarm_19: -4974049588893023638
+      ui_logo_swarm_2: -5368689016504833306
+      ui_logo_swarm_20: -6437240166229221578
+      ui_logo_swarm_21: -1802809251044015212
+      ui_logo_swarm_3: -8186641488558109283
+      ui_logo_swarm_4: -7848683924140821166
+      ui_logo_swarm_5: -2255175128864732949
+      ui_logo_swarm_6: 5835258238212115762
+      ui_logo_swarm_7: 539504019897142109
+      ui_logo_swarm_8: -4455964719300569456
+      ui_logo_swarm_9: -403582983772675324
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

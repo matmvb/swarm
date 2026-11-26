@@ -8,10 +8,38 @@ using UnityEngine;
 public class PlayerVisual : MonoBehaviour
 {
     [SerializeField] Transform visual;
+    [SerializeField] SpriteRenderer sprite;
+    [SerializeField] SpriteAnimator animator;
     [SerializeField] float rotateSpeed = 720f;
     [SerializeField] float facingRange = 30f;
 
     float _angle;
+
+    void Awake()
+    {
+        if (visual == null) return;
+        if (sprite == null) sprite = visual.GetComponentInChildren<SpriteRenderer>();
+        if (animator == null && sprite != null) animator = sprite.GetComponent<SpriteAnimator>();
+    }
+
+    /// <summary>Aplica a nave do piloto escolhido (idle animado em pixel art).</summary>
+    public void SetShip(CharacterData character)
+    {
+        if (character == null || sprite == null) return;
+
+        sprite.color = Color.white;
+
+        if (animator == null) animator = sprite.GetComponent<SpriteAnimator>();
+
+        if (character.idleFrames != null && character.idleFrames.Length > 0 && animator != null)
+        {
+            animator.Configure(character.idleFrames, 6f, true);
+            return;
+        }
+
+        if (animator != null) animator.Stop();
+        if (character.shipSprite != null) sprite.sprite = character.shipSprite;
+    }
 
     void LateUpdate()
     {

@@ -1294,5 +1294,23 @@
     "meshType": "FullRect",
     "extrudeEdges": 0,
     "maxSize": 2048
+  },
+  "ui_logo_swarm": {
+    "path": "UI/ui_logo_swarm.png",
+    "frameWidth": 355,
+    "frameHeight": 127,
+    "frames": 1,
+    "sheetWidth": 355,
+    "sheetHeight": 127,
+    "fps": 8,
+    "pivot": "center",
+    "ppu": 100,
+    "filter": "Point",
+    "compression": "None",
+    "mipmaps": false,
+    "alphaIsTransparency": true,
+    "meshType": "FullRect",
+    "extrudeEdges": 0,
+    "maxSize": 2048
   }
 }

@@ -23,3 +23,22 @@ MonoBehaviour:
   sprite: {fileID: 1545166937115452117, guid: 1a59d3536397550498939efbbb69e5ab, type: 3}
   color: {r: 1, g: 1, b: 1, a: 1}
   scale: 2.2
+  idleFrames:
+  - {fileID: 1545166937115452117, guid: 1a59d3536397550498939efbbb69e5ab, type: 3}
+  - {fileID: -5032130011180792264, guid: 1a59d3536397550498939efbbb69e5ab, type: 3}
+  - {fileID: 543000691723045984, guid: 1a59d3536397550498939efbbb69e5ab, type: 3}
+  - {fileID: -6767116068562434352, guid: 1a59d3536397550498939efbbb69e5ab, type: 3}
+  moveFrames: []
+  hitFrames:
+  - {fileID: 21300000, guid: cd1efa89b5d9d6e49bb10b623affc5ef, type: 3}
+  deathFrames:
+  - {fileID: -8413417362629722534, guid: ece0f8796aaf4fa4fa35b73422b0c61e, type: 3}
+  - {fileID: 5759298259677310174, guid: ece0f8796aaf4fa4fa35b73422b0c61e, type: 3}
+  - {fileID: -3052596590412193983, guid: ece0f8796aaf4fa4fa35b73422b0c61e, type: 3}
+  - {fileID: -86159907886462317, guid: ece0f8796aaf4fa4fa35b73422b0c61e, type: 3}
+  - {fileID: 539508768184118351, guid: ece0f8796aaf4fa4fa35b73422b0c61e, type: 3}
+  - {fileID: 8262327662570903538, guid: ece0f8796aaf4fa4fa35b73422b0c61e, type: 3}
+  - {fileID: -6258933275733419090, guid: ece0f8796aaf4fa4fa35b73422b0c61e, type: 3}
+  - {fileID: -6758269436415473717, guid: ece0f8796aaf4fa4fa35b73422b0c61e, type: 3}
+  animFps: 6
+  faceMovement: 0

@@ -25,4 +25,13 @@ public class EnemyData : ScriptableObject
     public Sprite sprite;
     public Color color = Color.red;
     public float scale = 0.7f;
+
+    [Header("Animação")]
+    public Sprite[] idleFrames;
+    public Sprite[] moveFrames;
+    public Sprite[] hitFrames;
+    public Sprite[] deathFrames;
+    public float animFps = 6f;
+    [Tooltip("Gira o visual para a direção do movimento (Dardo).")]
+    public bool faceMovement;
 }

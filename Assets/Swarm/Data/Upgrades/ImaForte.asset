@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeData
   title: "\xCDm\xE3 Forte"
   description: +1 de raio de coleta e +5% de velocidade
+  icon: {fileID: 21300000, guid: 2e8ed65de379a6349b129bd454e86c4a, type: 3}
   stat: 7
   amount: 1
   percent: 0

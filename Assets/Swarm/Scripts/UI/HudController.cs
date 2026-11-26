@@ -24,6 +24,7 @@ public class HudController : MonoBehaviour
     [SerializeField] GameObject levelUpPanel;
     [SerializeField] Text levelUpTitle;
     [SerializeField] Text levelUpOptions;
+    [SerializeField] UpgradeCardUI[] levelUpCards;
 
     [Header("Game Over")]
     [SerializeField] GameObject gameOverPanel;
@@ -115,7 +116,7 @@ public class HudController : MonoBehaviour
         if (damageFlash != null && _flashAlpha > 0f)
         {
             _flashAlpha = Mathf.Max(0f, _flashAlpha - Time.unscaledDeltaTime * 2f);
-            damageFlash.color = new Color(1f, 0.10f, 0.15f, _flashAlpha);
+            damageFlash.color = new Color(UIPalette.Danger.r, UIPalette.Danger.g, UIPalette.Danger.b, _flashAlpha);
         }
 
         if (LevelUpOpen)
@@ -136,7 +137,7 @@ public class HudController : MonoBehaviour
     void OnHealthChanged(float current, float max)
     {
         if (_lastHealth >= 0f && current < _lastHealth - 0.01f)
-            _flashAlpha = 0.35f;
+            _flashAlpha = 0.22f;
 
         _lastHealth = current;
         RefreshHp();
@@ -209,7 +210,24 @@ public class HudController : MonoBehaviour
         if (levelUpTitle != null)
             levelUpTitle.text = "NÍVEL " + (xp != null ? xp.Level : 1) + " — ESCOLHA UM UPGRADE";
 
-        if (levelUpOptions != null)
+        if (levelUpCards != null && levelUpCards.Length > 0)
+        {
+            if (levelUpOptions != null) levelUpOptions.text = "";
+
+            for (int i = 0; i < levelUpCards.Length; i++)
+            {
+                if (levelUpCards[i] == null) continue;
+
+                if (options != null && i < options.Length && options[i] != null)
+                    levelUpCards[i].Bind(options[i], i, UIPalette.ForStat(options[i].stat));
+                else
+                    levelUpCards[i].Clear();
+            }
+
+            if ((options == null || options.Length == 0) && levelUpOptions != null)
+                levelUpOptions.text = "Sem upgrades disponíveis.  [1] continuar";
+        }
+        else if (levelUpOptions != null)
         {
             if (options == null || options.Length == 0)
             {

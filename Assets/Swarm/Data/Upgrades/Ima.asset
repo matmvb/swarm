@@ -14,7 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeData
   title: "\xCDm\xE3"
   description: +40% raio de coleta
+  icon: {fileID: 21300000, guid: 2d80739b888cd9948afab9ffcb826dae, type: 3}
   stat: 7
   amount: 40
   percent: 1
   maxStacks: 3
+  prerequisite: {fileID: 0}
+  extraEffects: []

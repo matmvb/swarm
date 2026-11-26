@@ -14,7 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeData
   title: "Proj\xE9til Veloz"
   description: "+15% velocidade do proj\xE9til"
+  icon: {fileID: 21300000, guid: 1daa3e99bed8d98478256f4daee6a894, type: 3}
   stat: 9
   amount: 15
   percent: 1
   maxStacks: 3
+  prerequisite: {fileID: 0}
+  extraEffects: []

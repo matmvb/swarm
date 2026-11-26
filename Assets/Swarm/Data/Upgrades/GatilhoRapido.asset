@@ -14,7 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeData
   title: "Gatilho R\xE1pido"
   description: "+15% de cad\xEAncia"
+  icon: {fileID: 21300000, guid: e91ed51f6d4ae2b40ab3a6109ea8f318, type: 3}
   stat: 1
   amount: 15
   percent: 1
   maxStacks: 5
+  prerequisite: {fileID: 0}
+  extraEffects: []

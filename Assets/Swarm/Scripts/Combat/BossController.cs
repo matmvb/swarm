@@ -34,6 +34,10 @@ public class BossController : MonoBehaviour
     [SerializeField] float firstBurstDelay = 2.5f;
     [SerializeField] float firstChargeDelay = 7f;
 
+    [Header("Arte")]
+    [SerializeField] Sprite[] telegraphFrames;
+    [SerializeField] Sprite[] attackFrames;
+
     enum State
     {
         Chase,
@@ -47,6 +51,7 @@ public class BossController : MonoBehaviour
     Rigidbody2D _rb;
     SpriteRenderer _sprite;
     SpriteRenderer _telegraph;
+    SpriteAnimator _telegraphAnimator;
     Transform _player;
     State _state;
     float _stateEnd;
@@ -121,6 +126,14 @@ public class BossController : MonoBehaviour
             return;
         }
 
+        // A morte do Núcleo toca a sheet de morte antes de voltar ao pool.
+        if (_enemy != null && _enemy.IsDead)
+        {
+            _rb.linearVelocity = Vector2.zero;
+            HideTelegraph();
+            return;
+        }
+
         if (_player == null)
         {
             _player = PlayerController.PlayerTransform;
@@ -191,6 +204,7 @@ public class BossController : MonoBehaviour
     void Burst()
     {
         HideTelegraph();
+        if (_enemy != null) _enemy.PlayTemporary(attackFrames, 12f, 0.35f);
 
         if (projectilePrefab != null)
         {
@@ -219,6 +233,7 @@ public class BossController : MonoBehaviour
     void BeginCharge()
     {
         HideTelegraph();
+        if (_enemy != null) _enemy.PlayTemporary(attackFrames, 12f, 0.3f);
 
         Vector2 toPlayer = (Vector2)_player.position - (Vector2)transform.position;
         _chargeDirection = toPlayer.sqrMagnitude > 0.01f ? toPlayer.normalized : Vector2.up;
@@ -241,19 +256,27 @@ public class BossController : MonoBehaviour
 
     void EnsureTelegraph()
     {
-        if (_telegraph != null || _sprite == null || _sprite.sprite == null) return;
+        if (_telegraph != null || _sprite == null) return;
 
         var go = new GameObject("TelegraphHalo");
         go.transform.SetParent(transform, false);
-        go.transform.localScale = Vector3.one * 1.7f;
+        go.transform.localScale = Vector3.one;
 
         var sprite = go.AddComponent<SpriteRenderer>();
-        sprite.sprite = _sprite.sprite;
+        sprite.sprite = telegraphFrames != null && telegraphFrames.Length > 0
+            ? telegraphFrames[0]
+            : _sprite.sprite;
         sprite.sharedMaterial = _sprite.sharedMaterial;
-        sprite.color = new Color(1f, 0.15f, 0.15f, 0.3f);
+        sprite.color = Color.white;
         sprite.sortingOrder = _sprite.sortingOrder - 1;
 
         _telegraph = sprite;
+        _telegraphAnimator = go.AddComponent<SpriteAnimator>();
+        if (telegraphFrames != null && telegraphFrames.Length > 0)
+            _telegraphAnimator.Configure(telegraphFrames, 10f, true);
+        else
+            _telegraphAnimator.Stop();
+
         go.SetActive(false);
     }
 
@@ -261,18 +284,19 @@ public class BossController : MonoBehaviour
     {
         if (_telegraph == null) return;
         _telegraph.gameObject.SetActive(true);
+        if (_telegraphAnimator != null) _telegraphAnimator.PlayDefault();
     }
 
     void AnimateTelegraph()
     {
-        float pulse = 1f + Mathf.Sin(Time.time * 22f) * 0.1f;
+        float pulse = 1f + Mathf.Sin(Time.time * 22f) * 0.05f;
         transform.localScale = Vector3.one * (_baseScale * pulse);
 
         if (_telegraph == null) return;
 
         float wave = Mathf.PingPong(Time.time * 3f, 1f);
-        _telegraph.color = new Color(1f, 0.15f, 0.15f, Mathf.Lerp(0.15f, 0.55f, wave));
-        _telegraph.transform.localScale = Vector3.one * Mathf.Lerp(1.6f, 2.05f, wave);
+        _telegraph.color = new Color(1f, 1f, 1f, Mathf.Lerp(0.55f, 0.95f, wave));
+        _telegraph.transform.localScale = Vector3.one * Mathf.Lerp(1.0f, 1.18f, wave);
     }
 
     void HideTelegraph()
