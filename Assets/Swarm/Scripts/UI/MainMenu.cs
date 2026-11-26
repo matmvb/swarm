@@ -39,6 +39,7 @@ public class MainMenu : MonoBehaviour
     void Update()
     {
         if (!IsOpen) return;
+        if (OptionsMenu.Instance != null && OptionsMenu.Instance.ClosedThisFrame) return;
         if (OptionsMenu.Instance != null && OptionsMenu.Instance.IsOpen) return;
 
         if (InputReader.WasPressed(GameKey.Confirm)) Play();

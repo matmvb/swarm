@@ -1,3 +1,5 @@
+> **Nota:** este é o plano histórico da fase 0.x. Para o estado atual e o próximo roadmap, use `docs/auditoria/07-ROADMAP-ATUALIZADO.md`.
+
 # Plano de Desenvolvimento — SWARM
 
 Premissa: **1 pessoa, ~15 h/semana**. Cada sprint = 1 semana. Total até a demo: **~10 semanas**.
@@ -27,7 +29,7 @@ Um loop divertido e feio vence um jogo bonito e chato.
 
 **Meta:** ver quadrados se movendo na tela.
 
-- [ ] Instalar Unity **6000.6.7f1** no Windows (ver `03-SETUP.md`)
+- [ ] Instalar Unity **6000.6.1f1** no Windows (ver `03-SETUP.md`)
 - [ ] Criar projeto 2D (URP), instalar Input System
 - [ ] Copiar `Assets/Swarm`, rodar `SWARM > Montar Protótipo Completo`
 - [ ] Play: mover, atirar, matar, level up, morrer, reiniciar

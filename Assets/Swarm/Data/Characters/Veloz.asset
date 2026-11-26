@@ -15,6 +15,7 @@ MonoBehaviour:
   displayName: VELOZ
   description: "-20% vida  \xB7  +25% velocidade  \xB7  +10% cad\xEAncia"
   color: {r: 0.4, g: 1, b: 0.45, a: 1}
+  shipSprite: {fileID: 1622436424363318697, guid: 6d231209fa903f742b2c0c28d98c2f67, type: 3}
   maxHealthMultiplier: 0.8
   moveSpeedMultiplier: 1.25
   damageMultiplier: 1

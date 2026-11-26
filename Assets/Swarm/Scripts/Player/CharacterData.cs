@@ -13,6 +13,9 @@ public class CharacterData : ScriptableObject
 
     public Color color = Color.white;
 
+    [Tooltip("Sprite da nave usada por este piloto. Se vazio, mantém o sprite procedural.")]
+    public Sprite shipSprite;
+
     [Header("Multiplicadores (1 = neutro)")]
     public float maxHealthMultiplier = 1f;
     public float moveSpeedMultiplier = 1f;

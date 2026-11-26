@@ -1,6 +1,7 @@
 #if UNITY_EDITOR
 using System.IO;
 using UnityEditor;
+using UnityEditor.Build;
 using UnityEditor.Build.Reporting;
 using UnityEngine;
 
@@ -50,7 +51,7 @@ public static class BuildScript
             return;
         }
 
-        Texture2D[] template = PlayerSettings.GetIconsForTargetGroup(BuildTargetGroup.Standalone);
+        Texture2D[] template = PlayerSettings.GetIcons(NamedBuildTarget.Standalone, IconKind.Application);
         int slotCount = template != null ? template.Length : 0;
         if (slotCount == 0)
         {
@@ -64,10 +65,10 @@ public static class BuildScript
         for (int i = 0; i < slotCount; i++)
             icons[i] = icon;
 
-        PlayerSettings.SetIconsForTargetGroup(BuildTargetGroup.Standalone, icons);
+        PlayerSettings.SetIcons(NamedBuildTarget.Standalone, icons, IconKind.Application);
         AssetDatabase.SaveAssets();
 
-        Texture2D[] applied = PlayerSettings.GetIconsForTargetGroup(BuildTargetGroup.Standalone);
+        Texture2D[] applied = PlayerSettings.GetIcons(NamedBuildTarget.Standalone, IconKind.Application);
         Debug.Log("[SWARM] Ícone do app aplicado: " + iconPath + " (" +
                   (applied != null ? applied.Length : 0) + " ícone(s))");
     }
@@ -85,13 +86,13 @@ public static class BuildScript
 
         PlayerSettings.companyName = "Scoty";
         PlayerSettings.productName = "SWARM";
-        PlayerSettings.bundleVersion = "0.9.8";
+        PlayerSettings.bundleVersion = "0.9.9";
         PlayerSettings.fullScreenMode = FullScreenMode.FullScreenWindow;
         PlayerSettings.defaultScreenWidth = 1920;
         PlayerSettings.defaultScreenHeight = 1080;
         PlayerSettings.runInBackground = true;
         PlayerSettings.resizableWindow = true;
-        PlayerSettings.SetScriptingBackend(BuildTargetGroup.Standalone, ScriptingImplementation.Mono2x);
+        PlayerSettings.SetScriptingBackend(NamedBuildTarget.Standalone, ScriptingImplementation.Mono2x);
 
         ApplyAppIcon();
 

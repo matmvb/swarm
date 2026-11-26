@@ -33,6 +33,7 @@ public class PauseMenu : MonoBehaviour
     {
         if (MainMenu.Instance != null && MainMenu.Instance.IsOpen) return;
         if (characterSelect != null && characterSelect.IsChoosing) return;
+        if (options != null && options.ClosedThisFrame) return;
         if (options != null && options.IsOpen) return;
 
         if (!IsOpen)

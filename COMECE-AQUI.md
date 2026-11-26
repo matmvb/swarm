@@ -10,7 +10,7 @@ C:\Users\scoty\OneDrive\Documentos\Default Project\swarm
 |---|---|
 | Editor | **Unity 6000.6.1f1** (já instalado na sua máquina) |
 | Template | 2D (URP) oficial — URP 17.6.0, Input System 1.19.0 |
-| Versão | **0.9.8** (playtest) |
+| Versão | **0.9.9** (playtest) |
 | Cena do jogo | gerada pelo menu `SWARM` em `Assets/Swarm/Scenes/Swarm.unity` |
 
 ---

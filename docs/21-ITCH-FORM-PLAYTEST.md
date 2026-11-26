@@ -27,7 +27,7 @@ Ela complementa `docs/20-PLAYTEST-EXTERNO.md`.
 | **Nome personalizado** | deixar vazio |
 | **Comunidade** | `Comentários` |
 | **Visibilidade e acesso** | `Restrito` (não `Rascunho`) |
-| **Senha** | `swarmtest` |
+| **Senha** | `SUA_SENHA` |
 
 ### Por que "Sem pagamentos" no teste
 
@@ -166,9 +166,9 @@ incorreta pode afetar a indexação da página.
 1. Em **Visibilidade e acesso**, selecione **Restrito**.
 2. Role a página até as opções de acesso restrito.
 3. Ative **"Também permitir uma senha para ver a página"** (o texto pode variar).
-4. Defina a senha `swarmtest`.
+4. Defina a senha `SUA_SENHA`.
 5. Salve.
-6. Copie a URL secreta que o itch mostrar (ela pode já incluir `?password=swarmtest`).
+6. Copie a URL secreta que o itch mostrar (ela pode já incluir `?password=SUA_SENHA`).
 7. Abra essa URL em uma **janela anônima** e confirme que:
    - a página abre;
    - o botão de download aparece;

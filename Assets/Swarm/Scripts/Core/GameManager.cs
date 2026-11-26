@@ -108,6 +108,6 @@ public class GameManager : MonoBehaviour
     {
         AutoStartRun = autoStart;
         Time.timeScale = 1f;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

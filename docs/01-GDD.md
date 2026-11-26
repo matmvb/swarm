@@ -7,7 +7,7 @@
 | Plataforma | PC (Steam) primeiro, mobile depois |
 | Sessão | Run de 10 min, sessão de 20–30 min |
 | Público | 16–35, fãs de roguelite e jogos "de número subindo" |
-| Motor | Unity 6.6 (6000.6.7f1) |
+| Motor | Unity 6.6 (6000.6.1f1) |
 | Equipe | 1 pessoa (você) |
 
 ---
@@ -15,7 +15,7 @@
 ## 1. Pitch
 
 Você é a última nave de defesa de um setor invadido. Não atira: **o sistema atira por você**.
-Sua decisão é *para onde ir* e *qual upgrade escolher*. Cada 20 segundos o jogo pergunta:
+Sua decisão é *para onde ir* e *qual upgrade escolher*. A cada nível (por XP; no início, perto de 20 s) o jogo pergunta:
 "você quer ficar mais forte ou mais seguro?" — e as duas alternativas parecem certas.
 
 **Frase de loja:** *"Space Invaders na dose de Survivors."*
@@ -121,6 +121,9 @@ nucleos = floor(kills / 10) + floor(minutos)
 | Tanque | 2:00 | 90 | 1.3 | 14 | 3 | 20 | parede que exige dano |
 | Atirador | 2:30 | 35 | 1.4 | 6 | 3 | 12 | mantém distância e atira |
 | **Núcleo (boss)** | 5:00 | 1200 | 1.0 | 15 | 40 | evento | clímax do meio da run |
+
+> A tabela mostra **HP base**. O HP final é `base × Difficulty`: em 5:00 o Núcleo
+> tem 1200 × 2,75 = **3300 HP**. A fórmula vale para todos os inimigos.
 
 ### Núcleo — padrão de ataque
 

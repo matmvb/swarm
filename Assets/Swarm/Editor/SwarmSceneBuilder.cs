@@ -575,7 +575,7 @@ public static class SwarmSceneBuilder
         mainQuit.color = UIPalette.Muted;
 
         Text mainVersion = MakeText(mainMenuPanel.transform, "MainVersion", new Vector2(0.5f, 0.5f), new Vector2(0f, -226f), new Vector2(1400f, 30f), 18, TextAnchor.MiddleCenter);
-        mainVersion.text = "DEMO 0.9.8   ·   FEITO COM UNITY";
+        mainVersion.text = "DEMO 0.9.9   ·   FEITO COM UNITY";
         mainVersion.color = UIPalette.Muted;
 
         GameObject pausePanel = MakePanel(canvasObject.transform, "PausePanel", new Color(UIPalette.Panel.r, UIPalette.Panel.g, UIPalette.Panel.b, 0.88f));
@@ -854,7 +854,7 @@ public static class SwarmSceneBuilder
 
         EditorSceneManager.OpenScene(SCENE_PATH);
 
-        PlayerController player = Object.FindFirstObjectByType<PlayerController>();
+        PlayerController player = Object.FindAnyObjectByType<PlayerController>();
         if (player == null)
         {
             Debug.LogError("[SWARM] Player não encontrado");
@@ -885,11 +885,11 @@ public static class SwarmSceneBuilder
             }
         }
 
-        CameraFollow cameraFollow = Object.FindFirstObjectByType<CameraFollow>();
+        CameraFollow cameraFollow = Object.FindAnyObjectByType<CameraFollow>();
         if (cameraFollow == null) { Debug.LogError("[SWARM] CameraFollow ausente"); problems++; }
         else problems += CheckRefs(cameraFollow, "target");
 
-        EnemySpawner spawner = Object.FindFirstObjectByType<EnemySpawner>();
+        EnemySpawner spawner = Object.FindAnyObjectByType<EnemySpawner>();
         if (spawner == null)
         {
             Debug.LogError("[SWARM] EnemySpawner ausente");
@@ -901,7 +901,7 @@ public static class SwarmSceneBuilder
             problems += CheckArray(spawner, "templates", 5);
         }
 
-        HudController hud = Object.FindFirstObjectByType<HudController>();
+        HudController hud = Object.FindAnyObjectByType<HudController>();
         if (hud == null)
         {
             Debug.LogError("[SWARM] HudController ausente");
@@ -915,7 +915,7 @@ public static class SwarmSceneBuilder
                 "xp", "playerHealth", "upgrades", "stats");
         }
 
-        CharacterSelect characterSelect = Object.FindFirstObjectByType<CharacterSelect>();
+        CharacterSelect characterSelect = Object.FindAnyObjectByType<CharacterSelect>();
         if (characterSelect == null)
         {
             Debug.LogError("[SWARM] CharacterSelect ausente");
@@ -927,7 +927,7 @@ public static class SwarmSceneBuilder
             problems += CheckArray(characterSelect, "characters", 3);
         }
 
-        DeathBurst deathBurst = Object.FindFirstObjectByType<DeathBurst>();
+        DeathBurst deathBurst = Object.FindAnyObjectByType<DeathBurst>();
         if (deathBurst == null)
         {
             Debug.LogError("[SWARM] DeathBurst ausente");
@@ -938,7 +938,7 @@ public static class SwarmSceneBuilder
             problems += CheckRefs(deathBurst, "template");
         }
 
-        BurstParticle[] burstParticles = Object.FindObjectsByType<BurstParticle>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        BurstParticle[] burstParticles = Object.FindObjectsByType<BurstParticle>(FindObjectsInactive.Include);
         if (burstParticles.Length != 1)
         {
             Debug.LogError("[SWARM] Esperado 1 template de partícula, achei " + burstParticles.Length);
@@ -953,7 +953,7 @@ public static class SwarmSceneBuilder
             }
         }
 
-        SpawnWarning[] warnings = Object.FindObjectsByType<SpawnWarning>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        SpawnWarning[] warnings = Object.FindObjectsByType<SpawnWarning>(FindObjectsInactive.Include);
         if (warnings.Length != 1)
         {
             Debug.LogError("[SWARM] Esperado 1 template de aviso, achei " + warnings.Length);
@@ -968,21 +968,21 @@ public static class SwarmSceneBuilder
             }
         }
 
-        HitStop hitStop = Object.FindFirstObjectByType<HitStop>();
+        HitStop hitStop = Object.FindAnyObjectByType<HitStop>();
         if (hitStop == null)
         {
             Debug.LogError("[SWARM] HitStop ausente");
             problems++;
         }
 
-        ScreenshotCapture screenshot = Object.FindFirstObjectByType<ScreenshotCapture>();
+        ScreenshotCapture screenshot = Object.FindAnyObjectByType<ScreenshotCapture>();
         if (screenshot == null)
         {
             Debug.LogError("[SWARM] ScreenshotCapture ausente");
             problems++;
         }
 
-        BackgroundGrid backgroundGrid = Object.FindFirstObjectByType<BackgroundGrid>();
+        BackgroundGrid backgroundGrid = Object.FindAnyObjectByType<BackgroundGrid>();
         if (backgroundGrid == null)
         {
             Debug.LogError("[SWARM] BackgroundGrid ausente");
@@ -993,7 +993,7 @@ public static class SwarmSceneBuilder
             problems += CheckRefs(backgroundGrid, "follow");
         }
 
-        PlayerVisual playerVisual = Object.FindFirstObjectByType<PlayerVisual>();
+        PlayerVisual playerVisual = Object.FindAnyObjectByType<PlayerVisual>();
         if (playerVisual == null)
         {
             Debug.LogError("[SWARM] PlayerVisual ausente");
@@ -1004,7 +1004,7 @@ public static class SwarmSceneBuilder
             problems += CheckRefs(playerVisual, "visual");
         }
 
-        MuzzleFlash muzzleFlash = Object.FindFirstObjectByType<MuzzleFlash>();
+        MuzzleFlash muzzleFlash = Object.FindAnyObjectByType<MuzzleFlash>();
         if (muzzleFlash == null)
         {
             Debug.LogError("[SWARM] MuzzleFlash ausente");
@@ -1015,7 +1015,7 @@ public static class SwarmSceneBuilder
             problems += CheckRefs(muzzleFlash, "template");
         }
 
-        ThrusterTrail thruster = Object.FindFirstObjectByType<ThrusterTrail>();
+        ThrusterTrail thruster = Object.FindAnyObjectByType<ThrusterTrail>();
         if (thruster == null)
         {
             Debug.LogError("[SWARM] ThrusterTrail ausente");
@@ -1026,7 +1026,7 @@ public static class SwarmSceneBuilder
             problems += CheckRefs(thruster, "visual", "template");
         }
 
-        OptionsMenu optionsMenu = Object.FindFirstObjectByType<OptionsMenu>();
+        OptionsMenu optionsMenu = Object.FindAnyObjectByType<OptionsMenu>();
         if (optionsMenu == null)
         {
             Debug.LogError("[SWARM] OptionsMenu ausente");
@@ -1037,7 +1037,7 @@ public static class SwarmSceneBuilder
             problems += CheckRefs(optionsMenu, "panel", "title", "options", "characterSelect");
         }
 
-        MainMenu mainMenu = Object.FindFirstObjectByType<MainMenu>();
+        MainMenu mainMenu = Object.FindAnyObjectByType<MainMenu>();
         if (mainMenu == null)
         {
             Debug.LogError("[SWARM] MainMenu ausente");
@@ -1048,7 +1048,7 @@ public static class SwarmSceneBuilder
             problems += CheckRefs(mainMenu, "panel", "characterSelect");
         }
 
-        PauseMenu pauseMenu = Object.FindFirstObjectByType<PauseMenu>();
+        PauseMenu pauseMenu = Object.FindAnyObjectByType<PauseMenu>();
         if (pauseMenu == null)
         {
             Debug.LogError("[SWARM] PauseMenu ausente");
@@ -1059,7 +1059,7 @@ public static class SwarmSceneBuilder
             problems += CheckRefs(pauseMenu, "panel", "options", "hud", "characterSelect");
         }
 
-        SplitOnDeath splitOnDeath = Object.FindFirstObjectByType<SplitOnDeath>(FindObjectsInactive.Include);
+        SplitOnDeath splitOnDeath = Object.FindAnyObjectByType<SplitOnDeath>(FindObjectsInactive.Include);
         if (splitOnDeath == null)
         {
             Debug.LogError("[SWARM] SplitOnDeath ausente");
@@ -1070,7 +1070,7 @@ public static class SwarmSceneBuilder
             problems += CheckRefs(splitOnDeath, "fragmentTemplate");
         }
 
-        RangedEnemy rangedEnemy = Object.FindFirstObjectByType<RangedEnemy>(FindObjectsInactive.Include);
+        RangedEnemy rangedEnemy = Object.FindAnyObjectByType<RangedEnemy>(FindObjectsInactive.Include);
         if (rangedEnemy == null)
         {
             Debug.LogError("[SWARM] RangedEnemy ausente");
@@ -1081,7 +1081,7 @@ public static class SwarmSceneBuilder
             problems += CheckRefs(rangedEnemy, "projectilePrefab");
         }
 
-        Enemy[] enemies = Object.FindObjectsByType<Enemy>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        Enemy[] enemies = Object.FindObjectsByType<Enemy>(FindObjectsInactive.Include);
         if (enemies.Length != 6) { Debug.LogError("[SWARM] Esperados 6 templates de inimigo, achei " + enemies.Length); problems++; }
 
         foreach (Enemy enemy in enemies)
@@ -1092,7 +1092,7 @@ public static class SwarmSceneBuilder
             if (enemy.gameObject.activeSelf) { Debug.LogError("[SWARM] Template " + enemy.name + " deveria estar inativo"); problems++; }
         }
 
-        Projectile[] projectiles = Object.FindObjectsByType<Projectile>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        Projectile[] projectiles = Object.FindObjectsByType<Projectile>(FindObjectsInactive.Include);
         if (projectiles.Length != 1) { Debug.LogError("[SWARM] Esperado 1 template de projétil, achei " + projectiles.Length); problems++; }
         foreach (Projectile projectile in projectiles)
         {
@@ -1104,7 +1104,7 @@ public static class SwarmSceneBuilder
             if (projectile.gameObject.activeSelf) { Debug.LogError("[SWARM] Template de projétil deveria estar inativo"); problems++; }
         }
 
-        XpOrb[] orbs = Object.FindObjectsByType<XpOrb>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        XpOrb[] orbs = Object.FindObjectsByType<XpOrb>(FindObjectsInactive.Include);
         if (orbs.Length != 1) { Debug.LogError("[SWARM] Esperado 1 template de orbe, achei " + orbs.Length); problems++; }
         foreach (XpOrb orb in orbs)
         {
@@ -1117,15 +1117,15 @@ public static class SwarmSceneBuilder
 
         if (!inBuildSettings) { Debug.LogError("[SWARM] Cena não está no Build Settings"); problems++; }
 
-        RunLogger runLogger = Object.FindFirstObjectByType<RunLogger>();
+        RunLogger runLogger = Object.FindAnyObjectByType<RunLogger>();
         if (runLogger == null) { Debug.LogError("[SWARM] RunLogger ausente"); problems++; }
         else problems += CheckRefs(runLogger, "xp", "upgrades");
 
-        DebugOverlay overlay = Object.FindFirstObjectByType<DebugOverlay>();
+        DebugOverlay overlay = Object.FindAnyObjectByType<DebugOverlay>();
         if (overlay == null) { Debug.LogError("[SWARM] DebugOverlay ausente"); problems++; }
         else problems += CheckRefs(overlay, "stats", "health");
 
-        BossController boss = Object.FindFirstObjectByType<BossController>(FindObjectsInactive.Include);
+        BossController boss = Object.FindAnyObjectByType<BossController>(FindObjectsInactive.Include);
         if (boss == null)
         {
             Debug.LogError("[SWARM] BossController ausente");
@@ -1136,7 +1136,7 @@ public static class SwarmSceneBuilder
             problems += CheckRefs(boss, "projectilePrefab");
         }
 
-        EnemyProjectile[] enemyProjectiles = Object.FindObjectsByType<EnemyProjectile>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        EnemyProjectile[] enemyProjectiles = Object.FindObjectsByType<EnemyProjectile>(FindObjectsInactive.Include);
         if (enemyProjectiles.Length != 1)
         {
             Debug.LogError("[SWARM] Esperado 1 template de projétil inimigo, achei " + enemyProjectiles.Length);

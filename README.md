@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/press/og-1200x630.png" alt="SWARM — bullet heaven 2D, demo 0.9.8 para Windows" width="100%">
+  <img src="docs/press/og-1200x630.png" alt="SWARM — bullet heaven 2D, demo 0.9.9 para Windows" width="100%">
 </p>
 
 <h1 align="center">SWARM</h1>
@@ -20,7 +20,7 @@
 <p align="center">
   <img alt="Unity" src="https://img.shields.io/badge/Unity-6000.6.1f1-000?logo=unity&logoColor=white">
   <img alt="Windows" src="https://img.shields.io/badge/Windows-10%2F11-0078D6?logo=windows">
-  <img alt="Status" src="https://img.shields.io/badge/status-playtest%200.9.8-4DFFE0">
+  <img alt="Status" src="https://img.shields.io/badge/status-playtest%200.9.9-4DFFE0">
   <img alt="Feito com C#" src="https://img.shields.io/badge/C%23-239120?logo=csharp&logoColor=white">
 </p>
 
@@ -40,7 +40,7 @@ Sobreviva até 10:00 para vencer.
 
 ---
 
-## O que tem na demo 0.9.8
+## O que tem na demo 0.9.9
 
 | Conteúdo | Detalhe |
 |---|---|
@@ -177,6 +177,14 @@ A build sai em `Builds/Windows/SWARM.exe`.
 
 ## Changelog recente
 
+### 0.9.9
+
+- Integração das naves, inimigos e boss em pixel art.
+- Import settings corrigidos (PPU, Point, FullRect, sem compressão).
+- Flash de dano por overlay para sprites coloridos.
+- Restart por nome da cena, retorno ao menu no game over e ESC nas opções.
+- Página e documentação atualizadas para 0.9.9.
+
 ### 0.9.8
 
 - Menu principal e tela de pausa.
@@ -215,5 +223,5 @@ Se encontrar um bug, envie também:
 - Feedback: [formulário de playtest](https://matmvb.github.io/swarm/feedback/)
 
 <p align="center">
-  <sub>SWARM · demo 0.9.8 · feito com Unity 6.6 · 2026</sub>
+  <sub>SWARM · demo 0.9.9 · feito com Unity 6.6 · 2026</sub>
 </p>

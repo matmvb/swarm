@@ -72,7 +72,7 @@ Ele já contém `LEIA-ME.txt` na raiz. Para regerar depois de uma mudança:
 5. Adicione pelo menos 1 screenshot. Ideal: 3–5.
 6. Cole a descrição, os controles e as tags.
 7. Em **Visibility**, escolha **Restricted**.
-8. Defina uma senha simples, por exemplo `swarmtest`.
+8. Defina uma senha simples, por exemplo `SUA_SENHA`.
 9. Salve e copie a URL secreta.
 10. Abra a URL em uma janela anônima, baixe e confirme que o ZIP abre.
 
@@ -107,7 +107,7 @@ butler push Builds/SWARM-windows.zip usuario/swarm:windows --userversion 0.9.8
 > É Windows e não precisa instalar: baixa o ZIP, extrai e abre `SWARM.exe`.
 >
 > Link: **[COLE A URL RESTRITA AQUI]**
-> Senha: **swarmtest**
+> Senha: **SUA_SENHA**
 >
 > Dois avisos:
 > 1. O Windows pode dizer que o app não é reconhecido (não é assinado). Clique em **Mais informações → Executar assim mesmo**.

@@ -153,7 +153,18 @@ public class CharacterSelect : MonoBehaviour
             stats.fireRate *= character.fireRateMultiplier;
 
             var sprite = stats.GetComponentInChildren<SpriteRenderer>();
-            if (sprite != null) sprite.color = character.color;
+            if (sprite != null)
+            {
+                if (character.shipSprite != null)
+                {
+                    sprite.sprite = character.shipSprite;
+                    sprite.color = Color.white;
+                }
+                else
+                {
+                    sprite.color = character.color;
+                }
+            }
         }
 
         if (health != null) health.ScaleMaxHealth(character.maxHealthMultiplier);

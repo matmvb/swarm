@@ -52,9 +52,9 @@ enviando para o endpoint real; ela não tem nome.
 | URL | Status |
 |---|---|
 | `https://matmvb.itch.io/swarm` | 200, mas mostra a tela de senha |
-| `https://matmvb.itch.io/swarm?password=swarmtest` | 200, página real |
+| `https://matmvb.itch.io/swarm?password=<senha-do-convite>` | 200 com a senha correta |
 
-O projeto está **publicado no modo Restrito** e funcionando com a senha `swarmtest`.
+O projeto está **publicado no modo Restrito** e funcionando com a senha do convite.
 
 Conteúdo confirmado na página com senha:
 
@@ -71,10 +71,12 @@ Conteúdo confirmado na página com senha:
 ### Link para enviar aos testadores
 
 ```text
-https://matmvb.itch.io/swarm?password=swarmtest
+https://matmvb.itch.io/swarm?password=<senha-do-convite>
 ```
 
-O link sem `?password=swarmtest` mostra a tela de senha. O link com a senha abre direto.
+O link sem senha mostra a tela de acesso. O link com a senha do convite abre direto.
+
+> A senha real não é versionada. Use a senha atual enviada no convite.
 
 ## Pendências
 

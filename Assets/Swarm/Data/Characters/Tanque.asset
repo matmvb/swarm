@@ -15,6 +15,7 @@ MonoBehaviour:
   displayName: TANQUE
   description: "+50% vida  \xB7  -15% velocidade"
   color: {r: 1, g: 0.55, b: 0.2, a: 1}
+  shipSprite: {fileID: -5431022061467588703, guid: a2a309dcf9e02ae4a813689f9aab9277, type: 3}
   maxHealthMultiplier: 1.5
   moveSpeedMultiplier: 0.85
   damageMultiplier: 1

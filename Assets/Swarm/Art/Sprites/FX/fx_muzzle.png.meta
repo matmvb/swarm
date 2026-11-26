@@ -11,6 +11,9 @@ TextureImporter:
   - first:
       213: 7453773897529607183
     second: fx_muzzle_2
+  - first:
+      213: 3239409283281556454
+    second: fx_muzzle_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -43,7 +46,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -53,11 +56,11 @@ TextureImporter:
   lightmap: 0
   compressionQuality: 50
   spriteMode: 2
-  spriteExtrude: 1
-  spriteMeshType: 1
+  spriteExtrude: 0
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -83,7 +86,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -124,12 +127,12 @@ TextureImporter:
       name: fx_muzzle_0
       rect:
         serializedVersion: 2
-        x: 2
-        y: 3
-        width: 11
-        height: 10
+        x: 0
+        y: 0
+        width: 16
+        height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -146,12 +149,12 @@ TextureImporter:
       name: fx_muzzle_1
       rect:
         serializedVersion: 2
-        x: 15
+        x: 16
         y: 0
-        width: 34
+        width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -168,12 +171,12 @@ TextureImporter:
       name: fx_muzzle_2
       rect:
         serializedVersion: 2
-        x: 51
-        y: 4
-        width: 9
-        height: 8
+        x: 32
+        y: 0
+        width: 16
+        height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -182,6 +185,28 @@ TextureImporter:
       bones: []
       spriteID: f04c4563edf117760800000000000000
       internalID: 7453773897529607183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fx_muzzle_3
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6e3991c7491b4fc20800000000000000
+      internalID: 3239409283281556454
       vertices: []
       indices: 
       edges: []
@@ -203,6 +228,7 @@ TextureImporter:
       fx_muzzle_0: -5926081187967098936
       fx_muzzle_1: -622164153606335717
       fx_muzzle_2: 7453773897529607183
+      fx_muzzle_3: 3239409283281556454
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

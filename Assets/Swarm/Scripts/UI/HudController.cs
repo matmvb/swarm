@@ -129,6 +129,7 @@ public class HudController : MonoBehaviour
         if (!gameManager.IsRunning && gameOverPanel != null && gameOverPanel.activeSelf)
         {
             if (InputReader.WasPressed(GameKey.Restart)) gameManager.Restart();
+            else if (InputReader.WasPressed(GameKey.MainMenuKey)) gameManager.Restart(false);
         }
     }
 
@@ -268,7 +269,7 @@ public class HudController : MonoBehaviour
 
         builder.Append("\nNúcleos  +").Append(SaveSystem.LastCoresEarned).Append('\n');
         builder.Append("Total    ").Append(SaveSystem.Cores).Append('\n');
-        builder.Append("\n[R] JOGAR DE NOVO");
+        builder.Append("\n[R] JOGAR DE NOVO\n[M] MENU PRINCIPAL");
 
         gameOverText.text = builder.ToString();
     }

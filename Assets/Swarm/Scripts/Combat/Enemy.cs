@@ -34,6 +34,7 @@ public class Enemy : MonoBehaviour
     Color _baseColor;
     Color _flashColor = Color.white;
     SpriteRenderer _sprite;
+    SpriteRenderer _flashSprite;
     Rigidbody2D _rb;
     Collider2D _collider;
     Transform _target;
@@ -45,6 +46,16 @@ public class Enemy : MonoBehaviour
         _rb.freezeRotation = true;
         _sprite = GetComponentInChildren<SpriteRenderer>();
         _collider = GetComponent<Collider2D>();
+
+        if (_sprite != null)
+        {
+            var flashObject = new GameObject("Flash");
+            flashObject.transform.SetParent(transform, false);
+            _flashSprite = flashObject.AddComponent<SpriteRenderer>();
+            _flashSprite.sharedMaterial = _sprite.sharedMaterial;
+            _flashSprite.sortingOrder = _sprite.sortingOrder + 1;
+            _flashSprite.enabled = false;
+        }
     }
 
     void OnEnable()
@@ -73,6 +84,13 @@ public class Enemy : MonoBehaviour
             {
                 _baseColor = data.color;
                 _sprite.color = _baseColor;
+
+                if (_flashSprite != null)
+                {
+                    _flashSprite.sprite = _sprite.sprite;
+                    _flashSprite.color = new Color(1f, 1f, 1f, 0f);
+                    _flashSprite.enabled = false;
+                }
             }
         }
     }
@@ -80,6 +98,7 @@ public class Enemy : MonoBehaviour
     void OnDisable()
     {
         All.Remove(this);
+        if (_flashSprite != null) _flashSprite.enabled = false;
     }
 
     void FixedUpdate()
@@ -110,8 +129,18 @@ public class Enemy : MonoBehaviour
         if (_flash <= 0f) return;
 
         _flash -= Time.deltaTime * 6f;
+        float alpha = Mathf.Clamp01(_flash);
+
         if (_sprite != null)
-            _sprite.color = Color.Lerp(_baseColor, _flashColor, Mathf.Clamp01(_flash));
+            _sprite.color = Color.Lerp(_baseColor, _flashColor, alpha);
+
+        if (_flashSprite != null)
+        {
+            Color overlay = _flashColor;
+            overlay.a = alpha;
+            _flashSprite.color = overlay;
+            _flashSprite.enabled = alpha > 0.01f;
+        }
     }
 
     public void TakeDamage(float amount, bool critical)
@@ -121,6 +150,13 @@ public class Enemy : MonoBehaviour
         _health -= amount;
         _flash = 1f;
         _flashColor = critical ? new Color(1f, 0.85f, 0.2f) : Color.white;
+
+        if (_flashSprite != null)
+        {
+            if (_sprite != null) _flashSprite.sprite = _sprite.sprite;
+            _flashSprite.color = _flashColor;
+            _flashSprite.enabled = true;
+        }
 
         if (Sfx.Instance != null) Sfx.Instance.PlayHit();
 
@@ -143,15 +179,17 @@ public class Enemy : MonoBehaviour
 
         if (CameraFollow.Instance != null)
         {
-            bool big = data != null && data.scale > 1.4f;
+            bool big = GetComponent<BossController>() != null;
             CameraFollow.Instance.Shake(big ? 0.25f : 0.03f, big ? 0.40f : 0.08f);
         }
+
+        if (_flashSprite != null) _flashSprite.enabled = false;
 
         if (_rb != null) _rb.linearVelocity = Vector2.zero;
 
         if (_collider != null) _collider.enabled = false;
 
-        bool isBoss = data != null && data.scale > 1.4f;
+        bool isBoss = GetComponent<BossController>() != null;
         if (isBoss)
         {
             ObjectPool.Despawn(gameObject);

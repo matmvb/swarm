@@ -18,6 +18,10 @@ public class OptionsMenu : MonoBehaviour
 
     public bool IsOpen => _open;
 
+    /// <summary>Evita que o ESC que fecha opções também feche o menu de baixo no mesmo frame.</summary>
+    public static int ClosedFrame { get; private set; } = -1;
+    public bool ClosedThisFrame => ClosedFrame == Time.frameCount;
+
     void Awake()
     {
         Instance = this;
@@ -31,6 +35,7 @@ public class OptionsMenu : MonoBehaviour
     void Start()
     {
         GameOptions.Apply();
+        ClosedFrame = -1;
         if (panel != null) panel.SetActive(false);
     }
 
@@ -47,7 +52,7 @@ public class OptionsMenu : MonoBehaviour
             return;
         }
 
-        if (InputReader.WasPressed(GameKey.Options))
+        if (InputReader.WasPressed(GameKey.Options) || InputReader.WasPressed(GameKey.Back))
         {
             Close();
             return;
@@ -102,6 +107,7 @@ public class OptionsMenu : MonoBehaviour
     {
         _open = false;
         _resetConfirmUntil = 0f;
+        ClosedFrame = Time.frameCount;
         if (panel != null) panel.SetActive(false);
         CharacterSelect.InputBlocked = false;
     }
